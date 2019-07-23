@@ -41,7 +41,7 @@ export interface IActa {
   subscribeState: (params: {
     callback: (valueToReturn: TActaValue) => void;
     context: IComponentWithID;
-    defaultValue: string | number | object;
+    defaultValue?: string | number | object;
     stateKey: string;
   }) => TActaValue;
   unsubscribeState: (params: {
