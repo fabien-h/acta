@@ -1,0 +1,14 @@
+.awcache
+.cache
+.DS_Store
+.idea
+.nyc_output
+.rpt2_cache
+*.log
+compiled
+coverage
+dist
+docs
+node_modules
+npm-debug.log
+npm-debug*

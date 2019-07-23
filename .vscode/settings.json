@@ -1,0 +1,34 @@
+{
+  // An array of language ids which should be validated by ESLint
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "typescriptreact",
+      "autoFix": true
+    }
+  ],
+  "files.associations": {
+    "*.ts": "typescriptreact"
+  },
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.printWidth": 80,
+  "prettier.useTabs": false,
+  "prettier.tabWidth": 2,
+  "prettier.jsxBracketSameLine": true,
+  "prettier.bracketSpacing": true,
+  "prettier.semi": true,
+  "prettier.proseWrap": "preserve",
+
+  // When enabled, will trim trailing whitespace when saving a file.
+  "files.trimTrailingWhitespace": true,
+
+  // typescript auto-format settings
+  "javascript.preferences.importModuleSpecifier": "auto",
+  "typescript.preferences.quoteStyle": "single"
+}

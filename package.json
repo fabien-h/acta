@@ -1,0 +1,60 @@
+{
+  "name": "acta",
+  "version": "0.1.0",
+  "description": "Super light and dead simple state manager and event dispatcher for react.",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es5.js",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "react",
+    "acta",
+    "state manager"
+  ],
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "build:dev-watch": "rollup -w --config rollup.config.dev.js",
+    "build": "rimraf dist && tsc --module commonjs && rollup --config rollup.config.build.js",
+    "dev": "rimraf dist && concurrently \"npm run build:dev-watch\" --kill-others --restartTries 2 --restartDelay 200",
+    "release": "npm run build && release-it"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabien-h/acta.git"
+  },
+  "author": "Fabien Huet <fabien.huet@gmail.com> (https://wax-o.com)",
+  "bugs": {
+    "url": "https://github.com/fabien-h/acta/issues"
+  },
+  "homepage": "https://github.com/fabien-h/acta#readme",
+  "directories": {
+    "test": "tests"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.4",
+    "concurrently": "^4.1.1",
+    "release-it": "^12.3.3",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.17.0",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^5.1.1",
+    "rollup-plugin-typescript2": "^0.22.0",
+    "tsc": "^1.20150623.0",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
