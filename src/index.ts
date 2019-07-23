@@ -119,7 +119,8 @@ const Acta: IActa = {
      * If a subscribtion for this context on this state
      * already exists, stop here
      */
-    if (this.states[stateKey].subscribtions[context.actaID]) return false;
+    if (this.states[stateKey].subscribtions[context.actaID as string])
+      return false;
 
     /**
      * Extend the componentWillUnmount hook on the context
@@ -148,7 +149,7 @@ const Acta: IActa = {
      * Add the callback and the context to the subscribtion list
      * of the state
      */
-    this.states[stateKey].subscribtions[context.actaID] = {
+    this.states[stateKey].subscribtions[context.actaID as string] = {
       callback,
       context,
     };
@@ -188,7 +189,7 @@ const Acta: IActa = {
     }
 
     /* Delete the subscribtion */
-    delete this.states[stateKey].subscribtions[context.actaID];
+    delete this.states[stateKey].subscribtions[context.actaID as string];
   },
 
   /**
@@ -346,7 +347,7 @@ const Acta: IActa = {
     this.ensureActaID(context);
 
     /* If this context already listen to that event already exists, stop here */
-    if (this.events[eventName][context.actaID]) return;
+    if (this.events[eventName][context.actaID as string]) return;
 
     /**
      * Extend the componentWillUnmount hook on the context
@@ -376,7 +377,7 @@ const Acta: IActa = {
      * Add the callback and the context to the event listener list
      * of the event
      */
-    this.events[eventName][context.actaID] = {
+    this.events[eventName][context.actaID as string] = {
       callback,
       context,
     };
@@ -404,7 +405,7 @@ const Acta: IActa = {
     }
 
     /* Delete the subscribtion */
-    delete this.events[eventName][context.actaID];
+    delete this.events[eventName][context.actaID as string];
   },
 
   /**

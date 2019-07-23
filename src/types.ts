@@ -21,7 +21,7 @@ export interface IEvents {
 }
 
 export interface IComponentWithID extends React.Component {
-  actaID: string;
+  actaID?: string;
 }
 
 export interface IActa {
