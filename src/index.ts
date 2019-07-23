@@ -1,4 +1,4 @@
-import { IActa, IComponentWithID, TActaValue } from './types';
+import { IActa } from './types';
 
 const Acta: IActa = {
   /**
@@ -35,9 +35,12 @@ const Acta: IActa = {
     const storage = { ...localStorage, ...sessionStorage };
     for (const storedObjectKey in storage) {
       if (storedObjectKey.slice(0, 8) === '__acta__') {
-        const state = JSON.parse(storage[storedObjectKey]);
-        if (state !== undefined && state !== null) {
-          this.setState(storedObjectKey.slice(8), state);
+        const value = JSON.parse(storage[storedObjectKey]);
+        if (value !== undefined && value !== null) {
+          this.setState({
+            stateKey: storedObjectKey.slice(8),
+            value,
+          });
         }
       }
     }
@@ -54,9 +57,15 @@ const Acta: IActa = {
             event.newValue !== '' &&
             event.newValue !== 'null'
           ) {
-            this.setState(event.key.slice(8), JSON.parse(event.newValue));
+            this.setState({
+              stateKey: event.key.slice(8),
+              value: JSON.parse(event.newValue),
+            });
           } else {
-            this.setState(event.key.slice(8), null);
+            this.setState({
+              stateKey: event.key.slice(8),
+              value: null,
+            });
           }
         }
       },
@@ -81,12 +90,7 @@ const Acta: IActa = {
    * @param {TActaValue} defaultValue - Optionnal, set a default value for
    * the state if there is none
    */
-  subscribeState(
-    stateKey: string,
-    callback: (valueToReturn: TActaValue) => void,
-    context: IComponentWithID,
-    defaultValue: TActaValue,
-  ): TActaValue {
+  subscribeState({ stateKey, callback, context, defaultValue }) {
     /* Ensure the arguments */
     if (
       !stateKey ||
@@ -126,12 +130,18 @@ const Acta: IActa = {
     if (context.componentWillUnmount) {
       const oldComponentWillUnmount = context.componentWillUnmount;
       context.componentWillUnmount = () => {
-        this.unsubscribeState(stateKey, context);
+        this.unsubscribeState({
+          context,
+          stateKey,
+        });
         oldComponentWillUnmount.bind(context)();
       };
     } else {
       context.componentWillUnmount = () =>
-        this.unsubscribeState(stateKey, context);
+        this.unsubscribeState({
+          context,
+          stateKey,
+        });
     }
 
     /**
@@ -163,7 +173,7 @@ const Acta: IActa = {
    * @param {String} stateKey - The key to name the state
    * @param {Object} context - Reference to the target react component
    */
-  unsubscribeState(stateKey: string, context: IComponentWithID) {
+  unsubscribeState({ stateKey, context }) {
     /* Ensure the arguments */
     if (
       !stateKey ||
@@ -192,11 +202,7 @@ const Acta: IActa = {
    * @param {String} persistenceType - optionnal - can be "sessionStorage" or "localStorage"
    * if set, the state will be saved into the corresponding storage
    */
-  setState(
-    stateKey: string,
-    value: any,
-    persistenceType?: 'sessionStorage' | 'localStorage',
-  ) {
+  setState({ stateKey, value, persistenceType }) {
     /* Ensure the arguments */
     if (!stateKey || typeof stateKey !== 'string') {
       throw new Error('You need to provide a state key.');
@@ -255,16 +261,13 @@ const Acta: IActa = {
    *
    * @param {String} state the state to target
    */
-  deleteState(
-    stateKey: string,
-    persistenceType: 'localStorage' | 'sessionStorage',
-  ) {
+  deleteState({ stateKey, persistenceType }) {
     /* Ensure the arguments */
     if (!stateKey || typeof stateKey !== 'string') {
       throw new Error('You need to provide a state key.');
     }
 
-    this.setState(stateKey, null);
+    this.setState({ stateKey, value: null });
 
     if (persistenceType === 'sessionStorage') {
       window.sessionStorage.removeItem(`__acta__${stateKey}`);
@@ -283,7 +286,7 @@ const Acta: IActa = {
    * @param {String} stateKey - the key to identify the target state
    * @return {*} can be anything
    */
-  getState(stateKey: string): TActaValue {
+  getState(stateKey) {
     /* Ensure the arguments */
     if (!stateKey || typeof stateKey !== 'string' || !this.states[stateKey]) {
       if (process.env.APP_ENV === 'development') {
@@ -302,7 +305,7 @@ const Acta: IActa = {
    *
    * @param {String} stateKey - the key to identify the target state
    */
-  hasState(stateKey: string): boolean {
+  hasState(stateKey) {
     return !!this.states[stateKey];
   },
 
@@ -321,11 +324,7 @@ const Acta: IActa = {
    * wich the subscribtion is made => that will be needed to unsubscribe
    * when the compnent woll unmount
    */
-  subscribeEvent(
-    eventName: string,
-    callback: () => void,
-    context: IComponentWithID,
-  ): void {
+  subscribeEvent({ eventName, callback, context }): void {
     /* Ensure the arguments */
     if (
       !eventName ||
@@ -358,12 +357,18 @@ const Acta: IActa = {
     if (context.componentWillUnmount) {
       const oldComponentWillUnmount = context.componentWillUnmount;
       context.componentWillUnmount = () => {
-        this.unsubscribeEvent(eventName, context);
+        this.unsubscribeEvent({
+          context,
+          eventName,
+        });
         oldComponentWillUnmount.bind(context)();
       };
     } else {
       context.componentWillUnmount = () => {
-        this.unsubscribeEvent(eventName, context);
+        this.unsubscribeEvent({
+          context,
+          eventName,
+        });
       };
     }
 
@@ -384,7 +389,7 @@ const Acta: IActa = {
    * @param {String} eventName - The key to name the eventName
    * @param {Object} context - Reference to the target react component
    */
-  unsubscribeEvent(eventName: string, context: IComponentWithID): void {
+  unsubscribeEvent({ eventName, context }) {
     /* Ensure the arguments */
     if (
       !eventName ||
@@ -409,7 +414,7 @@ const Acta: IActa = {
    * @param {String} eventName - the key to target the event
    * @param {TActaValue} data - the data passed with the event
    */
-  dispatchEvent(eventName: string, data?: TActaValue): void {
+  dispatchEvent({ eventName, data }) {
     /* Ensure the arguments */
     if (!eventName || typeof eventName !== 'string') {
       throw new Error('You need to provide an event name to set.');
@@ -444,7 +449,7 @@ const Acta: IActa = {
    * ensureActaID is a small utility function to
    * inject a unique id to all subscribers contexts
    */
-  ensureActaID(context: IComponentWithID): string | boolean {
+  ensureActaID(context) {
     /* Stops there if there is already an ID */
     if (!context || context.actaID) return false;
 
