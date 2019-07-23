@@ -55,7 +55,6 @@ export interface IActa {
   }) => void;
   getState: (stateKey: string) => TActaValue;
   hasState: (stateKey: string) => boolean;
-
   deleteState: (params: {
     persistenceType: 'localStorage' | 'sessionStorage';
     stateKey: string;
