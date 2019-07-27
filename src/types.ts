@@ -61,7 +61,7 @@ export interface IActa {
   }) => void;
 
   subscribeEvent: (params: {
-    callback: () => void;
+    callback: (valueToReturn: TActaValue) => void;
     context: IComponentWithID;
     eventName: string;
   }) => void;
