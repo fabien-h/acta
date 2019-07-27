@@ -39,7 +39,7 @@ export interface IActa {
   ensureActaID: (context: IComponentWithID) => string | boolean;
 
   subscribeState: (params: {
-    callback: (valueToReturn: TActaValue) => void;
+    callback: (valueToReturn: any) => void;
     context: IComponentWithID;
     defaultValue?: string | number | object;
     stateKey: string;
@@ -61,7 +61,7 @@ export interface IActa {
   }) => void;
 
   subscribeEvent: (params: {
-    callback: (valueToReturn: TActaValue) => void;
+    callback: (valueToReturn: any) => void;
     context: IComponentWithID;
     eventName: string;
   }) => void;
