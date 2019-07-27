@@ -19,8 +19,8 @@
   "scripts": {
     "build:dev-watch": "rollup -w --config rollup.config.dev.js",
     "build": "rimraf dist && tsc --module commonjs && rollup --config rollup.config.build.js",
-    "dev": "rimraf dist && concurrently \"npm run build:dev-watch\" --kill-others --restartTries 2 --restartDelay 200",
-    "release": "npm run build && release-it"
+    "dev": "rimraf dist && concurrently \"yarn run build:dev-watch\" --kill-others --restartTries 2 --restartDelay 200",
+    "release": "yarn run build && release-it"
   },
   "repository": {
     "type": "git",
