@@ -318,20 +318,20 @@ const Acta: IActa = {
    * that subsribtion can be destroyed manually and will be
    * destroyed automatically when the component unmount
    *
-   * @param {String} eventName - The key to name the event
+   * @param {String} eventKey - The key to name the event
    * @param {Function} callback - Reference to the callback that will
    * be called when the state change
    * @param {React.Component} context - Reference to the react component from
    * wich the subscribtion is made => that will be needed to unsubscribe
    * when the compnent woll unmount
    */
-  subscribeEvent({ eventName, callback, context }): void {
+  subscribeEvent({ eventKey, callback, context }): void {
     /* Ensure the arguments */
     if (
-      !eventName ||
+      !eventKey ||
       !callback ||
       !context ||
-      typeof eventName !== 'string' ||
+      typeof eventKey !== 'string' ||
       typeof callback !== 'function' ||
       typeof context !== 'object'
     ) {
@@ -341,13 +341,13 @@ const Acta: IActa = {
     }
 
     /* If this event does not already exists, creates it */
-    this.events[eventName] = this.events[eventName] || {};
+    this.events[eventKey] = this.events[eventKey] || {};
 
     /* If the component does not have an acta id, get him one */
     this.ensureActaID(context);
 
     /* If this context already listen to that event already exists, stop here */
-    if (this.events[eventName][context.actaID as string]) return;
+    if (this.events[eventKey][context.actaID as string]) return;
 
     /**
      * Extend the componentWillUnmount hook on the context
@@ -360,7 +360,7 @@ const Acta: IActa = {
       context.componentWillUnmount = () => {
         this.unsubscribeEvent({
           context,
-          eventName,
+          eventKey,
         });
         oldComponentWillUnmount.bind(context)();
       };
@@ -368,7 +368,7 @@ const Acta: IActa = {
       context.componentWillUnmount = () => {
         this.unsubscribeEvent({
           context,
-          eventName,
+          eventKey,
         });
       };
     }
@@ -377,7 +377,7 @@ const Acta: IActa = {
      * Add the callback and the context to the event listener list
      * of the event
      */
-    this.events[eventName][context.actaID as string] = {
+    this.events[eventKey][context.actaID as string] = {
       callback,
       context,
     };
@@ -387,17 +387,17 @@ const Acta: IActa = {
    * unsubscribeEvent will remove the target context form
    * the subscribtions of the target eve,t
    *
-   * @param {String} eventName - The key to name the eventName
+   * @param {String} eventKey - The key to name the eventKey
    * @param {Object} context - Reference to the target react component
    */
-  unsubscribeEvent({ eventName, context }) {
+  unsubscribeEvent({ eventKey, context }) {
     /* Ensure the arguments */
     if (
-      !eventName ||
+      !eventKey ||
       !context ||
-      typeof eventName !== 'string' ||
+      typeof eventKey !== 'string' ||
       typeof context !== 'object' ||
-      !this.events[eventName]
+      !this.events[eventKey]
     ) {
       throw new Error(
         'You need to provide an existing event name, and a context (a mounted or mounting react component) when unsubscribing from a state',
@@ -405,42 +405,42 @@ const Acta: IActa = {
     }
 
     /* Delete the subscribtion */
-    delete this.events[eventName][context.actaID as string];
+    delete this.events[eventKey][context.actaID as string];
   },
 
   /**
    * Dispatch an event : check if the event exists and has subscribers
    * if it does, call the callback of each subscriber
    *
-   * @param {String} eventName - the key to target the event
+   * @param {String} eventKey - the key to target the event
    * @param {TActaValue} data - the data passed with the event
    */
-  dispatchEvent({ eventName, data }) {
+  dispatchEvent({ eventKey, data }) {
     /* Ensure the arguments */
-    if (!eventName || typeof eventName !== 'string') {
+    if (!eventKey || typeof eventKey !== 'string') {
       throw new Error('You need to provide an event name to set.');
     }
 
     /* The event should exist */
-    if (!this.events[eventName]) {
+    if (!this.events[eventKey]) {
       return console.warn(
         'You tried to dispatch an event that does not exist.',
       );
     }
 
     /* Call each subscriber callback */
-    Object.keys(this.events[eventName]).forEach(actaID => {
+    Object.keys(this.events[eventKey]).forEach(actaID => {
       try {
-        this.events[eventName][actaID].callback(data || null);
+        this.events[eventKey][actaID].callback(data || null);
       } catch (err) {
         if (
-          !this.events[eventName][actaID].context ||
-          !this.events[eventName][actaID].callback
+          !this.events[eventKey][actaID].context ||
+          !this.events[eventKey][actaID].callback
         ) {
           console.warn(
             'The context or the callback of an Acta event does not exists.',
           );
-          delete this.events[eventName][actaID];
+          delete this.events[eventKey][actaID];
         }
       }
     });

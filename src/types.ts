@@ -44,17 +44,22 @@ export interface IActa {
     defaultValue?: string | number | object;
     stateKey: string;
   }) => TActaValue;
+
   unsubscribeState: (params: {
     context: IComponentWithID;
     stateKey: string;
   }) => void;
+
   setState: (params: {
     persistenceType?: 'sessionStorage' | 'localStorage';
     stateKey: string;
     value: TActaValue;
   }) => void;
+
   getState: (stateKey: string) => TActaValue;
+
   hasState: (stateKey: string) => boolean;
+
   deleteState: (params: {
     persistenceType: 'localStorage' | 'sessionStorage';
     stateKey: string;
@@ -63,11 +68,13 @@ export interface IActa {
   subscribeEvent: (params: {
     callback: (valueToReturn: any) => void;
     context: IComponentWithID;
-    eventName: string;
+    eventKey: string;
   }) => void;
+
   unsubscribeEvent: (params: {
     context: IComponentWithID;
-    eventName: string;
+    eventKey: string;
   }) => void;
-  dispatchEvent: (params: { eventName: string; data?: TActaValue }) => void;
+
+  dispatchEvent: (params: { eventKey: string; data?: TActaValue }) => void;
 }
