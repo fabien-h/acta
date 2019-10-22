@@ -50,11 +50,12 @@ export interface IActa {
     stateKey: string;
   }) => void;
 
-  setState: (params: {
-    persistenceType?: 'sessionStorage' | 'localStorage';
-    stateKey: string;
-    value: TActaValue;
-  }) => void;
+  setState: (
+    states: {
+      [stateKey: string]: TActaValue;
+    },
+    persistenceType?: 'sessionStorage' | 'localStorage',
+  ) => void;
 
   getState: (stateKey: string) => TActaValue;
 
@@ -76,5 +77,9 @@ export interface IActa {
     eventKey: string;
   }) => void;
 
-  dispatchEvent: (params: { eventKey: string; data?: TActaValue }) => void;
+  dispatchEvent: (
+    eventKey: string,
+    data?: TActaValue,
+    isShared?: boolean,
+  ) => void;
 }

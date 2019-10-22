@@ -33,13 +33,13 @@ const Acta: IActa = {
      * Load the data from local and session storage
      */
     const storage = { ...localStorage, ...sessionStorage };
-    for (const storedObjectKey in storage) {
-      if (storedObjectKey.slice(0, 8) === '__acta__') {
-        const value = JSON.parse(storage[storedObjectKey]);
+    const storageKeys = Object.keys(storage);
+    for (const storageKey of storageKeys) {
+      if (storageKey.slice(0, 8) === '__acta__') {
+        const value = JSON.parse(storage[storageKey]);
         if (value !== undefined && value !== null) {
           this.setState({
-            stateKey: storedObjectKey.slice(8),
-            value,
+            [storageKey.slice(8)]: value,
           });
         }
       }
@@ -58,15 +58,19 @@ const Acta: IActa = {
             event.newValue !== 'null'
           ) {
             this.setState({
-              stateKey: event.key.slice(8),
-              value: JSON.parse(event.newValue),
+              [event.key.slice(8)]: JSON.parse(event.newValue),
             });
           } else {
             this.setState({
-              stateKey: event.key.slice(8),
-              value: null,
+              [event.key.slice(8)]: null,
             });
           }
+        } else if (event.key && event.key.slice(0, 13) === '__actaEvent__') {
+          this.dispatchEvent(
+            event.key.slice(13),
+            event.newValue ? JSON.parse(event.newValue) : event.newValue,
+            false,
+          );
         }
       },
       false,
@@ -197,64 +201,78 @@ const Acta: IActa = {
    * and will dispatch that update to all the subscriber
    * by he provided callback
    *
-   * @param {String} stateKey - mandatory - the state to target
-   * @param {*} value - optionnal - can be anything, including falsy values
-   * ; if that argument is omitted, the state will become undefined
+   * @param {Object} states - mandatory - an object where the keys are states to set and
+   * values the target values
    * @param {String} persistenceType - optionnal - can be "sessionStorage" or "localStorage"
    * if set, the state will be saved into the corresponding storage
    */
-  setState({ stateKey, value, persistenceType }) {
+  setState(states, persistenceType) {
     /* Ensure the arguments */
-    if (!stateKey || typeof stateKey !== 'string') {
-      throw new Error('You need to provide a state key.');
-    }
-
-    /* If this state does not already exists, creates it */
-    if (!this.states[stateKey]) {
-      this.states[stateKey] = this.states[stateKey] || {
-        value: value || undefined,
-        defaultValue: undefined,
-        subscribtions: {},
-      };
-    }
-
-    /* Save the value */
-    this.states[stateKey].value = value;
-
-    /* If persistence is configured, store the value */
-    if (persistenceType === 'localStorage') {
-      window.localStorage.setItem(`__acta__${stateKey}`, JSON.stringify(value));
-    } else if (persistenceType === 'sessionStorage') {
-      window.sessionStorage.setItem(
-        `__acta__${stateKey}`,
-        JSON.stringify(value),
-      );
-    } else if (persistenceType) {
-      throw new Error(
-        'Persistence type can only be sessionStorage or localStorage.',
-      );
+    if (
+      !states ||
+      typeof states !== 'object' ||
+      Object.keys(states).length === 0
+    ) {
+      throw new Error('You need to provide at least a state to set.');
     }
 
     /**
-     * Try to dispatch to all subscribers & kill the
-     * subscribtion if the subscriber has been destroyed
+     * Loop over the states
      */
-    Object.keys(this.states[stateKey].subscribtions || {}).forEach(actaID => {
-      try {
-        this.states[stateKey].subscribtions[actaID].callback(value);
-      } catch (err) {
-        if (
-          !this.states[stateKey].subscribtions[actaID] ||
-          !this.states[stateKey].subscribtions[actaID].context ||
-          !this.states[stateKey].subscribtions[actaID].callback
-        ) {
-          console.warn(
-            'The context or the callback of an Acta subscribtion does not exists.',
-          );
-          delete this.states[stateKey].subscribtions[actaID];
-        }
+    for (const state of Object.entries(states)) {
+      const stateKey = state[0];
+      const value = state[1];
+
+      /* If this state does not already exists, creates it */
+      if (!this.states[stateKey]) {
+        this.states[stateKey] = this.states[stateKey] || {
+          value: value || undefined,
+          defaultValue: undefined,
+          subscribtions: {},
+        };
       }
-    });
+
+      /* Save the value */
+      this.states[stateKey].value = value;
+
+      /* If persistence is configured, store the value */
+      if (persistenceType && persistenceType === 'localStorage') {
+        window.localStorage.setItem(
+          `__acta__${stateKey}`,
+          JSON.stringify(value),
+        );
+      } else if (persistenceType && persistenceType === 'sessionStorage') {
+        window.sessionStorage.setItem(
+          `__acta__${stateKey}`,
+          JSON.stringify(value),
+        );
+      } else if (persistenceType) {
+        throw new Error(
+          'Persistence type can only be sessionStorage or localStorage.',
+        );
+      }
+
+      /**
+       * Try to dispatch to all subscribers & kill the
+       * subscribtion if the subscriber has been destroyed
+       */
+      Object.keys(this.states[stateKey].subscribtions || {}).forEach(actaID => {
+        try {
+          this.states[stateKey].subscribtions[actaID].callback(value);
+        } catch (err) {
+          if (
+            !this.states[stateKey].subscribtions[actaID] ||
+            !this.states[stateKey].subscribtions[actaID].context ||
+            !this.states[stateKey].subscribtions[actaID].callback
+          ) {
+            console.warn(
+              'The context or the callback of an Acta subscribtion does not exists.',
+            );
+            delete this.states[stateKey].subscribtions[actaID];
+          }
+        }
+      });
+    }
   },
 
   /**
@@ -268,7 +286,7 @@ const Acta: IActa = {
       throw new Error('You need to provide a state key.');
     }
 
-    this.setState({ stateKey, value: null });
+    this.setState({ [stateKey]: null });
 
     if (persistenceType === 'sessionStorage') {
       window.sessionStorage.removeItem(`__acta__${stateKey}`);
@@ -414,8 +432,9 @@ const Acta: IActa = {
    *
    * @param {String} eventKey - the key to target the event
    * @param {TActaValue} data - the data passed with the event
+   * @param {Boolean} isShared - if the event should be shared accross tabs and windows
    */
-  dispatchEvent({ eventKey, data }) {
+  dispatchEvent(eventKey, data, isShared) {
     /* Ensure the arguments */
     if (!eventKey || typeof eventKey !== 'string') {
       throw new Error('You need to provide an event name to set.');
@@ -428,7 +447,17 @@ const Acta: IActa = {
       );
     }
 
-    /* Call each subscriber callback */
+    /**
+     * If this is a shared message, send it to the local storage;
+     * it will come back instantly
+     */
+    if (isShared) {
+      localStorage.setItem(`__actaEvent__${eventKey}`, JSON.stringify(data));
+    }
+
+    /**
+     * Call each subscriber callback
+     */
     Object.keys(this.events[eventKey]).forEach(actaID => {
       try {
         this.events[eventKey][actaID].callback(data || null);
