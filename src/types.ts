@@ -38,17 +38,14 @@ export interface IActa {
   init: () => void;
   ensureActaID: (context: IComponentWithID) => string | boolean;
 
-  subscribeState: (params: {
-    callback: (valueToReturn: any) => void;
-    context: IComponentWithID;
-    defaultValue?: string | number | object;
-    stateKey: string;
-  }) => TActaValue;
+  subscribeState: (
+    stateKey: string,
+    callback: (valueToReturn: any) => void,
+    context: IComponentWithID,
+    defaultValue?: string | number | object,
+  ) => TActaValue;
 
-  unsubscribeState: (params: {
-    context: IComponentWithID;
-    stateKey: string;
-  }) => void;
+  unsubscribeState: (stateKey: string, context: IComponentWithID) => void;
 
   setState: (
     states: {
@@ -61,21 +58,18 @@ export interface IActa {
 
   hasState: (stateKey: string) => boolean;
 
-  deleteState: (params: {
-    persistenceType: 'localStorage' | 'sessionStorage';
-    stateKey: string;
-  }) => void;
+  deleteState: (
+    stateKey: string,
+    persistenceType: 'localStorage' | 'sessionStorage',
+  ) => void;
 
-  subscribeEvent: (params: {
-    callback: (valueToReturn: any) => void;
-    context: IComponentWithID;
-    eventKey: string;
-  }) => void;
+  subscribeEvent: (
+    eventKey: string,
+    callback: (valueToReturn: any) => void,
+    context: IComponentWithID,
+  ) => void;
 
-  unsubscribeEvent: (params: {
-    context: IComponentWithID;
-    eventKey: string;
-  }) => void;
+  unsubscribeEvent: (eventKey: string, context: IComponentWithID) => void;
 
   dispatchEvent: (
     eventKey: string,

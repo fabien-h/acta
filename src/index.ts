@@ -94,7 +94,7 @@ const Acta: IActa = {
    * @param {TActaValue} defaultValue - Optionnal, set a default value for
    * the state if there is none
    */
-  subscribeState({ stateKey, callback, context, defaultValue }) {
+  subscribeState(stateKey, callback, context, defaultValue) {
     /* Ensure the arguments */
     if (
       !stateKey ||
@@ -135,18 +135,12 @@ const Acta: IActa = {
     if (context.componentWillUnmount) {
       const oldComponentWillUnmount = context.componentWillUnmount;
       context.componentWillUnmount = () => {
-        this.unsubscribeState({
-          context,
-          stateKey,
-        });
+        this.unsubscribeState(stateKey, context);
         oldComponentWillUnmount.bind(context)();
       };
     } else {
       context.componentWillUnmount = () =>
-        this.unsubscribeState({
-          context,
-          stateKey,
-        });
+        this.unsubscribeState(stateKey, context);
     }
 
     /**
@@ -178,7 +172,7 @@ const Acta: IActa = {
    * @param {String} stateKey - The key to name the state
    * @param {Object} context - Reference to the target react component
    */
-  unsubscribeState({ stateKey, context }) {
+  unsubscribeState(stateKey, context) {
     /* Ensure the arguments */
     if (
       !stateKey ||
@@ -280,7 +274,7 @@ const Acta: IActa = {
    *
    * @param {String} state the state to target
    */
-  deleteState({ stateKey, persistenceType }) {
+  deleteState(stateKey, persistenceType) {
     /* Ensure the arguments */
     if (!stateKey || typeof stateKey !== 'string') {
       throw new Error('You need to provide a state key.');
@@ -343,7 +337,7 @@ const Acta: IActa = {
    * wich the subscribtion is made => that will be needed to unsubscribe
    * when the compnent woll unmount
    */
-  subscribeEvent({ eventKey, callback, context }): void {
+  subscribeEvent(eventKey, callback, context): void {
     /* Ensure the arguments */
     if (
       !eventKey ||
@@ -376,18 +370,12 @@ const Acta: IActa = {
     if (context.componentWillUnmount) {
       const oldComponentWillUnmount = context.componentWillUnmount;
       context.componentWillUnmount = () => {
-        this.unsubscribeEvent({
-          context,
-          eventKey,
-        });
+        this.unsubscribeEvent(eventKey, context);
         oldComponentWillUnmount.bind(context)();
       };
     } else {
       context.componentWillUnmount = () => {
-        this.unsubscribeEvent({
-          context,
-          eventKey,
-        });
+        this.unsubscribeEvent(eventKey, context);
       };
     }
 
@@ -408,7 +396,7 @@ const Acta: IActa = {
    * @param {String} eventKey - The key to name the eventKey
    * @param {Object} context - Reference to the target react component
    */
-  unsubscribeEvent({ eventKey, context }) {
+  unsubscribeEvent(eventKey, context) {
     /* Ensure the arguments */
     if (
       !eventKey ||
