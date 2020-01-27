@@ -12,7 +12,7 @@ There is only one global store. Since this is an indexed object, there are no pe
 
 `Acta.subscribeState` is usually called in `componentDidMount`.
 
-```JavaScipt
+```JavaScript
   subscribeState: (
     stateKey: string,
     callback: (valueToReturn: any) => void,
@@ -48,7 +48,7 @@ example:
 
 `Acta.setState` can be called from anywhere (including in your dev console).
 
-```JavaScipt
+```JavaScript
   setState: (
     states: {
       [stateKey: string]: TActaValue;
@@ -64,7 +64,7 @@ example:
 
 `Acta.getState` can be called from anywhere (including in your dev console).
 
-```JavaScipt
+```JavaScript
   getState: (stateKey: string) => TActaValue;
 ```
 
@@ -74,7 +74,7 @@ example:
 
 `Acta.subscribeEvent` is usually called in `componentDidMount`.
 
-```JavaScipt
+```JavaScript
   subscribeEvent: (
     eventKey: string,
     callback: (valueToReturn: any) => void,
@@ -92,7 +92,7 @@ example:
 
 `Acta.dispatchEvent` can be called from anywhere (including in your dev console).
 
-```JavaScipt
+```JavaScript
   dispatchEvent: (
     eventKey: string,
     data?: TActaValue,
@@ -110,7 +110,7 @@ You can use those methods for some edge case, but you should not normally have t
 
 ## Unsubscribe
 
-```JavaScipt
+```JavaScript
   unsubscribeState: (stateKey: string, context: IComponentWithID) => void;
 
   unsubscribeEvent: (eventKey: string, context: IComponentWithID) => void;
@@ -120,7 +120,7 @@ If you want to explicitly unsubscribe. But Acta cleans after itself when the com
 
 ## HasState
 
-```JavaScipt
+```JavaScript
   hasState: (stateKey: string) => boolean;
 ```
 
@@ -128,7 +128,7 @@ You should use `getState`.
 
 ## DeleteState
 
-```JavaScipt
+```JavaScript
   deleteState: (
     stateKey: string,
     persistenceType: 'localStorage' | 'sessionStorage',
