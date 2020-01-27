@@ -45,6 +45,7 @@ export default {
     typescript({
       typescript: require('typescript'),
       useTsconfigDeclarationDir: true,
+      objectHashIgnoreUnknownHack: true,
     }),
     sourceMaps(),
     terser(),
