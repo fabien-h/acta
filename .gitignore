@@ -8,7 +8,6 @@
 compiled
 coverage
 dist
-docs
 node_modules
 npm-debug.log
 npm-debug*
