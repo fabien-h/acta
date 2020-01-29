@@ -25,6 +25,8 @@ export interface IComponentWithID extends React.Component {
 }
 
 export interface IActa {
+  window: Window | null;
+
   initialized: boolean;
 
   states: {
@@ -35,7 +37,7 @@ export interface IActa {
   };
   actaIDs: Array<string>;
 
-  init: () => void;
+  init: (_window?: Window) => void;
   ensureActaID: (context: IComponentWithID) => string | boolean;
 
   subscribeState: (

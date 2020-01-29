@@ -2,6 +2,11 @@ import { IActa } from './types';
 
 const Acta: IActa = {
   /**
+   * A reference to the window used internally
+   */
+  window: null,
+
+  /**
    * Boolean to know if acta has been initialized before
    */
   initialized: false,
@@ -21,13 +26,30 @@ const Acta: IActa = {
    * and session storage and will start listening on the changes in the storages
    * to update itself if the storage is updated from another tab
    */
-  init(): void {
+  init(_window): void {
     this.initialized = true;
+
+    console.log('***********');
+    console.log('process.env');
+    console.log('***********');
+    console.log(process.env);
+    /**
+     * If we have no window, stop here
+     */
+    if (typeof window === 'undefined' && !_window) {
+      return;
+    }
+
+    if (_window) {
+      this.window = _window;
+    } else {
+      this.window = this.window as Window;
+    }
 
     /**
      * Attach to the window for global public access
      */
-    (window as any).Acta = Acta;
+    (this.window as any).Acta = Acta;
 
     /**
      * Load the data from local and session storage
@@ -48,7 +70,7 @@ const Acta: IActa = {
     /**
      * Listen to the storage to synchronise Acta between tabs
      */
-    window.addEventListener(
+    this.window.addEventListener(
       'storage',
       event => {
         if (event.key && event.key.slice(0, 8) === '__acta__') {
@@ -229,18 +251,26 @@ const Acta: IActa = {
       /* Save the value */
       this.states[stateKey].value = value;
 
-      /* If persistence is configured, store the value */
-      if (persistenceType && persistenceType === 'localStorage') {
-        window.localStorage.setItem(
+      /* If persistence is configured and we have a window, store the value */
+      if (
+        this.window &&
+        persistenceType &&
+        persistenceType === 'localStorage'
+      ) {
+        this.window.localStorage.setItem(
           `__acta__${stateKey}`,
           JSON.stringify(value),
         );
-      } else if (persistenceType && persistenceType === 'sessionStorage') {
-        window.sessionStorage.setItem(
+      } else if (
+        this.window &&
+        persistenceType &&
+        persistenceType === 'sessionStorage'
+      ) {
+        this.window.sessionStorage.setItem(
           `__acta__${stateKey}`,
           JSON.stringify(value),
         );
-      } else if (persistenceType) {
+      } else if (this.window && persistenceType) {
         throw new Error(
           'Persistence type can only be sessionStorage or localStorage.',
         );
@@ -282,11 +312,15 @@ const Acta: IActa = {
 
     this.setState({ [stateKey]: null });
 
-    if (persistenceType === 'sessionStorage') {
-      window.sessionStorage.removeItem(`__acta__${stateKey}`);
-    } else if (persistenceType === 'localStorage') {
-      window.localStorage.removeItem(`__acta__${stateKey}`);
-    } else if (persistenceType) {
+    /**
+     * If the persistance type is set and we have a window, remove the
+     * value from the storage
+     */
+    if (this.window && persistenceType === 'sessionStorage') {
+      this.window.sessionStorage.removeItem(`__acta__${stateKey}`);
+    } else if (this.window && persistenceType === 'localStorage') {
+      this.window.localStorage.removeItem(`__acta__${stateKey}`);
+    } else if (this.window && persistenceType) {
       throw new Error(
         'Persistence type can only be sessionStorage or localStorage.',
       );
@@ -481,8 +515,7 @@ const Acta: IActa = {
 
 /**
  * If Acta has not been initialized, init Acta
- * works only client side
  */
-if (typeof window !== 'undefined' && !Acta.initialized) Acta.init();
+if (!Acta.initialized) Acta.init();
 
 export default Acta;
