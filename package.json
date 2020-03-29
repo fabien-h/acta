@@ -19,8 +19,21 @@
   "scripts": {
     "build:dev-watch": "rollup -w --config rollup.config.dev.js",
     "build": "rimraf dist && tsc --module commonjs && rollup --config rollup.config.build.js",
-    "dev": "rimraf dist && concurrently \"yarn run build:dev-watch\" --kill-others --restartTries 2 --restartDelay 200",
-    "release": "yarn run build && release-it"
+    "dev": "rimraf dist && concurrently \"yarn run build:dev-watch\" \"jest --watch --config ./jest.config.js\" --kill-others --restartTries 2 --restartDelay 200",
+    "release": "yarn run build && release-it",
+    "lint": "eslint src/*.ts --cache",
+    "test": "jest"
+  },
+  "lint-staged": {
+    "src/*.ts": [
+      "eslint --cache --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "repository": {
     "type": "git",
@@ -36,23 +49,37 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/react": "^16.9.19",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@types/jest": "^25.1.4",
+    "@types/react": "^16.9.26",
     "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
     "concurrently": "^5.1.0",
-    "release-it": "^12.4.3",
-    "rimraf": "^3.0.0",
-    "rollup": "^1.30.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.3",
+    "jest": "^25.2.3",
+    "jest-config": "^25.2.3",
+    "jsdom": "^16.2.1",
+    "lint-staged": "^10.0.9",
+    "release-it": "^13.5.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.2.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.5.0",
-    "rollup-plugin-terser": "^5.2.0",
-    "rollup-plugin-typescript2": "^0.25.3",
+    "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "ts-jest": "^25.2.1",
     "tsc": "^1.20150623.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "publishConfig": {
     "access": "public"
