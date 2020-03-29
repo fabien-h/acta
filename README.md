@@ -8,7 +8,7 @@ In Acta, you can store string, numbers, objects, and arrays. Since all values st
 
 There is only one global store. Since this is an indexed object, there are no performance issue. Even with big objects and many keys.
 
-You don't need tooling to use Acta. Just go in your console, `Acta.states` will give you what you need to see. `Acta.setState` and `Acta.dispatchEvent` can be used directly in hte console.
+You don't need tooling to debug Acta. In your browser developper tools, `Acta.states` will let you access to all the informations you need. The store methods like `Acta.setState` or `Acta.dispatchEvent` are available in the console.
 
 ## Acta.subscribeState
 

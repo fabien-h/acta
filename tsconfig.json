@@ -31,8 +31,7 @@
     "baseUrl": "src",
     "outDir": "dist",
     "rootDir": "src",
-    "typeRoots": ["node_modules/@types"],
-    "types": ["node"]
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": ["node_modules", "tests", "dist"],
   "include": ["src"]
