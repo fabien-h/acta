@@ -1,6 +1,12 @@
 import { IActa } from './types';
 import { isObject } from './isObject';
 
+const actaStoragePrefix = '__acta__';
+const actaStoragePrefixLength = actaStoragePrefix.length;
+const actaEventPrefix = '__actaEvent__';
+const actaEventPrefixLength = actaEventPrefix.length;
+const isInDOM = typeof window !== 'undefined';
+
 const Acta: IActa = {
   /**
    * Boolean to know if acta has been initialized before
@@ -34,47 +40,36 @@ const Acta: IActa = {
     (window as any).Acta = Acta;
 
     /**
-     * Load the data from local and session storage
-     */
-    const storage = {
-      ...window.localStorage,
-      ...window.sessionStorage,
-    };
-    const storageKeys = Object.keys(storage);
-    for (const storageKey of storageKeys) {
-      if (storageKey.slice(0, 8) === '__acta__') {
-        const value = JSON.parse(storage[storageKey]);
-        if (value !== undefined && value !== null) {
-          this.setState({
-            [storageKey.slice(8)]: value,
-          });
-        }
-      }
-    }
-
-    /**
      * Listen to the storage to synchronise Acta between tabs
      */
     window.addEventListener(
       'storage',
       event => {
-        if (event.key && event.key.slice(0, 8) === '__acta__') {
+        if (
+          event.key &&
+          event.key.slice(0, actaStoragePrefixLength) === actaStoragePrefix
+        ) {
           if (
             event.newValue !== null &&
             event.newValue !== '' &&
             event.newValue !== 'null'
           ) {
             this.setState({
-              [event.key.slice(8)]: JSON.parse(event.newValue),
+              [event.key.slice(actaStoragePrefixLength)]: JSON.parse(
+                event.newValue,
+              ),
             });
           } else {
             this.setState({
-              [event.key.slice(8)]: null,
+              [event.key.slice(actaStoragePrefixLength)]: null,
             });
           }
-        } else if (event.key && event.key.slice(0, 13) === '__actaEvent__') {
+        } else if (
+          event.key &&
+          event.key.slice(0, actaEventPrefixLength) === actaEventPrefix
+        ) {
           this.dispatchEvent(
-            event.key.slice(13),
+            event.key.slice(actaEventPrefixLength),
             event.newValue ? JSON.parse(event.newValue) : event.newValue,
             false,
           );
@@ -82,6 +77,25 @@ const Acta: IActa = {
       },
       false,
     );
+
+    /**
+     * Load the data from local and session storage
+     */
+    const storage = {
+      ...localStorage,
+      ...sessionStorage,
+    };
+    const storageKeys = Object.keys(storage);
+    for (const storageKey of storageKeys) {
+      if (storageKey.slice(0, actaStoragePrefixLength) === actaStoragePrefix) {
+        const value = JSON.parse(storage[storageKey]);
+        if (value !== undefined && value !== null) {
+          this.setState({
+            [storageKey.slice(actaStoragePrefixLength)]: value,
+          });
+        }
+      }
+    }
   },
 
   /**
@@ -236,20 +250,14 @@ const Acta: IActa = {
       this.states[stateKey].value = value;
 
       /* If persistence is configured and we have a window, store the value */
-      if (typeof window !== 'undefined' && persistenceType) {
+      if (isInDOM && persistenceType) {
         if (persistenceType === 'localStorage') {
-          window.localStorage.setItem(
-            `__acta__${stateKey}`,
-            JSON.stringify(value),
-          );
+          localStorage.setItem(`__acta__${stateKey}`, JSON.stringify(value));
         } else if (persistenceType === 'sessionStorage') {
-          window.sessionStorage.setItem(
-            `__acta__${stateKey}`,
-            JSON.stringify(value),
-          );
+          sessionStorage.setItem(`__acta__${stateKey}`, JSON.stringify(value));
         } else {
           throw new Error(
-            'Persistence type can only be sessionStorage or localStorage.',
+            'Invalid persistence. Can be "sessionStorage" or "localStorage".',
           );
         }
       }
@@ -294,11 +302,11 @@ const Acta: IActa = {
      * If the persistance type is set and we have a window, remove the
      * value from the storage
      */
-    if (typeof window !== 'undefined' && persistenceType) {
+    if (isInDOM && persistenceType) {
       if (persistenceType === 'sessionStorage') {
-        window.sessionStorage.removeItem(`__acta__${stateKey}`);
+        sessionStorage.removeItem(`__acta__${stateKey}`);
       } else if (persistenceType === 'localStorage') {
-        window.localStorage.removeItem(`__acta__${stateKey}`);
+        localStorage.removeItem(`__acta__${stateKey}`);
       } else {
         throw new Error(
           'Persistence type can only be sessionStorage or localStorage.',
@@ -314,16 +322,15 @@ const Acta: IActa = {
    * @return {*} can be anything
    */
   getState(stateKey) {
-    /* Ensure the arguments */
-    if (!stateKey || typeof stateKey !== 'string' || !this.states[stateKey]) {
-      if (process.env.APP_ENV === 'development') {
-        console.warn('You need to provide an existing state key.');
-      }
-      return null;
+    /* Check the parameter */
+    if (typeof stateKey !== 'string' || !this.hasState(stateKey)) {
+      throw new Error('You need to provide an existing state key.');
     }
 
     return (
-      this.states[stateKey].value || this.states[stateKey].defaultValue || null
+      this.states[stateKey].value ||
+      this.states[stateKey].defaultValue ||
+      undefined
     );
   },
 
@@ -333,6 +340,12 @@ const Acta: IActa = {
    * @param {String} stateKey - the key to identify the target state
    */
   hasState(stateKey) {
+    /**
+     * Check param
+     */
+    if (typeof stateKey !== 'string') {
+      throw new Error('You must pass a string key to Acta.hasState.');
+    }
     return !!this.states[stateKey];
   },
 
@@ -453,9 +466,9 @@ const Acta: IActa = {
      * If this is a shared message, send it to the local storage;
      * it will come back instantly
      */
-    if (isShared && typeof window !== 'undefined') {
-      window.localStorage.setItem(
-        `__actaEvent__${eventKey}`,
+    if (isShared && isInDOM) {
+      localStorage.setItem(
+        `${actaEventPrefix}${eventKey}`,
         JSON.stringify(data),
       );
     }
@@ -499,6 +512,6 @@ const Acta: IActa = {
 /**
  * If Acta has not been initialized, init Acta
  */
-if (!Acta.initialized && typeof window !== 'undefined') Acta.init();
+if (!Acta.initialized && isInDOM) Acta.init();
 
 export default Acta;
