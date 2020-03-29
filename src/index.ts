@@ -1,4 +1,5 @@
 import { IActa } from './types';
+import { isObject } from './isObject';
 
 const Acta: IActa = {
   /**
@@ -22,6 +23,9 @@ const Acta: IActa = {
    * to update itself if the storage is updated from another tab
    */
   init(): void {
+    /**
+     * Acta is now initialized
+     */
     this.initialized = true;
 
     /**
@@ -32,7 +36,10 @@ const Acta: IActa = {
     /**
      * Load the data from local and session storage
      */
-    const storage = { ...localStorage, ...sessionStorage };
+    const storage = {
+      ...window.localStorage,
+      ...window.sessionStorage,
+    };
     const storageKeys = Object.keys(storage);
     for (const storageKey of storageKeys) {
       if (storageKey.slice(0, 8) === '__acta__') {
@@ -102,7 +109,7 @@ const Acta: IActa = {
       !context ||
       typeof stateKey !== 'string' ||
       typeof callback !== 'function' ||
-      typeof context !== 'object'
+      !isObject(context)
     ) {
       throw new Error(
         'You need to provide a state key, a callback function and a context (a mounted or mounting react component) when subscribing to a state',
@@ -178,7 +185,7 @@ const Acta: IActa = {
       !stateKey ||
       !context ||
       typeof stateKey !== 'string' ||
-      typeof context !== 'object' ||
+      !isObject(context) ||
       !this.states[stateKey]
     ) {
       throw new Error(
@@ -202,11 +209,10 @@ const Acta: IActa = {
    */
   setState(states, persistenceType) {
     /* Ensure the arguments */
-    if (
-      !states ||
-      typeof states !== 'object' ||
-      Object.keys(states).length === 0
-    ) {
+    if (!isObject(states)) {
+      throw new Error('States must be an object.');
+    }
+    if (Object.keys(states).length === 0) {
       throw new Error('You need to provide at least a state to set.');
     }
 
@@ -229,21 +235,23 @@ const Acta: IActa = {
       /* Save the value */
       this.states[stateKey].value = value;
 
-      /* If persistence is configured, store the value */
-      if (persistenceType && persistenceType === 'localStorage') {
-        window.localStorage.setItem(
-          `__acta__${stateKey}`,
-          JSON.stringify(value),
-        );
-      } else if (persistenceType && persistenceType === 'sessionStorage') {
-        window.sessionStorage.setItem(
-          `__acta__${stateKey}`,
-          JSON.stringify(value),
-        );
-      } else if (persistenceType) {
-        throw new Error(
-          'Persistence type can only be sessionStorage or localStorage.',
-        );
+      /* If persistence is configured and we have a window, store the value */
+      if (typeof window !== 'undefined' && persistenceType) {
+        if (persistenceType === 'localStorage') {
+          window.localStorage.setItem(
+            `__acta__${stateKey}`,
+            JSON.stringify(value),
+          );
+        } else if (persistenceType === 'sessionStorage') {
+          window.sessionStorage.setItem(
+            `__acta__${stateKey}`,
+            JSON.stringify(value),
+          );
+        } else {
+          throw new Error(
+            'Persistence type can only be sessionStorage or localStorage.',
+          );
+        }
       }
 
       /**
@@ -282,14 +290,20 @@ const Acta: IActa = {
 
     this.setState({ [stateKey]: null });
 
-    if (persistenceType === 'sessionStorage') {
-      window.sessionStorage.removeItem(`__acta__${stateKey}`);
-    } else if (persistenceType === 'localStorage') {
-      window.localStorage.removeItem(`__acta__${stateKey}`);
-    } else if (persistenceType) {
-      throw new Error(
-        'Persistence type can only be sessionStorage or localStorage.',
-      );
+    /**
+     * If the persistance type is set and we have a window, remove the
+     * value from the storage
+     */
+    if (typeof window !== 'undefined' && persistenceType) {
+      if (persistenceType === 'sessionStorage') {
+        window.sessionStorage.removeItem(`__acta__${stateKey}`);
+      } else if (persistenceType === 'localStorage') {
+        window.localStorage.removeItem(`__acta__${stateKey}`);
+      } else {
+        throw new Error(
+          'Persistence type can only be sessionStorage or localStorage.',
+        );
+      }
     }
   },
 
@@ -345,7 +359,7 @@ const Acta: IActa = {
       !context ||
       typeof eventKey !== 'string' ||
       typeof callback !== 'function' ||
-      typeof context !== 'object'
+      !isObject(context)
     ) {
       throw new Error(
         'You need to provide a event key, a callback function and a context (a mounted or mounting react component) when subscribing to an event',
@@ -402,7 +416,7 @@ const Acta: IActa = {
       !eventKey ||
       !context ||
       typeof eventKey !== 'string' ||
-      typeof context !== 'object' ||
+      !isObject(context) ||
       !this.events[eventKey]
     ) {
       throw new Error(
@@ -439,8 +453,11 @@ const Acta: IActa = {
      * If this is a shared message, send it to the local storage;
      * it will come back instantly
      */
-    if (isShared) {
-      localStorage.setItem(`__actaEvent__${eventKey}`, JSON.stringify(data));
+    if (isShared && typeof window !== 'undefined') {
+      window.localStorage.setItem(
+        `__actaEvent__${eventKey}`,
+        JSON.stringify(data),
+      );
     }
 
     /**
@@ -481,8 +498,7 @@ const Acta: IActa = {
 
 /**
  * If Acta has not been initialized, init Acta
- * works only client side
  */
-if (typeof window !== 'undefined' && !Acta.initialized) Acta.init();
+if (!Acta.initialized && typeof window !== 'undefined') Acta.init();
 
 export default Acta;

@@ -35,7 +35,8 @@ export interface IActa {
   };
   actaIDs: Array<string>;
 
-  init: () => void;
+  init: (userProvidedWindow?: Window) => void;
+
   ensureActaID: (context: IComponentWithID) => string | boolean;
 
   subscribeState: (

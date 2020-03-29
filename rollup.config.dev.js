@@ -10,7 +10,7 @@ export default {
     {
       file: _package.main,
       format: 'umd',
-      name: 'Router',
+      name: 'Acta',
       sourcemap: true,
       globals: {
         'react-dom': 'ReactDOM',
@@ -21,7 +21,7 @@ export default {
     {
       file: _package.module,
       format: 'es',
-      name: 'Router',
+      name: 'Acta',
       sourcemap: true,
     },
   ],
