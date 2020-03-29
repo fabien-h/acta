@@ -2,6 +2,10 @@
 
 Super light and dead simple state manager and event dispatcher for react.
 
+![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)
+![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
+![badgen mit licence](https://badgen.net/badge/license/MIT/blue)
+
 # Acta API
 
 In Acta, you can store string, numbers, objects, and arrays. Since all values stored have to be compatible with the local storage (string ony) Maps, Sets, functions... won’t work.
