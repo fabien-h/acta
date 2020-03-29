@@ -1,11 +1,7 @@
 import { IActa } from './types';
+import { isObject } from './isObject';
 
 const Acta: IActa = {
-  /**
-   * A reference to the window used internally
-   */
-  window: null,
-
   /**
    * Boolean to know if acta has been initialized before
    */
@@ -26,35 +22,24 @@ const Acta: IActa = {
    * and session storage and will start listening on the changes in the storages
    * to update itself if the storage is updated from another tab
    */
-  init(_window): void {
-    this.initialized = true;
-
-    console.log('***********');
-    console.log('process.env');
-    console.log('***********');
-    console.log(process.env);
+  init(): void {
     /**
-     * If we have no window, stop here
+     * Acta is now initialized
      */
-    if (typeof window === 'undefined' && !_window) {
-      return;
-    }
-
-    if (_window) {
-      this.window = _window;
-    } else {
-      this.window = this.window as Window;
-    }
+    this.initialized = true;
 
     /**
      * Attach to the window for global public access
      */
-    (this.window as any).Acta = Acta;
+    (window as any).Acta = Acta;
 
     /**
      * Load the data from local and session storage
      */
-    const storage = { ...localStorage, ...sessionStorage };
+    const storage = {
+      ...window.localStorage,
+      ...window.sessionStorage,
+    };
     const storageKeys = Object.keys(storage);
     for (const storageKey of storageKeys) {
       if (storageKey.slice(0, 8) === '__acta__') {
@@ -70,7 +55,7 @@ const Acta: IActa = {
     /**
      * Listen to the storage to synchronise Acta between tabs
      */
-    this.window.addEventListener(
+    window.addEventListener(
       'storage',
       event => {
         if (event.key && event.key.slice(0, 8) === '__acta__') {
@@ -124,7 +109,7 @@ const Acta: IActa = {
       !context ||
       typeof stateKey !== 'string' ||
       typeof callback !== 'function' ||
-      typeof context !== 'object'
+      !isObject(context)
     ) {
       throw new Error(
         'You need to provide a state key, a callback function and a context (a mounted or mounting react component) when subscribing to a state',
@@ -200,7 +185,7 @@ const Acta: IActa = {
       !stateKey ||
       !context ||
       typeof stateKey !== 'string' ||
-      typeof context !== 'object' ||
+      !isObject(context) ||
       !this.states[stateKey]
     ) {
       throw new Error(
@@ -224,11 +209,10 @@ const Acta: IActa = {
    */
   setState(states, persistenceType) {
     /* Ensure the arguments */
-    if (
-      !states ||
-      typeof states !== 'object' ||
-      Object.keys(states).length === 0
-    ) {
+    if (!isObject(states)) {
+      throw new Error('States must be an object.');
+    }
+    if (Object.keys(states).length === 0) {
       throw new Error('You need to provide at least a state to set.');
     }
 
@@ -252,28 +236,22 @@ const Acta: IActa = {
       this.states[stateKey].value = value;
 
       /* If persistence is configured and we have a window, store the value */
-      if (
-        this.window &&
-        persistenceType &&
-        persistenceType === 'localStorage'
-      ) {
-        this.window.localStorage.setItem(
-          `__acta__${stateKey}`,
-          JSON.stringify(value),
-        );
-      } else if (
-        this.window &&
-        persistenceType &&
-        persistenceType === 'sessionStorage'
-      ) {
-        this.window.sessionStorage.setItem(
-          `__acta__${stateKey}`,
-          JSON.stringify(value),
-        );
-      } else if (this.window && persistenceType) {
-        throw new Error(
-          'Persistence type can only be sessionStorage or localStorage.',
-        );
+      if (typeof window !== 'undefined' && persistenceType) {
+        if (persistenceType === 'localStorage') {
+          window.localStorage.setItem(
+            `__acta__${stateKey}`,
+            JSON.stringify(value),
+          );
+        } else if (persistenceType === 'sessionStorage') {
+          window.sessionStorage.setItem(
+            `__acta__${stateKey}`,
+            JSON.stringify(value),
+          );
+        } else {
+          throw new Error(
+            'Persistence type can only be sessionStorage or localStorage.',
+          );
+        }
       }
 
       /**
@@ -316,14 +294,16 @@ const Acta: IActa = {
      * If the persistance type is set and we have a window, remove the
      * value from the storage
      */
-    if (this.window && persistenceType === 'sessionStorage') {
-      this.window.sessionStorage.removeItem(`__acta__${stateKey}`);
-    } else if (this.window && persistenceType === 'localStorage') {
-      this.window.localStorage.removeItem(`__acta__${stateKey}`);
-    } else if (this.window && persistenceType) {
-      throw new Error(
-        'Persistence type can only be sessionStorage or localStorage.',
-      );
+    if (typeof window !== 'undefined' && persistenceType) {
+      if (persistenceType === 'sessionStorage') {
+        window.sessionStorage.removeItem(`__acta__${stateKey}`);
+      } else if (persistenceType === 'localStorage') {
+        window.localStorage.removeItem(`__acta__${stateKey}`);
+      } else {
+        throw new Error(
+          'Persistence type can only be sessionStorage or localStorage.',
+        );
+      }
     }
   },
 
@@ -379,7 +359,7 @@ const Acta: IActa = {
       !context ||
       typeof eventKey !== 'string' ||
       typeof callback !== 'function' ||
-      typeof context !== 'object'
+      !isObject(context)
     ) {
       throw new Error(
         'You need to provide a event key, a callback function and a context (a mounted or mounting react component) when subscribing to an event',
@@ -436,7 +416,7 @@ const Acta: IActa = {
       !eventKey ||
       !context ||
       typeof eventKey !== 'string' ||
-      typeof context !== 'object' ||
+      !isObject(context) ||
       !this.events[eventKey]
     ) {
       throw new Error(
@@ -473,8 +453,11 @@ const Acta: IActa = {
      * If this is a shared message, send it to the local storage;
      * it will come back instantly
      */
-    if (isShared) {
-      localStorage.setItem(`__actaEvent__${eventKey}`, JSON.stringify(data));
+    if (isShared && typeof window !== 'undefined') {
+      window.localStorage.setItem(
+        `__actaEvent__${eventKey}`,
+        JSON.stringify(data),
+      );
     }
 
     /**
@@ -516,6 +499,6 @@ const Acta: IActa = {
 /**
  * If Acta has not been initialized, init Acta
  */
-if (!Acta.initialized) Acta.init();
+if (!Acta.initialized && typeof window !== 'undefined') Acta.init();
 
 export default Acta;
