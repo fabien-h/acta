@@ -437,7 +437,7 @@ const Acta: IActa = {
     }
 
     /* Delete the subscribtion */
-    delete this.events[eventKey][context.actaID as string];
+    delete this.events[eventKey][String(context.actaID)];
   },
 
   /**
