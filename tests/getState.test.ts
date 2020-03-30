@@ -17,57 +17,44 @@ describe('Acta getState.test method', () => {
   });
 
   test('When trying to call without a key; we should get an error.', () => {
-    try {
+    expect(() => {
       // Call with no param
       // @ts-ignore
       Acta.getState();
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('You need to provide an existing state key.');
-    }
+    }).toThrowError('You need to provide an existing state key.');
   });
 
   test('When trying to call with a key that does not exist; we should get an error.', () => {
-    try {
+    expect(() => {
       // Call with a non existing key
       // @ts-ignore
       Acta.getState('nonExistingKey');
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('You need to provide an existing state key.');
-    }
+    }).toThrowError('You need to provide an existing state key.');
   });
 
   test('When trying to call with a param that is not a string; we should get an error.', () => {
-    try {
+    expect(() => {
+      // Call with a non existing key
       // @ts-ignore
       Acta.getState([]);
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('You need to provide an existing state key.');
-    }
-    try {
+    }).toThrowError('You need to provide an existing state key.');
+
+    expect(() => {
+      // Call with a non existing key
       // @ts-ignore
       Acta.getState({});
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('You need to provide an existing state key.');
-    }
-    try {
+    }).toThrowError('You need to provide an existing state key.');
+
+    expect(() => {
+      // Call with a non existing key
       // @ts-ignore
       Acta.getState(10);
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('You need to provide an existing state key.');
-    }
-    try {
+    }).toThrowError('You need to provide an existing state key.');
+
+    expect(() => {
+      // Call with a non existing key
       // @ts-ignore
       Acta.getState(new Date());
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('You need to provide an existing state key.');
-    }
+    }).toThrowError('You need to provide an existing state key.');
   });
 });

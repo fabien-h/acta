@@ -16,54 +16,37 @@ describe('Acta setState method', () => {
   });
 
   test('Calling Acta.setState without a state param should throw an error.', () => {
-    try {
+    expect(() => {
       // Try to set an empty object
       // @ts-ignore
       Acta.setState();
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('States must be an object.');
-    }
+    }).toThrowError('States must be an object.');
   });
 
   test('Calling Acta.setState with a state param that is not an object should throw an error.', () => {
-    try {
-      // Try to set an empty object
+    expect(() => {
+      // Try to set an empty array
       // @ts-ignore
       Acta.setState([]);
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe('States must be an object.');
-    }
+    }).toThrowError('States must be an object.');
   });
 
-  test('Calling Acta.setState with an  empty state param should throw an error.', () => {
-    try {
+  test('Calling Acta.setState with an empty object param should throw an error.', () => {
+    expect(() => {
       // Try to set an empty object
+      // @ts-ignore
       Acta.setState({});
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'You need to provide at least a state to set.',
-      );
-    }
+    }).toThrowError('You need to provide at least a state to set.');
   });
 
   test('If an invalid persistence type is set, should throw an error.', () => {
-    try {
+    expect(() => {
       // Try to set a state with an invalid persistence
       // @ts-ignore
       Acta.setState({ a: 1 }, 'invalidPersistence');
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'Invalid persistence. Can be "sessionStorage" or "localStorage".',
-      );
-    }
+    }).toThrowError(
+      'Invalid persistence. Can be "sessionStorage" or "localStorage".',
+    );
   });
 
   test('If a persistence is set to sessionStorage, we should find the state in the local storage', () => {

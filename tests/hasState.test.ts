@@ -20,72 +20,42 @@ describe('Acta hasState method', () => {
   });
 
   test('Calling hasState without key should throw an error.', () => {
-    try {
+    expect(() => {
       // Try to call without a key
       // @ts-ignore
       Acta.hasState();
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'You must pass a string key to Acta.hasState.',
-      );
-    }
+    }).toThrowError('You must pass a string key to Acta.hasState.');
   });
 
   test('Calling hasState with a null key should throw an error.', () => {
-    try {
+    expect(() => {
       // Try to call without a key
       // @ts-ignore
       Acta.hasState(null);
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'You must pass a string key to Acta.hasState.',
-      );
-    }
+    }).toThrowError('You must pass a string key to Acta.hasState.');
   });
 
   test('Calling hasState with an undefined key should throw an error.', () => {
-    try {
-      // Try to call without a key
+    expect(() => {
+      // Try to call with an undefined key
       // @ts-ignore
       Acta.hasState(undefined);
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'You must pass a string key to Acta.hasState.',
-      );
-    }
+    }).toThrowError('You must pass a string key to Acta.hasState.');
   });
 
   test('Calling hasState with a number key should throw an error.', () => {
-    try {
-      // Try to call without a key
+    expect(() => {
+      // Try to call with a number key
       // @ts-ignore
       Acta.hasState(10);
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'You must pass a string key to Acta.hasState.',
-      );
-    }
+    }).toThrowError('You must pass a string key to Acta.hasState.');
   });
 
   test('Calling hasState with an object key should throw an error.', () => {
-    try {
-      // Try to call without a key
+    expect(() => {
+      // Try to call with an object key
       // @ts-ignore
       Acta.hasState({ a: 1 });
-      // Fail test if above expression doesn't throw anything.
-      expect(true).toBe(false);
-    } catch (error) {
-      expect(error.message).toBe(
-        'You must pass a string key to Acta.hasState.',
-      );
-    }
+    }).toThrowError('You must pass a string key to Acta.hasState.');
   });
 });
