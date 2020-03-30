@@ -20,7 +20,7 @@ describe('Acta setState method', () => {
       // Try to set an empty object
       // @ts-ignore
       Acta.setState();
-    }).toThrowError('States must be an object.');
+    }).toThrowError('Acta.setState params => [0]: object with 1+ key');
   });
 
   test('Calling Acta.setState with a state param that is not an object should throw an error.', () => {
@@ -28,7 +28,7 @@ describe('Acta setState method', () => {
       // Try to set an empty array
       // @ts-ignore
       Acta.setState([]);
-    }).toThrowError('States must be an object.');
+    }).toThrowError('Acta.setState params => [0]: object with 1+ key');
   });
 
   test('Calling Acta.setState with an empty object param should throw an error.', () => {
@@ -36,7 +36,7 @@ describe('Acta setState method', () => {
       // Try to set an empty object
       // @ts-ignore
       Acta.setState({});
-    }).toThrowError('You need to provide at least a state to set.');
+    }).toThrowError('Acta.setState params => [0]: object with 1+ key');
   });
 
   test('If an invalid persistence type is set, should throw an error.', () => {
@@ -45,7 +45,7 @@ describe('Acta setState method', () => {
       // @ts-ignore
       Acta.setState({ a: 1 }, 'invalidPersistence');
     }).toThrowError(
-      'Invalid persistence. Can be "sessionStorage" or "localStorage".',
+      'Acta.setState params => [1]: "sessionStorage" | "localStorage".',
     );
   });
 

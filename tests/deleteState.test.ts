@@ -64,39 +64,39 @@ describe('Acta deleteState test method', () => {
     expect(() => {
       //@ts-ignore
       Acta.deleteState('');
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
   });
 
   test('When passing a stateKey that is not a string, should throw an error.', () => {
     expect(() => {
       //@ts-ignore
       Acta.deleteState();
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState(false);
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState({ a: 1 });
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState([]);
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState({});
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState(new Date());
-    }).toThrowError('You need to provide a state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
   });
 
   test('When passing an invalid persistence target, throw an error.', () => {
@@ -104,14 +104,14 @@ describe('Acta deleteState test method', () => {
       //@ts-ignore
       Acta.deleteState('validKey', 'invalidPersistence');
     }).toThrowError(
-      'Persistence type can only be "sessionStorage" or "localStorage".',
+      'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".',
     );
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState('validKey', {});
     }).toThrowError(
-      'Persistence type can only be "sessionStorage" or "localStorage".',
+      'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".',
     );
   });
 });
