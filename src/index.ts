@@ -322,7 +322,7 @@ const Acta: IActa = {
    */
   getState(stateKey) {
     /* Check the parameter */
-    if (typeof stateKey !== 'string' || !this.hasState(stateKey)) {
+    if (typeof stateKey !== 'string') {
       throw new Error('Acta.deleteState params => [0]: string');
     }
 
