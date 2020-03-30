@@ -6,6 +6,7 @@ Super light and dead simple state manager and event dispatcher for react.
 ![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 ![badgen types included](https://badgen.net/npm/types/acta)
 ![badgen mit licence](https://badgen.net/badge/license/MIT/blue)
+![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
 
 # Acta API
 
