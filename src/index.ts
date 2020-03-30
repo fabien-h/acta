@@ -123,7 +123,10 @@ const Acta: IActa = {
       !isObject(context)
     ) {
       throw new Error(
-        'You need to provide a state key, a callback function and a context (a mounted or mounting react component) when subscribing to a state',
+        `Acta.subscribeState params =>
+[0]: string,
+[1]: function,
+[2]: mounted react component`,
       );
     }
 
@@ -198,7 +201,9 @@ const Acta: IActa = {
       !this.states[stateKey]
     ) {
       throw new Error(
-        'You need to provide an existing state key, and a context (a mounted or mounting react component) when unsubscribing from a state',
+        `Acta.unsubscribeState params =>
+[0]: string,
+[2]: mounted react component`,
       );
     }
 
@@ -218,11 +223,8 @@ const Acta: IActa = {
    */
   setState(states, persistenceType) {
     /* Ensure the arguments */
-    if (!isObject(states)) {
-      throw new Error('States must be an object.');
-    }
-    if (Object.keys(states).length === 0) {
-      throw new Error('You need to provide at least a state to set.');
+    if (!isObject(states) || Object.keys(states).length === 0) {
+      throw new Error('Acta.setState params => [0]: object with 1+ key');
     }
 
     /**
@@ -258,7 +260,7 @@ const Acta: IActa = {
           );
         } else {
           throw new Error(
-            'Invalid persistence. Can be "sessionStorage" or "localStorage".',
+            'Acta.setState params => [1]: "sessionStorage" | "localStorage".',
           );
         }
       }
@@ -272,13 +274,9 @@ const Acta: IActa = {
           this.states[stateKey].subscribtions[actaID].callback(value);
         } catch (err) {
           if (
-            !this.states[stateKey].subscribtions[actaID] ||
-            !this.states[stateKey].subscribtions[actaID].context ||
+            !this.states[stateKey].subscribtions[actaID]?.context ||
             !this.states[stateKey].subscribtions[actaID].callback
           ) {
-            console.warn(
-              'The context or the callback of an Acta subscribtion does not exists.',
-            );
             delete this.states[stateKey].subscribtions[actaID];
           }
         }
@@ -294,7 +292,7 @@ const Acta: IActa = {
   deleteState(stateKey, persistenceType) {
     /* Ensure the arguments */
     if (typeof stateKey !== 'string' || stateKey === '') {
-      throw new Error('You need to provide a state key.');
+      throw new Error('Acta.deleteState params => [0]: string');
     }
 
     delete this.states[stateKey];
@@ -310,7 +308,7 @@ const Acta: IActa = {
         localStorage.removeItem(`${actaStoragePrefix}${stateKey}`);
       } else {
         throw new Error(
-          'Persistence type can only be "sessionStorage" or "localStorage".',
+          'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".',
         );
       }
     }
@@ -325,7 +323,7 @@ const Acta: IActa = {
   getState(stateKey) {
     /* Check the parameter */
     if (typeof stateKey !== 'string' || !this.hasState(stateKey)) {
-      throw new Error('You need to provide an existing state key.');
+      throw new Error('Acta.deleteState params => [0]: string');
     }
 
     return (
@@ -345,7 +343,7 @@ const Acta: IActa = {
      * Check param
      */
     if (typeof stateKey !== 'string') {
-      throw new Error('You must pass a string key to Acta.hasState.');
+      throw new Error('Acta.hasState params => [0]: string');
     }
     return this.states.hasOwnProperty(stateKey);
   },
@@ -373,7 +371,10 @@ const Acta: IActa = {
       !isObject(context)
     ) {
       throw new Error(
-        'You need to provide a event key, a callback function and a context (a mounted or mounting react component) when subscribing to an event',
+        `Acta.subscribeEvent params =>
+[0]: string,
+[1]: function,
+[2]: mounted react component`,
       );
     }
 
@@ -429,7 +430,9 @@ const Acta: IActa = {
       !this.events[eventKey]
     ) {
       throw new Error(
-        'You need to provide an existing event name, and a context (a mounted or mounting react component) when unsubscribing from a state',
+        `Acta.subscribeEvent params =>
+[0]: string,
+[2]: mounted react component`,
       );
     }
 
@@ -447,14 +450,9 @@ const Acta: IActa = {
    */
   dispatchEvent(eventKey, data, isShared) {
     /* Ensure the arguments */
-    if (!eventKey || typeof eventKey !== 'string') {
-      throw new Error('You need to provide an event name to set.');
-    }
-
-    /* The event should exist */
-    if (!this.events[eventKey]) {
-      return console.warn(
-        'You tried to dispatch an event that does not exist.',
+    if (typeof eventKey !== 'string' || !this.events[eventKey]) {
+      throw new Error(
+        'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
       );
     }
 
@@ -480,9 +478,6 @@ const Acta: IActa = {
           !this.events[eventKey][actaID].context ||
           !this.events[eventKey][actaID].callback
         ) {
-          console.warn(
-            'The context or the callback of an Acta event does not exists.',
-          );
           delete this.events[eventKey][actaID];
         }
       }
