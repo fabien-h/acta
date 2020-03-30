@@ -327,8 +327,8 @@ const Acta: IActa = {
     }
 
     return (
-      this.states[stateKey].value ||
-      this.states[stateKey].defaultValue ||
+      this.states[stateKey]?.value ||
+      this.states[stateKey]?.defaultValue ||
       undefined
     );
   },
