@@ -22,8 +22,8 @@
     "dev": "rimraf dist && concurrently \"yarn run build:dev-watch\" \"jest --watch --config ./jest.config.js\" --kill-others --restartTries 2 --restartDelay 200",
     "release": "yarn run build && release-it",
     "lint": "eslint src/*.ts --cache",
-    "test": "jest --verbose",
-    "test:watch": "jest --watch --verbose"
+    "test": "jest --verbose --runInBand",
+    "test:watch": "jest --watch --verbose --runInBand"
   },
   "lint-staged": {
     "src/*.ts": [
