@@ -292,11 +292,11 @@ const Acta: IActa = {
    */
   deleteState(stateKey, persistenceType) {
     /* Ensure the arguments */
-    if (!stateKey || typeof stateKey !== 'string') {
+    if (typeof stateKey !== 'string') {
       throw new Error('You need to provide a state key.');
     }
 
-    this.setState({ [stateKey]: null });
+    delete this.states[stateKey];
 
     /**
      * If the persistance type is set and we have a window, remove the
