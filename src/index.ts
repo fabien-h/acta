@@ -346,7 +346,7 @@ const Acta: IActa = {
     if (typeof stateKey !== 'string') {
       throw new Error('You must pass a string key to Acta.hasState.');
     }
-    return !!this.states[stateKey];
+    return this.states.hasOwnProperty(stateKey);
   },
 
   /**
