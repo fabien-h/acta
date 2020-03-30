@@ -68,7 +68,7 @@ export interface IActa {
     eventKey: string,
     callback: (valueToReturn: any) => void,
     context: IComponentWithID,
-  ) => void;
+  ) => void | boolean;
 
   unsubscribeEvent: (eventKey: string, context: IComponentWithID) => void;
 

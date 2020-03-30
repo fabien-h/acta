@@ -45,24 +45,17 @@ describe('Acta unsubscribeEvent.test method', () => {
 
     expect(() => {
       // @ts-ignore
-      Acta.unsubscribeEvent({});
+      Acta.unsubscribeEvent({}, {});
     }).toThrowError(paramError);
 
     expect(() => {
       // @ts-ignore
-      Acta.unsubscribeEvent(null);
+      Acta.unsubscribeEvent(null, {});
     }).toThrowError(paramError);
 
     expect(() => {
       // @ts-ignore
-      Acta.unsubscribeEvent(undefined);
-    }).toThrowError(paramError);
-  });
-
-  test('If the event key passed does not exist in Acta.event, throw an error.', () => {
-    expect(() => {
-      // @ts-ignore
-      Acta.unsubscribeEvent('nonExistingKey');
+      Acta.unsubscribeEvent(undefined, {});
     }).toThrowError(paramError);
   });
 

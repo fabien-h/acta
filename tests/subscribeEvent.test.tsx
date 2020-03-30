@@ -1,10 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import App, { addElementsInActa, ACTA_STATE_ELEMENTS_LIST } from './testApp';
+import App, { dispatchEventInActa, ACTA_EVENT_KEY_MESSAGE } from './testApp';
 import Acta from '../src';
 import { IComponentWithID } from '../src/types';
 
-const paramsErrorMessage = `Acta.subscribeState params =>
+const paramsErrorMessage = `Acta.subscribeEvent params =>
 [0]: string,
 [1]: function,
 [2]: mounted react component`;
@@ -13,48 +13,44 @@ describe('Acta subscribeState.test method', () => {
   /**
    * Feature
    */
-  test('When a state change, the callback is triggered in the component.', () => {
+  test('When an event is dispatched, the callback is triggered in the component.', () => {
     const app = renderer.create(<App />);
 
     // Render the app with an empty elements array
     let tree = app.toJSON();
-    // The ul child should have no children
-    let children = tree?.children?.find(
+    // The p#message should not be displayed
+    expect(
       // @ts-ignore
-      child => child.props.id === 'listContainer',
-      // @ts-ignore
-    )?.children;
-    expect(children).toBe(null);
+      tree.children.find(child => child.props.id === 'message'),
+    ).toBeUndefined();
     // Snapshot the resulting markup
     expect(tree).toMatchSnapshot();
 
     // Set the value in Acta state
     // It should trigger the callback
-    addElementsInActa();
+    dispatchEventInActa();
 
     // Render the app with an elements array containing strings now
     tree = app.toJSON();
-    // The ul child should have children now
-    children = tree?.children?.find(
+    // The p#message should not be displayed
+    expect(
       // @ts-ignore
-      child => child.props.id === 'listContainer',
-      // @ts-ignore
-    )?.children;
-    expect(Array.isArray(children)).toBe(true);
-    expect(children.length > 0).toBe(true);
+      tree.children.find(child => child.props.id === 'message'),
+    ).toBeDefined();
     // Snapshot the resulting markup
     expect(tree).toMatchSnapshot();
   });
 
-  test('When a component has already subscribed to a state, a new subscritpion return false', () => {
-    const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
-    const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]].context;
+  test('When a component has already subscribed to an event, a new subscritpion return false', () => {
+    const actaEventSubs = Acta.events[ACTA_EVENT_KEY_MESSAGE];
+    const alreadyEventSubscribedContext =
+      actaEventSubs[Object.keys(actaEventSubs)[0]].context;
 
     expect(
-      Acta.subscribeState(
-        ACTA_STATE_ELEMENTS_LIST,
+      Acta.subscribeEvent(
+        ACTA_EVENT_KEY_MESSAGE,
         () => true,
-        alreadySubscribedContext,
+        alreadyEventSubscribedContext,
       ),
     ).toBe(false);
   });
@@ -65,22 +61,22 @@ describe('Acta subscribeState.test method', () => {
   test('When the stateKey param is not a valid string, should throw an error', () => {
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState(null, () => true, {} as IComponentWithID);
+      Acta.subscribeEvent(null, () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('', () => true, {} as IComponentWithID);
+      Acta.subscribeEvent('', () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState([], () => true, {} as IComponentWithID);
+      Acta.subscribeEvent([], () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState({}, () => true, {} as IComponentWithID);
+      Acta.subscribeEvent({}, () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      Acta.subscribeState(
+      Acta.subscribeEvent(
         // @ts-ignore
         () => true,
         // @ts-ignore
@@ -94,42 +90,42 @@ describe('Acta subscribeState.test method', () => {
   test('When the callback param is not a valid function, should throw an error', () => {
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', '', {} as IComponentWithID);
+      Acta.subscribeEvent('testKey', '', {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', null, {} as IComponentWithID);
+      Acta.subscribeEvent('testKey', null, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', undefined, {} as IComponentWithID);
+      Acta.subscribeEvent('testKey', undefined, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', [], {} as IComponentWithID);
+      Acta.subscribeEvent('testKey', [], {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', {}, {} as IComponentWithID);
+      Acta.subscribeEvent('testKey', {}, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
   });
 
   test('When the callback param is not a valid function, should throw an error', () => {
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', () => true);
+      Acta.subscribeEvent('testKey', () => true);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', () => true, '');
+      Acta.subscribeEvent('testKey', () => true, '');
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', () => true, []);
+      Acta.subscribeEvent('testKey', () => true, []);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', () => true, null);
+      Acta.subscribeEvent('testKey', () => true, null);
     }).toThrowError(paramsErrorMessage);
   });
 });

@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Acta subscribeState.test method When an event is dispatched, the callback is triggered in the component. 1`] = `
+<div>
+  <h1>
+    Elements
+  </h1>
+  <ul
+    id="listContainer"
+  />
+</div>
+`;
+
+exports[`Acta subscribeState.test method When an event is dispatched, the callback is triggered in the component. 2`] = `
+<div>
+  <h1>
+    Elements
+  </h1>
+  <ul
+    id="listContainer"
+  />
+  <p
+    id="message"
+  >
+    A message from an Acta event.
+  </p>
+</div>
+`;

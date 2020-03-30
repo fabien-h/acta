@@ -161,9 +161,6 @@ const Acta: IActa = {
         this.unsubscribeState(stateKey, context);
         oldComponentWillUnmount.bind(context)();
       };
-    } else {
-      context.componentWillUnmount = () =>
-        this.unsubscribeState(stateKey, context);
     }
 
     /**
@@ -197,11 +194,7 @@ const Acta: IActa = {
    */
   unsubscribeState(stateKey, context) {
     /* Ensure the arguments */
-    if (
-      typeof stateKey !== 'string' ||
-      !isObject(context) ||
-      !this.states[stateKey]
-    ) {
+    if (typeof stateKey !== 'string' || !isObject(context)) {
       throw new Error(
         `Acta.unsubscribeState params =>
 [0]: string,
@@ -210,7 +203,8 @@ const Acta: IActa = {
     }
 
     /* Delete the subscribtion */
-    delete this.states[stateKey].subscribtions[context.actaID as string];
+    if (this.states[stateKey])
+      delete this.states[stateKey].subscribtions[context.actaID as string];
   },
 
   /**
@@ -365,9 +359,10 @@ const Acta: IActa = {
    * wich the subscribtion is made => that will be needed to unsubscribe
    * when the compnent woll unmount
    */
-  subscribeEvent(eventKey, callback, context): void {
+  subscribeEvent(eventKey, callback, context) {
     /* Ensure the arguments */
     if (
+      eventKey === '' ||
       typeof eventKey !== 'string' ||
       typeof callback !== 'function' ||
       !isObject(context)
@@ -387,7 +382,9 @@ const Acta: IActa = {
     this.ensureActaID(context);
 
     /* If this context already listen to that event already exists, stop here */
-    if (this.events[eventKey][context.actaID as string]) return;
+    if (this.events[eventKey][context.actaID as string]) {
+      return false;
+    }
 
     /**
      * Extend the componentWillUnmount hook on the context
@@ -401,10 +398,6 @@ const Acta: IActa = {
         this.unsubscribeEvent(eventKey, context);
         oldComponentWillUnmount.bind(context)();
       };
-    } else {
-      context.componentWillUnmount = () => {
-        this.unsubscribeEvent(eventKey, context);
-      };
     }
 
     /**
@@ -415,6 +408,7 @@ const Acta: IActa = {
       callback,
       context,
     };
+    return;
   },
 
   /**
@@ -426,11 +420,7 @@ const Acta: IActa = {
    */
   unsubscribeEvent(eventKey, context) {
     /* Ensure the arguments */
-    if (
-      typeof eventKey !== 'string' ||
-      !isObject(context) ||
-      !this.events[eventKey]
-    ) {
+    if (typeof eventKey !== 'string' || !isObject(context)) {
       throw new Error(
         `Acta.subscribeEvent params =>
 [0]: string,
@@ -439,7 +429,8 @@ const Acta: IActa = {
     }
 
     /* Delete the subscribtion */
-    delete this.events[eventKey][String(context.actaID)];
+    if (this.events[eventKey])
+      delete this.events[eventKey][String(context.actaID)];
   },
 
   /**
@@ -452,7 +443,7 @@ const Acta: IActa = {
    */
   dispatchEvent(eventKey, data, isShared) {
     /* Ensure the arguments */
-    if (typeof eventKey !== 'string' || !this.events[eventKey]) {
+    if (typeof eventKey !== 'string') {
       throw new Error(
         'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
       );
@@ -472,7 +463,7 @@ const Acta: IActa = {
     /**
      * Call each subscriber callback
      */
-    Object.keys(this.events[eventKey]).forEach(actaID => {
+    Object.keys(this.events[eventKey] || {}).forEach(actaID => {
       try {
         this.events[eventKey][actaID].callback(data || null);
       } catch (err) {
