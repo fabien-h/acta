@@ -2,13 +2,18 @@
 
 Super light and dead simple state manager and event dispatcher for react.
 
+![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)
+![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
+![badgen types included](https://badgen.net/npm/types/acta)
+![badgen mit licence](https://badgen.net/badge/license/MIT/blue)
+
 # Acta API
 
 In Acta, you can store string, numbers, objects, and arrays. Since all values stored have to be compatible with the local storage (string ony) Maps, Sets, functions... won’t work.
 
 There is only one global store. Since this is an indexed object, there are no performance issue. Even with big objects and many keys.
 
-You don't need tooling to use Acta. Just go in your console, `Acta.states` will give you what you need to see. `Acta.setState` and `Acta.dispatchEvent` can be used directly in hte console.
+You don't need tooling to debug Acta. In your browser developper tools, `Acta.states` will let you access to all the informations you need. The store methods like `Acta.setState` or `Acta.dispatchEvent` are available in the console.
 
 ## Acta.subscribeState
 

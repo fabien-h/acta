@@ -6,15 +6,15 @@ export interface IState {
   value: TActaValue;
   defaultValue: TActaValue;
   subscribtions: {
-    [key: string]: {
+    [contextID: string]: {
       callback: (value: TActaValue) => void;
       context: IComponentWithID;
     };
   };
 }
 
-export interface IEvents {
-  [key: string]: {
+export interface IEvent {
+  [contextID: string]: {
     callback: (value: TActaValue) => void;
     context: IComponentWithID;
   };
@@ -28,15 +28,16 @@ export interface IActa {
   initialized: boolean;
 
   states: {
-    [key: string]: IState;
+    [stateKey: string]: IState;
   };
   events: {
-    [key: string]: IEvents;
+    [eventKey: string]: IEvent;
   };
   actaIDs: Array<string>;
 
-  init: () => void;
-  ensureActaID: (context: IComponentWithID) => string | boolean;
+  init: (userProvidedWindow?: Window) => void;
+
+  ensureActaID: (context: IComponentWithID) => boolean | string;
 
   subscribeState: (
     stateKey: string,
@@ -60,14 +61,14 @@ export interface IActa {
 
   deleteState: (
     stateKey: string,
-    persistenceType: 'localStorage' | 'sessionStorage',
+    persistenceType?: 'localStorage' | 'sessionStorage',
   ) => void;
 
   subscribeEvent: (
     eventKey: string,
     callback: (valueToReturn: any) => void,
     context: IComponentWithID,
-  ) => void;
+  ) => void | boolean;
 
   unsubscribeEvent: (eventKey: string, context: IComponentWithID) => void;
 
