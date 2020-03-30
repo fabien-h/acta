@@ -48,38 +48,32 @@ describe('Acta hasState method', () => {
       // Try to call without a key
       // @ts-ignore
       Acta.hasState();
-    }).toThrowError('You must pass a string key to Acta.hasState.');
+    }).toThrowError('Acta.hasState params => [0]: string');
   });
 
-  test('Calling hasState with a null key should throw an error.', () => {
+  test('Calling hasState with a non string key should throw an error.', () => {
     expect(() => {
-      // Try to call without a key
+      // Try to call with null
       // @ts-ignore
       Acta.hasState(null);
-    }).toThrowError('You must pass a string key to Acta.hasState.');
-  });
+    }).toThrowError('Acta.hasState params => [0]: string');
 
-  test('Calling hasState with an undefined key should throw an error.', () => {
     expect(() => {
-      // Try to call with an undefined key
+      // Try to call with undefined
       // @ts-ignore
       Acta.hasState(undefined);
-    }).toThrowError('You must pass a string key to Acta.hasState.');
-  });
+    }).toThrowError('Acta.hasState params => [0]: string');
 
-  test('Calling hasState with a number key should throw an error.', () => {
     expect(() => {
-      // Try to call with a number key
+      // Try to call with a number
       // @ts-ignore
       Acta.hasState(10);
-    }).toThrowError('You must pass a string key to Acta.hasState.');
-  });
+    }).toThrowError('Acta.hasState params => [0]: string');
 
-  test('Calling hasState with an object key should throw an error.', () => {
     expect(() => {
-      // Try to call with an object key
+      // Try to call with an object
       // @ts-ignore
       Acta.hasState({ a: 1 });
-    }).toThrowError('You must pass a string key to Acta.hasState.');
+    }).toThrowError('Acta.hasState params => [0]: string');
   });
 });

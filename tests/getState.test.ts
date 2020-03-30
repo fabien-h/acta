@@ -35,7 +35,7 @@ describe('Acta getState.test method', () => {
       // Call with no param
       // @ts-ignore
       Acta.getState();
-    }).toThrowError('You need to provide an existing state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
   });
 
   test('When trying to call with a param that is not a string; we should get an error.', () => {
@@ -43,24 +43,24 @@ describe('Acta getState.test method', () => {
       // Call with a non existing key
       // @ts-ignore
       Acta.getState([]);
-    }).toThrowError('You need to provide an existing state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       // Call with a non existing key
       // @ts-ignore
       Acta.getState({});
-    }).toThrowError('You need to provide an existing state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       // Call with a non existing key
       // @ts-ignore
       Acta.getState(10);
-    }).toThrowError('You need to provide an existing state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       // Call with a non existing key
       // @ts-ignore
       Acta.getState(new Date());
-    }).toThrowError('You need to provide an existing state key.');
+    }).toThrowError('Acta.deleteState params => [0]: string');
   });
 });
