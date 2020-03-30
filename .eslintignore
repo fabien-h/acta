@@ -3,3 +3,6 @@ dist/
 coverage/
 **/*.json
 package.json
+tslint.json
+tsconfig.json
+tsconfig.spec.json
