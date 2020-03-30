@@ -6,15 +6,15 @@ export interface IState {
   value: TActaValue;
   defaultValue: TActaValue;
   subscribtions: {
-    [key: string]: {
+    [contextID: string]: {
       callback: (value: TActaValue) => void;
       context: IComponentWithID;
     };
   };
 }
 
-export interface IEvents {
-  [key: string]: {
+export interface IEvent {
+  [contextID: string]: {
     callback: (value: TActaValue) => void;
     context: IComponentWithID;
   };
@@ -28,10 +28,10 @@ export interface IActa {
   initialized: boolean;
 
   states: {
-    [key: string]: IState;
+    [stateKey: string]: IState;
   };
   events: {
-    [key: string]: IEvents;
+    [eventKey: string]: IEvent;
   };
   actaIDs: Array<string>;
 
