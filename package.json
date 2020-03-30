@@ -25,6 +25,11 @@
     "test": "jest --verbose --runInBand --collectCoverage",
     "test:watch": "jest --watch --verbose --runInBand --collectCoverage"
   },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: bump version for release: %s"
+    }
+  },
   "lint-staged": {
     "src/*.ts": [
       "eslint --cache --fix"
