@@ -1,5 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import renderer from 'react-test-renderer';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import App, { addElementsInActa, ACTA_STATE_ELEMENTS_LIST } from './testApp';
 import Acta from '../src';
 import { IComponentWithID } from '../src/types';
