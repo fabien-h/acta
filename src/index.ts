@@ -118,6 +118,7 @@ const Acta: IActa = {
   subscribeState(stateKey, callback, context, defaultValue) {
     /* Ensure the arguments */
     if (
+      stateKey === '' ||
       typeof stateKey !== 'string' ||
       typeof callback !== 'function' ||
       !isObject(context)
