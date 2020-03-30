@@ -1,4 +1,4 @@
-const { isObject } = require('../src/isObject.ts');
+import { isObject } from '../src/isObject';
 
 describe('Test the "isObject" utility', () => {
   test('Object litterals should return true.', () => {

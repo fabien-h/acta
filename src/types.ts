@@ -37,7 +37,7 @@ export interface IActa {
 
   init: (userProvidedWindow?: Window) => void;
 
-  ensureActaID: (context: IComponentWithID) => string | boolean;
+  ensureActaID: (context: IComponentWithID) => boolean | string;
 
   subscribeState: (
     stateKey: string,
@@ -61,7 +61,7 @@ export interface IActa {
 
   deleteState: (
     stateKey: string,
-    persistenceType: 'localStorage' | 'sessionStorage',
+    persistenceType?: 'localStorage' | 'sessionStorage',
   ) => void;
 
   subscribeEvent: (
