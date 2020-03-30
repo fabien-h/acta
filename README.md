@@ -1,5 +1,7 @@
 # Acta
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)](https://app.codacy.com/manual/fabien-h/acta?utm_source=github.com&utm_medium=referral&utm_content=fabien-h/acta&utm_campaign=Badge_Grade_Dashboard)
+
 Super light and dead simple state manager and event dispatcher for react.
 
 ![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)
