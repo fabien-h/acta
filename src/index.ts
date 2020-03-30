@@ -144,8 +144,9 @@ const Acta: IActa = {
      * If a subscribtion for this context on this state
      * already exists, stop here
      */
-    if (this.states[stateKey].subscribtions[context.actaID as string])
+    if (this.states[stateKey].subscribtions[context.actaID as string]) {
       return false;
+    }
 
     /**
      * Extend the componentWillUnmount hook on the context
