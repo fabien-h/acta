@@ -118,9 +118,6 @@ const Acta: IActa = {
   subscribeState(stateKey, callback, context, defaultValue) {
     /* Ensure the arguments */
     if (
-      !stateKey ||
-      !callback ||
-      !context ||
       typeof stateKey !== 'string' ||
       typeof callback !== 'function' ||
       !isObject(context)
@@ -196,8 +193,6 @@ const Acta: IActa = {
   unsubscribeState(stateKey, context) {
     /* Ensure the arguments */
     if (
-      !stateKey ||
-      !context ||
       typeof stateKey !== 'string' ||
       !isObject(context) ||
       !this.states[stateKey]
@@ -252,9 +247,15 @@ const Acta: IActa = {
       /* If persistence is configured and we have a window, store the value */
       if (isInDOM && persistenceType) {
         if (persistenceType === 'localStorage') {
-          localStorage.setItem(`__acta__${stateKey}`, JSON.stringify(value));
+          localStorage.setItem(
+            `${actaStoragePrefix}${stateKey}`,
+            JSON.stringify(value),
+          );
         } else if (persistenceType === 'sessionStorage') {
-          sessionStorage.setItem(`__acta__${stateKey}`, JSON.stringify(value));
+          sessionStorage.setItem(
+            `${actaStoragePrefix}${stateKey}`,
+            JSON.stringify(value),
+          );
         } else {
           throw new Error(
             'Invalid persistence. Can be "sessionStorage" or "localStorage".',
@@ -304,9 +305,9 @@ const Acta: IActa = {
      */
     if (isInDOM && persistenceType) {
       if (persistenceType === 'sessionStorage') {
-        sessionStorage.removeItem(`__acta__${stateKey}`);
+        sessionStorage.removeItem(`${actaStoragePrefix}${stateKey}`);
       } else if (persistenceType === 'localStorage') {
-        localStorage.removeItem(`__acta__${stateKey}`);
+        localStorage.removeItem(`${actaStoragePrefix}${stateKey}`);
       } else {
         throw new Error(
           'Persistence type can only be "sessionStorage" or "localStorage".',
@@ -367,9 +368,6 @@ const Acta: IActa = {
   subscribeEvent(eventKey, callback, context): void {
     /* Ensure the arguments */
     if (
-      !eventKey ||
-      !callback ||
-      !context ||
       typeof eventKey !== 'string' ||
       typeof callback !== 'function' ||
       !isObject(context)
@@ -426,8 +424,6 @@ const Acta: IActa = {
   unsubscribeEvent(eventKey, context) {
     /* Ensure the arguments */
     if (
-      !eventKey ||
-      !context ||
       typeof eventKey !== 'string' ||
       !isObject(context) ||
       !this.events[eventKey]
