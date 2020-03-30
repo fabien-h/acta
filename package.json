@@ -22,6 +22,7 @@
     "dev": "rimraf dist && concurrently \"yarn run build:dev-watch\" \"jest --watch --config ./jest.config.js\" --kill-others --restartTries 2 --restartDelay 200",
     "release": "yarn run build && release-it",
     "lint": "eslint src/*.ts --cache",
+    "lint-md": "remark .",
     "test": "jest --verbose --runInBand --collectCoverage",
     "test:watch": "jest --watch --verbose --runInBand --collectCoverage"
   },
@@ -33,6 +34,9 @@
   "lint-staged": {
     "src/*.ts": [
       "eslint --cache --fix"
+    ],
+    "*.md": [
+      "remark"
     ]
   },
   "husky": {
@@ -40,6 +44,15 @@
       "pre-commit": "yarn lint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
+  },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-lint-recommended",
+      [
+        "remark-lint-list-item-indent",
+        false
+      ]
+    ]
   },
   "repository": {
     "type": "git",
@@ -77,6 +90,9 @@
     "lint-staged": "^10.0.9",
     "react-test-renderer": "^16.13.1",
     "release-it": "^13.5.0",
+    "remark-cli": "^8.0.0",
+    "remark-lint": "^7.0.0",
+    "remark-preset-lint-recommended": "^4.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.2.0",
     "rollup-plugin-commonjs": "^10.1.0",
