@@ -61,7 +61,7 @@ export interface IActa {
 
   deleteState: (
     stateKey: string,
-    persistenceType: 'localStorage' | 'sessionStorage',
+    persistenceType?: 'localStorage' | 'sessionStorage',
   ) => void;
 
   subscribeEvent: (

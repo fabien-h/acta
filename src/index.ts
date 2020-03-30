@@ -292,7 +292,7 @@ const Acta: IActa = {
    */
   deleteState(stateKey, persistenceType) {
     /* Ensure the arguments */
-    if (typeof stateKey !== 'string') {
+    if (typeof stateKey !== 'string' || stateKey === '') {
       throw new Error('You need to provide a state key.');
     }
 
@@ -309,7 +309,7 @@ const Acta: IActa = {
         localStorage.removeItem(`__acta__${stateKey}`);
       } else {
         throw new Error(
-          'Persistence type can only be sessionStorage or localStorage.',
+          'Persistence type can only be "sessionStorage" or "localStorage".',
         );
       }
     }
