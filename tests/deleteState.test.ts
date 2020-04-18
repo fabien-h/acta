@@ -27,7 +27,7 @@ describe('Acta deleteState test method', () => {
       {
         [stateKey]: stateValue,
       },
-      'localStorage',
+      'localStorage'
     );
     // Check that the key exists in Acta and in the local storage
     expect(Acta.hasState(stateKey)).toBe(true);
@@ -45,7 +45,7 @@ describe('Acta deleteState test method', () => {
       {
         [stateKey]: stateValue,
       },
-      'sessionStorage',
+      'sessionStorage'
     );
     // Check that the key exists in Acta and in the session storage
     expect(Acta.hasState(stateKey)).toBe(true);
@@ -104,14 +104,14 @@ describe('Acta deleteState test method', () => {
       //@ts-ignore
       Acta.deleteState('validKey', 'invalidPersistence');
     }).toThrowError(
-      'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".',
+      'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".'
     );
 
     expect(() => {
       //@ts-ignore
       Acta.deleteState('validKey', {});
     }).toThrowError(
-      'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".',
+      'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".'
     );
   });
 });

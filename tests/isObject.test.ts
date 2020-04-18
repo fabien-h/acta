@@ -6,7 +6,7 @@ describe('Test the "isObject" utility', () => {
     expect(
       isObject({
         a: 1,
-      }),
+      })
     ).toBe(true);
   });
 

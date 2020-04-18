@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import renderer from 'react-test-renderer';
+import ReactTestUtils from 'react-dom/test-utils';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import App, { addElementsInActa, ACTA_STATE_ELEMENTS_LIST } from './testApp';
 import Acta from '../src';
@@ -23,7 +24,7 @@ describe('Acta subscribeState.test method', () => {
     // The ul child should have no children
     let children = tree?.children?.find(
       // @ts-ignore
-      child => child.props.id === 'listContainer',
+      (child) => child.props.id === 'listContainer',
       // @ts-ignore
     )?.children;
     expect(children).toBe(null);
@@ -34,12 +35,18 @@ describe('Acta subscribeState.test method', () => {
     // It should trigger the callback
     addElementsInActa();
 
+    console.log(tree);
+
+    const app2 = ReactTestUtils.renderIntoDocument(<App />);
+
+    console.log(app2);
+
     // Render the app with an elements array containing strings now
     tree = app.toJSON();
     // The ul child should have children now
     children = tree?.children?.find(
       // @ts-ignore
-      child => child.props.id === 'listContainer',
+      (child) => child.props.id === 'listContainer',
       // @ts-ignore
     )?.children;
     expect(Array.isArray(children)).toBe(true);

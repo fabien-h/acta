@@ -5,11 +5,11 @@ describe('Acta.init method', () => {
     // Inject data in storages
     localStorage.setItem(
       '__acta__testLocalKey',
-      JSON.stringify('testLocalValue'),
+      JSON.stringify('testLocalValue')
     );
     sessionStorage.setItem(
       '__acta__testSessionKey',
-      JSON.stringify('testSessionValue'),
+      JSON.stringify('testSessionValue')
     );
 
     // Set initialized to false to be able to re-init Acta
@@ -30,7 +30,7 @@ describe('Acta.init method', () => {
       new StorageEvent('storage', {
         key: 'test_key',
         newValue: 'test_value',
-      }),
+      })
     );
   });
 });
