@@ -45,7 +45,7 @@ describe('Acta setState method', () => {
       // @ts-ignore
       Acta.setState({ a: 1 }, 'invalidPersistence');
     }).toThrowError(
-      'Acta.setState params => [1]: "sessionStorage" | "localStorage".',
+      'Acta.setState params => [1]: "sessionStorage" | "localStorage".'
     );
   });
 
