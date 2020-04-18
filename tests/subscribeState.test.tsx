@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import renderer from 'react-test-renderer';
-import ReactTestUtils from 'react-dom/test-utils';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import App, { addElementsInActa, ACTA_STATE_ELEMENTS_LIST } from './testApp';
 import Acta from '../src';
@@ -24,7 +23,7 @@ describe('Acta subscribeState.test method', () => {
     // The ul child should have no children
     let children = tree?.children?.find(
       // @ts-ignore
-      (child) => child.props.id === 'listContainer',
+      (child) => child.props.id === 'listContainer'
       // @ts-ignore
     )?.children;
     expect(children).toBe(null);
@@ -35,18 +34,12 @@ describe('Acta subscribeState.test method', () => {
     // It should trigger the callback
     addElementsInActa();
 
-    console.log(tree);
-
-    const app2 = ReactTestUtils.renderIntoDocument(<App />);
-
-    console.log(app2);
-
     // Render the app with an elements array containing strings now
     tree = app.toJSON();
     // The ul child should have children now
     children = tree?.children?.find(
       // @ts-ignore
-      (child) => child.props.id === 'listContainer',
+      (child) => child.props.id === 'listContainer'
       // @ts-ignore
     )?.children;
     expect(Array.isArray(children)).toBe(true);
@@ -63,9 +56,27 @@ describe('Acta subscribeState.test method', () => {
       Acta.subscribeState(
         ACTA_STATE_ELEMENTS_LIST,
         () => true,
-        alreadySubscribedContext,
-      ),
+        alreadySubscribedContext
+      )
     ).toBe(false);
+  });
+
+  test('When a component unmounts, it should not be in the acta subs anymore', () => {
+    const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
+    const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]].context;
+
+    // We should have one sub
+    expect(Object.keys(actaSubs).length).toBe(1);
+
+    if (
+      alreadySubscribedContext &&
+      alreadySubscribedContext.componentWillUnmount
+    ) {
+      alreadySubscribedContext?.componentWillUnmount();
+    }
+
+    // We should not has subs anymore
+    expect(Object.keys(actaSubs).length).toBe(0);
   });
 
   /**
@@ -95,7 +106,7 @@ describe('Acta subscribeState.test method', () => {
         // @ts-ignore
         () => true,
         // @ts-ignore
-        {} as IComponentWithID,
+        {} as IComponentWithID
       );
     }).toThrowError(paramsErrorMessage);
   });
@@ -140,5 +151,19 @@ describe('Acta subscribeState.test method', () => {
       // @ts-ignore
       Acta.subscribeState('testKey', () => true, null);
     }).toThrowError(paramsErrorMessage);
+  });
+
+  test('When the initial value is a circular object, should return false', () => {
+    const circularObject: { item?: object } = {};
+    circularObject.item = circularObject;
+
+    expect(
+      Acta.subscribeState(
+        'testKey',
+        () => true,
+        {} as IComponentWithID,
+        circularObject
+      )
+    ).toBe(false);
   });
 });

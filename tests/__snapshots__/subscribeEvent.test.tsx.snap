@@ -8,6 +8,11 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
   <ul
     id="listContainer"
   />
+  <p
+    id="stateWithInitialValue"
+  >
+    THIS IS AN INITIAL VALUE
+  </p>
 </div>
 `;
 
@@ -23,6 +28,11 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
     id="message"
   >
     A message from an Acta event.
+  </p>
+  <p
+    id="stateWithInitialValue"
+  >
+    THIS IS AN INITIAL VALUE
   </p>
 </div>
 `;

@@ -44,7 +44,7 @@ const Acta: IActa = {
      */
     window.addEventListener(
       'storage',
-      event => {
+      (event) => {
         if (
           event.key &&
           event.key.slice(0, actaStoragePrefixLength) === actaStoragePrefix
@@ -56,7 +56,7 @@ const Acta: IActa = {
           ) {
             this.setState({
               [event.key.slice(actaStoragePrefixLength)]: JSON.parse(
-                event.newValue,
+                event.newValue
               ),
             });
           } else {
@@ -71,11 +71,11 @@ const Acta: IActa = {
           this.dispatchEvent(
             event.key.slice(actaEventPrefixLength),
             event.newValue ? JSON.parse(event.newValue) : event.newValue,
-            false,
+            false
           );
         }
       },
-      false,
+      false
     );
 
     /**
@@ -127,7 +127,7 @@ const Acta: IActa = {
         `Acta.subscribeState params =>
 [0]: string,
 [1]: function,
-[2]: mounted react component`,
+[2]: mounted react component`
       );
     }
 
@@ -136,7 +136,7 @@ const Acta: IActa = {
 
     /* If this state does not already exists, creates it */
     this.states[stateKey] = this.states[stateKey] || {
-      value: defaultValue || undefined,
+      value: undefined,
       defaultValue: defaultValue || undefined,
       subscribtions: {},
     };
@@ -198,7 +198,7 @@ const Acta: IActa = {
       throw new Error(
         `Acta.unsubscribeState params =>
 [0]: string,
-[2]: mounted react component`,
+[2]: mounted react component`
       );
     }
 
@@ -247,16 +247,16 @@ const Acta: IActa = {
         if (persistenceType === 'localStorage') {
           localStorage.setItem(
             `${actaStoragePrefix}${stateKey}`,
-            JSON.stringify(value),
+            JSON.stringify(value)
           );
         } else if (persistenceType === 'sessionStorage') {
           sessionStorage.setItem(
             `${actaStoragePrefix}${stateKey}`,
-            JSON.stringify(value),
+            JSON.stringify(value)
           );
         } else {
           throw new Error(
-            'Acta.setState params => [1]: "sessionStorage" | "localStorage".',
+            'Acta.setState params => [1]: "sessionStorage" | "localStorage".'
           );
         }
       }
@@ -265,18 +265,20 @@ const Acta: IActa = {
        * Try to dispatch to all subscribers & kill the
        * subscribtion if the subscriber has been destroyed
        */
-      Object.keys(this.states[stateKey].subscribtions || {}).forEach(actaID => {
-        try {
-          this.states[stateKey].subscribtions[actaID].callback(value);
-        } catch (err) {
-          if (
-            !this.states[stateKey].subscribtions[actaID]?.context ||
-            !this.states[stateKey].subscribtions[actaID].callback
-          ) {
-            delete this.states[stateKey].subscribtions[actaID];
+      if (this.states[stateKey].subscribtions) {
+        Object.keys(this.states[stateKey].subscribtions).forEach((actaID) => {
+          try {
+            this.states[stateKey].subscribtions[actaID].callback(value);
+          } catch (err) {
+            if (
+              !this.states[stateKey].subscribtions[actaID]?.context ||
+              !this.states[stateKey].subscribtions[actaID].callback
+            ) {
+              delete this.states[stateKey].subscribtions[actaID];
+            }
           }
-        }
-      });
+        });
+      }
     }
   },
 
@@ -304,7 +306,7 @@ const Acta: IActa = {
         localStorage.removeItem(`${actaStoragePrefix}${stateKey}`);
       } else {
         throw new Error(
-          'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".',
+          'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".'
         );
       }
     }
@@ -371,7 +373,7 @@ const Acta: IActa = {
         `Acta.subscribeEvent params =>
 [0]: string,
 [1]: function,
-[2]: mounted react component`,
+[2]: mounted react component`
       );
     }
 
@@ -424,7 +426,7 @@ const Acta: IActa = {
       throw new Error(
         `Acta.subscribeEvent params =>
 [0]: string,
-[2]: mounted react component`,
+[2]: mounted react component`
       );
     }
 
@@ -445,7 +447,7 @@ const Acta: IActa = {
     /* Ensure the arguments */
     if (typeof eventKey !== 'string') {
       throw new Error(
-        'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
+        'Acta.dispatchEvent params => [0]: string & must exist in Acta.events'
       );
     }
 
@@ -456,14 +458,14 @@ const Acta: IActa = {
     if (isShared && isInDOM) {
       localStorage.setItem(
         `${actaEventPrefix}${eventKey}`,
-        JSON.stringify(data),
+        JSON.stringify(data)
       );
     }
 
     /**
      * Call each subscriber callback
      */
-    Object.keys(this.events[eventKey] || {}).forEach(actaID => {
+    Object.keys(this.events[eventKey] || {}).forEach((actaID) => {
       try {
         this.events[eventKey][actaID].callback(data || null);
       } catch (err) {
