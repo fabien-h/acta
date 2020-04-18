@@ -2,7 +2,11 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import App, { dispatchEventInActa, ACTA_EVENT_KEY_MESSAGE } from './testApp';
+import App, {
+  dispatchEventInActa,
+  dispatchEventInActaWithNullValue,
+  ACTA_EVENT_KEY_MESSAGE,
+} from './testApp';
 import Acta from '../src';
 import { IComponentWithID } from '../src/types';
 
@@ -23,7 +27,7 @@ describe('Acta subscribeState.test method', () => {
     // The p#message should not be displayed
     expect(
       // @ts-ignore
-      tree.children.find(child => child.props.id === 'message'),
+      tree.children.find((child) => child.props.id === 'message')
     ).toBeUndefined();
     // Snapshot the resulting markup
     expect(tree).toMatchSnapshot();
@@ -32,12 +36,15 @@ describe('Acta subscribeState.test method', () => {
     // It should trigger the callback
     dispatchEventInActa();
 
+    // Dispatch an event with a null value
+    dispatchEventInActaWithNullValue();
+
     // Render the app with an elements array containing strings now
     tree = app.toJSON();
     // The p#message should not be displayed
     expect(
       // @ts-ignore
-      tree.children.find(child => child.props.id === 'message'),
+      tree.children.find((child) => child.props.id === 'message')
     ).toBeDefined();
     // Snapshot the resulting markup
     expect(tree).toMatchSnapshot();
@@ -52,9 +59,28 @@ describe('Acta subscribeState.test method', () => {
       Acta.subscribeEvent(
         ACTA_EVENT_KEY_MESSAGE,
         () => true,
-        alreadyEventSubscribedContext,
-      ),
+        alreadyEventSubscribedContext
+      )
     ).toBe(false);
+  });
+
+  test('When a component unmounts, it should not be in the acta subs anymore', () => {
+    const actaEventSubs = Acta.events[ACTA_EVENT_KEY_MESSAGE];
+    const alreadyEventSubscribedContext =
+      actaEventSubs[Object.keys(actaEventSubs)[0]].context;
+
+    // We should have one sub
+    expect(Object.keys(actaEventSubs).length).toBe(1);
+
+    if (
+      alreadyEventSubscribedContext &&
+      alreadyEventSubscribedContext.componentWillUnmount
+    ) {
+      alreadyEventSubscribedContext?.componentWillUnmount();
+    }
+
+    // We should not has subs anymore
+    expect(Object.keys(actaEventSubs).length).toBe(0);
   });
 
   /**
@@ -84,7 +110,7 @@ describe('Acta subscribeState.test method', () => {
         // @ts-ignore
         () => true,
         // @ts-ignore
-        {} as IComponentWithID,
+        {} as IComponentWithID
       );
     }).toThrowError(paramsErrorMessage);
   });

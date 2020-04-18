@@ -8,7 +8,10 @@ interface IState {
 }
 
 export const ACTA_STATE_ELEMENTS_LIST = 'ACTA_STATE_ELEMENTS_LIST';
+export const ACTA_STATE_WITH_INITIAL_VALUE = 'ACTA_STATE_WITH_INITIAL_VALUE';
+
 export const ACTA_EVENT_KEY_MESSAGE = 'ACTA_EVENT_KEY_MESSAGE';
+export const ACTA_EVENT_KEY_WITH_NULL_VALUE = 'ACTA_EVENT_KEY_WITH_NULL_VALUE';
 
 export const addElementsInActa = () =>
   Acta.setState({
@@ -18,6 +21,9 @@ export const addElementsInActa = () =>
 export const dispatchEventInActa = () =>
   Acta.dispatchEvent(ACTA_EVENT_KEY_MESSAGE, 'A message from an Acta event.');
 
+export const dispatchEventInActaWithNullValue = () =>
+  Acta.dispatchEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE);
+
 export default class App extends React.Component<IProps, IState> {
   public state: IState = {
     elements: [],
@@ -26,25 +32,40 @@ export default class App extends React.Component<IProps, IState> {
   public componentDidMount() {
     Acta.subscribeState(
       ACTA_STATE_ELEMENTS_LIST,
-      elements =>
+      (elements) =>
         this.setState({
           elements,
         }),
+      this
+    );
+
+    Acta.subscribeState(
+      ACTA_STATE_WITH_INITIAL_VALUE,
+      () => false,
       this,
+      'THIS IS AN INITIAL VALUE'
     );
 
     Acta.subscribeEvent(
       ACTA_EVENT_KEY_MESSAGE,
-      message =>
+      (message) =>
         this.setState({
           message,
         }),
-      this,
+      this
     );
+
+    Acta.subscribeEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE, () => false, this);
+  }
+
+  public componentWillUnmount() {
+    return false;
   }
 
   public render(): JSX.Element {
     const { elements, message } = this.state;
+
+    const stateWithInitialValue = Acta.getState(ACTA_STATE_WITH_INITIAL_VALUE);
 
     return (
       <div>
@@ -57,6 +78,8 @@ export default class App extends React.Component<IProps, IState> {
         </ul>
 
         {message && <p id='message'>{message}</p>}
+
+        <p id='stateWithInitialValue'>{stateWithInitialValue}</p>
       </div>
     );
   }

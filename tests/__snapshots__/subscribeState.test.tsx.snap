@@ -8,6 +8,11 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
   <ul
     id="listContainer"
   />
+  <p
+    id="stateWithInitialValue"
+  >
+    THIS IS AN INITIAL VALUE
+  </p>
 </div>
 `;
 
@@ -26,5 +31,10 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
       b
     </li>
   </ul>
+  <p
+    id="stateWithInitialValue"
+  >
+    THIS IS AN INITIAL VALUE
+  </p>
 </div>
 `;
