@@ -176,7 +176,9 @@ const Acta: IActa = {
 		if initialize is not set to false and if there is a valid
 		non circular state to dispatch */
     try {
-      const valueToReturn = JSON.stringify(this.states[stateKey].value || null);
+      const valueToReturn = JSON.stringify(
+        this.states[stateKey].value || defaultValue || null
+      );
       callback(JSON.parse(valueToReturn));
       return JSON.parse(valueToReturn);
     } catch (err) {
