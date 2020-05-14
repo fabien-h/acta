@@ -1,12 +1,14 @@
 # Acta
 
-Super light and dead simple state manager and event dispatcher for react.
+<p align="center">Super light and dead simple state manager and event dispatcher for react.</p>
 
-![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)
-![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
+[![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
+[![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org/)
 ![badgen types included](https://badgen.net/npm/types/acta)
-![badgen mit licence](https://badgen.net/badge/license/MIT/blue)
+[![badgen mit licence](https://badgen.net/badge/license/MIT/blue)](https://en.wikipedia.org/wiki/MIT_License)
 ![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
+[![badgen npm version](https://badgen.net/npm/v/acta)](https://www.npmjs.com/package/acta)
+[![Known Vulnerabilities](https://snyk.io/test/github/fabien-h/acta/badge.svg?targetFile=package.json)](https://snyk.io/test/github/fabien-h/acta?targetFile=package.json)
 
 # Acta API
 
@@ -20,6 +22,10 @@ You don't need tooling to debug Acta. In your browser developper tools, `Acta.st
 
 `Acta.subscribeState()` must be called inside with a component reference. Usually in the `componentDidMount()` method. The component will then be explicitely subscribed to the state. Each time the state is set from anywhere in the application (even cross tabs), the callback will be triggered and pass the new value.
 
+The simple way to call `subscribeState` is to pass a state key. When a `dispatchedState` is called, the state of the component will be set to the disptached value.
+
+If you need a more custom behaviour, you can pass a callback that will pass the updated value as only argument.
+
 > If you pass `this` - as the context of the current component - in a closure, you can subscrive from anywhere. But this is not recommended. As is would make code harder to read.
 
 **Example**
@@ -27,10 +33,20 @@ You don't need tooling to debug Acta. In your browser developper tools, `Acta.st
 ```typescript
 public componentDidMount(): void {
   Acta.subscribeState(
-    stateKey: 'ACTA_KEY_TODOS',
-    callback: (todos) => this.setState(todos),
-    context: this,
-    defaultValue: [],
+    'ACTA_KEY_TODOS_2',
+    'myTodos'
+    this
+  );
+}
+```
+
+```typescript
+public componentDidMount(): void {
+  Acta.subscribeState(
+    'ACTA_KEY_TODOS',
+    (todos) => this.setState(todos),
+    this,
+    defaultValue: []
   );
 }
 ```
@@ -40,9 +56,9 @@ public componentDidMount(): void {
 ```typescript
 subscribeState: (
   stateKey: string,
-  callback: (valueToReturn: any) => void,
+  callbackOrStateKey: string | (valueToReturn: any) => void,
   context: IComponentWithID,
-  defaultValue?: string | number | object,
+  defaultValue?: string | number | object
 ) => TActaValue;
 ```
 
@@ -66,7 +82,7 @@ Acta.setState(
   {
     ACTA_KEY_TODOS: ['todo1', 'todo2'],
   },
-  'localStorage',
+  'localStorage'
 );
 ```
 
@@ -144,13 +160,13 @@ subscribeEvent: (
 - `data`: _optionnal_ the data to pass.
 - `isShared`: _optionnal_ if you want to share this event between windows and tabs.
 
-# Secondary methods
-
-You can use those methods for some edge case, but you should not normally have to. They are mostly used internally.
-
 ## Acta.getState
 
 `Acta.getState` can be called from anywhere (including in your dev console) to get the current value attached to a state key.
+
+# Secondary methods
+
+You can use those methods for some edge case, but you should not normally have to. They are mostly used internally.
 
 **Example**
 
@@ -222,3 +238,5 @@ deleteState: (
   persistenceType: 'localStorage' | 'sessionStorage',
 ) => void;
 ```
+
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
