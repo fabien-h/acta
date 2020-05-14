@@ -1,4 +1,4 @@
-import { IActa } from './types';
+import { IActa, TActaValue } from './types';
 import { isObject } from './isObject';
 
 const actaStoragePrefix = '__acta__';
@@ -107,26 +107,27 @@ const Acta: IActa = {
    * destroyed automatically when the
    *
    * @param {String} stateKey - The key to name the state
-   * @param {Function} callback - Reference to the callback that will
-   * be called when the state change
+   * @param {Function | String} callbackOrStateKey - Reference to the callback
+   * that will be called when the state change or to the state key to set
    * @param {Object} context - Reference to the react component from
    * wich the subscribtion is made => that will be needed to unsubscribe
    * when the compnent will unmount
    * @param {TActaValue} defaultValue - Optionnal, set a default value for
    * the state if there is none
    */
-  subscribeState(stateKey, callback, context, defaultValue) {
+  subscribeState(stateKey, callbackOrStateKey, context, defaultValue) {
     /* Ensure the arguments */
     if (
       stateKey === '' ||
       typeof stateKey !== 'string' ||
-      typeof callback !== 'function' ||
+      (typeof callbackOrStateKey !== 'function' &&
+        typeof callbackOrStateKey !== 'string') ||
       !isObject(context)
     ) {
       throw new Error(
         `Acta.subscribeState params =>
 [0]: string,
-[1]: function,
+[1]: function or string,
 [2]: mounted react component`
       );
     }
@@ -136,7 +137,7 @@ const Acta: IActa = {
 
     /* If this state does not already exists, creates it */
     this.states[stateKey] = this.states[stateKey] || {
-      value: undefined,
+      value: defaultValue || undefined,
       defaultValue: defaultValue || undefined,
       subscribtions: {},
     };
@@ -146,7 +147,7 @@ const Acta: IActa = {
      * already exists, stop here
      */
     if (this.states[stateKey].subscribtions[context.actaID as string]) {
-      return false;
+      return;
     }
 
     /**
@@ -164,11 +165,25 @@ const Acta: IActa = {
     }
 
     /**
+     * If the callback is not a function, it sets the state
+     * in the component
+     */
+    let passedCallback;
+    if (typeof callbackOrStateKey === 'string') {
+      passedCallback = (value: TActaValue) =>
+        context.setState({
+          [callbackOrStateKey]: value,
+        });
+    } else {
+      passedCallback = callbackOrStateKey;
+    }
+
+    /**
      * Add the callback and the context to the subscribtion list
      * of the state
      */
     this.states[stateKey].subscribtions[context.actaID as string] = {
-      callback,
+      callback: passedCallback,
       context,
     };
 
@@ -176,14 +191,11 @@ const Acta: IActa = {
 		if initialize is not set to false and if there is a valid
 		non circular state to dispatch */
     try {
-      const valueToReturn = JSON.stringify(
-        this.states[stateKey].value || defaultValue || null
-      );
-      callback(JSON.parse(valueToReturn));
-      return JSON.parse(valueToReturn);
+      if (this.states[stateKey].value !== undefined) {
+        passedCallback(JSON.parse(JSON.stringify(this.states[stateKey].value)));
+      }
     } catch (err) {
       console.error(`Error in subscribeState for "${stateKey}":`, err);
-      return false;
     }
   },
 
