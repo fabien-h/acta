@@ -28,10 +28,10 @@ export interface IActa {
   initialized: boolean;
 
   states: {
-    [stateKey: string]: IState;
+    [actaStateKey: string]: IState;
   };
   events: {
-    [eventKey: string]: IEvent;
+    [actaEventKey: string]: IEvent;
   };
   actaIDs: Array<string>;
 
@@ -39,11 +39,11 @@ export interface IActa {
 
   ensureActaID: (context: IComponentWithID) => boolean | string;
 
-  useActaState: (stateKey: string, defaultValue?: TActaValue) => TActaValue;
+  useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
 
   subscribeState: (
-    stateKey: string,
-    callbackOrStateKey: string | ((valueToReturn: any) => void),
+    actaStateKey: string,
+    callbackOrLocalStateKey: string | ((valueToReturn: any) => void),
     context: IComponentWithID,
     defaultValue?: TActaValue
   ) => void;

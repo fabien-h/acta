@@ -104,13 +104,13 @@ const Acta: IActa = {
    * This method will subscribe a react functionnal component to
    * an Acta state.
    *
-   * @param { String } stateKey - the state key
+   * @param { String } actaStateKey - the state key
    * @param { TActaValue } defaultValue - optionnal - the initial value
    * if not set, the initial value will be undefined
    */
-  useActaState(stateKey: string, defaultValue?: TActaValue) {
+  useActaState(actaStateKey: string, defaultValue?: TActaValue) {
     /* Ensure the arguments */
-    if (stateKey === '' || typeof stateKey !== 'string') {
+    if (actaStateKey === '' || typeof actaStateKey !== 'string') {
       throw new Error(
         `Acta.useActaState params =>
 [0]: string,
@@ -125,8 +125,8 @@ const Acta: IActa = {
      * Try to get an initial value in Acta if the state already exists
      * of in the optional defaultValue
      */
-    const initialValue = this.hasState(stateKey)
-      ? this.getState(stateKey)
+    const initialValue = this.hasState(actaStateKey)
+      ? this.getState(actaStateKey)
       : defaultValue;
 
     /**
@@ -136,7 +136,7 @@ const Acta: IActa = {
     const [actaValue, setActaValue] = window.React.useState(initialValue);
 
     /* If this state does not already exists, creates it */
-    this.states[stateKey] = this.states[stateKey] || {
+    this.states[actaStateKey] = this.states[actaStateKey] || {
       value: defaultValue,
       defaultValue: defaultValue,
       subscribtions: {},
@@ -149,12 +149,12 @@ const Acta: IActa = {
      */
     window.React.useEffect(() => {
       /* Subscribe */
-      this.states[stateKey].subscribtions[`__${internalID}`] = {
+      this.states[actaStateKey].subscribtions[`__${internalID}`] = {
         callback: (value) => setActaValue(value),
       };
       /* Unsubscribe */
       return () => {
-        delete this.states[stateKey].subscribtions[String(internalID)];
+        delete this.states[actaStateKey].subscribtions[String(internalID)];
       };
     });
 
@@ -170,8 +170,8 @@ const Acta: IActa = {
    * that subsribtion can be destroyed manually and will be
    * destroyed automatically when the
    *
-   * @param {String} stateKey - The key to name the state
-   * @param {Function | String} callbackOrStateKey - Reference to the callback
+   * @param {String} actaStateKey - The key to name the state
+   * @param {Function | String} callbackOrLocalStateKey - Reference to the callback
    * that will be called when the state change or to the state key to set
    * @param {Object} context - Reference to the react component from
    * wich the subscribtion is made => that will be needed to unsubscribe
@@ -180,17 +180,17 @@ const Acta: IActa = {
    * the state if there is none
    */
   subscribeState(
-    stateKey,
-    callbackOrStateKey,
+    actaStateKey,
+    callbackOrLocalStateKey,
     context,
     defaultValue = undefined
   ) {
     /* Ensure the arguments */
     if (
-      stateKey === '' ||
-      typeof stateKey !== 'string' ||
-      (typeof callbackOrStateKey !== 'function' &&
-        typeof callbackOrStateKey !== 'string') ||
+      actaStateKey === '' ||
+      typeof actaStateKey !== 'string' ||
+      (typeof callbackOrLocalStateKey !== 'function' &&
+        typeof callbackOrLocalStateKey !== 'string') ||
       !isObject(context)
     ) {
       throw new Error(
@@ -205,7 +205,7 @@ const Acta: IActa = {
     this.ensureActaID(context);
 
     /* If this state does not already exists, creates it */
-    this.states[stateKey] = this.states[stateKey] || {
+    this.states[actaStateKey] = this.states[actaStateKey] || {
       value: defaultValue,
       defaultValue: defaultValue,
       subscribtions: {},
@@ -215,7 +215,7 @@ const Acta: IActa = {
      * If a subscribtion for this context on this state
      * already exists, stop here
      */
-    if (this.states[stateKey].subscribtions[context.actaID as string]) {
+    if (this.states[actaStateKey].subscribtions[context.actaID as string]) {
       return;
     }
 
@@ -228,7 +228,7 @@ const Acta: IActa = {
     if (context.componentWillUnmount) {
       const oldComponentWillUnmount = context.componentWillUnmount;
       context.componentWillUnmount = () => {
-        this.unsubscribeState(stateKey, context);
+        this.unsubscribeState(actaStateKey, context);
         oldComponentWillUnmount.bind(context)();
       };
     }
@@ -238,20 +238,20 @@ const Acta: IActa = {
      * in the component
      */
     let passedCallback;
-    if (typeof callbackOrStateKey === 'string') {
+    if (typeof callbackOrLocalStateKey === 'string') {
       passedCallback = (value: TActaValue) =>
         context.setState({
-          [callbackOrStateKey]: value,
+          [callbackOrLocalStateKey]: value,
         });
     } else {
-      passedCallback = callbackOrStateKey;
+      passedCallback = callbackOrLocalStateKey;
     }
 
     /**
      * Add the callback and the context to the subscribtion list
      * of the state
      */
-    this.states[stateKey].subscribtions[context.actaID as string] = {
+    this.states[actaStateKey].subscribtions[context.actaID as string] = {
       callback: passedCallback,
       context,
     };
@@ -260,11 +260,13 @@ const Acta: IActa = {
 		if initialize is not set to false and if there is a valid
 		non circular state to dispatch */
     try {
-      if (this.states[stateKey].value !== undefined) {
-        passedCallback(JSON.parse(JSON.stringify(this.states[stateKey].value)));
+      if (this.states[actaStateKey].value !== undefined) {
+        passedCallback(
+          JSON.parse(JSON.stringify(this.states[actaStateKey].value))
+        );
       }
     } catch (err) {
-      console.error(`Error in subscribeState for "${stateKey}":`, err);
+      console.error(`Error in subscribeState for "${actaStateKey}":`, err);
     }
   },
 
