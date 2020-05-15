@@ -8,7 +8,7 @@ export interface IState {
   subscribtions: {
     [contextID: string]: {
       callback: (value: TActaValue) => void;
-      context: IComponentWithID;
+      context?: IComponentWithID;
     };
   };
 }
@@ -39,11 +39,13 @@ export interface IActa {
 
   ensureActaID: (context: IComponentWithID) => boolean | string;
 
+  useActaState: (stateKey: string, defaultValue?: TActaValue) => TActaValue;
+
   subscribeState: (
     stateKey: string,
     callbackOrStateKey: string | ((valueToReturn: any) => void),
     context: IComponentWithID,
-    defaultValue?: string | number | object
+    defaultValue?: TActaValue
   ) => void;
 
   unsubscribeState: (stateKey: string, context: IComponentWithID) => void;

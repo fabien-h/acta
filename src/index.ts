@@ -1,3 +1,4 @@
+// import { useEffect } from 'react';
 import { IActa, TActaValue } from './types';
 import { isObject } from './isObject';
 
@@ -6,6 +7,7 @@ const actaStoragePrefixLength = actaStoragePrefix.length;
 const actaEventPrefix = '__actaEvent__';
 const actaEventPrefixLength = actaEventPrefix.length;
 const isInDOM = typeof window !== 'undefined';
+let tempHooksId = 0;
 
 const Acta: IActa = {
   /**
@@ -99,6 +101,68 @@ const Acta: IActa = {
   },
 
   /**
+   * This method will subscribe a react functionnal component to
+   * an Acta state.
+   *
+   * @param { String } stateKey - the state key
+   * @param { TActaValue } defaultValue - optionnal - the initial value
+   * if not set, the initial value will be undefined
+   */
+  useActaState(stateKey: string, defaultValue?: TActaValue) {
+    /* Ensure the arguments */
+    if (stateKey === '' || typeof stateKey !== 'string') {
+      throw new Error(
+        `Acta.useActaState params =>
+[0]: string,
+[1]: optionnal, string | number | object | boolean | null | undefined`
+      );
+    }
+
+    /* Update the interal id for future reference */
+    const internalID = tempHooksId++;
+
+    /**
+     * Try to get an initial value in Acta if the state already exists
+     * of in the optional defaultValue
+     */
+    const initialValue = this.hasState(stateKey)
+      ? this.getState(stateKey)
+      : defaultValue;
+
+    /**
+     * Init the state hook that wll return the value and
+     * trigger a re-render for the component
+     */
+    const [actaValue, setActaValue] = window.React.useState(initialValue);
+
+    /* If this state does not already exists, creates it */
+    this.states[stateKey] = this.states[stateKey] || {
+      value: defaultValue,
+      defaultValue: defaultValue,
+      subscribtions: {},
+    };
+
+    /**
+     * Add the life cycle hook to subscribe to the state when
+     * the component is rendered and unsubscribe when the component
+     * is unmounted
+     */
+    window.React.useEffect(() => {
+      /* Subscribe */
+      this.states[stateKey].subscribtions[`__${internalID}`] = {
+        callback: (value) => setActaValue(value),
+      };
+      /* Unsubscribe */
+      return () => {
+        delete this.states[stateKey].subscribtions[String(internalID)];
+      };
+    });
+
+    /* Returns the initial value for immediate use */
+    return actaValue;
+  },
+
+  /**
    * subscribeState is called from a react component with a callback
    * when that state will be set, its value will be send
    * to the component by the callback
@@ -115,7 +179,12 @@ const Acta: IActa = {
    * @param {TActaValue} defaultValue - Optionnal, set a default value for
    * the state if there is none
    */
-  subscribeState(stateKey, callbackOrStateKey, context, defaultValue) {
+  subscribeState(
+    stateKey,
+    callbackOrStateKey,
+    context,
+    defaultValue = undefined
+  ) {
     /* Ensure the arguments */
     if (
       stateKey === '' ||
@@ -137,8 +206,8 @@ const Acta: IActa = {
 
     /* If this state does not already exists, creates it */
     this.states[stateKey] = this.states[stateKey] || {
-      value: defaultValue || undefined,
-      defaultValue: defaultValue || undefined,
+      value: defaultValue,
+      defaultValue: defaultValue,
       subscribtions: {},
     };
 
