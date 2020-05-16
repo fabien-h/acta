@@ -7,7 +7,8 @@ const actaStoragePrefixLength = actaStoragePrefix.length;
 const actaEventPrefix = '__actaEvent__';
 const actaEventPrefixLength = actaEventPrefix.length;
 const isInDOM = typeof window !== 'undefined';
-let tempHooksId = 0;
+let tempStateHooksId = 0;
+let tempEventHooksId = 0;
 
 const Acta: IActa = {
   /**
@@ -119,7 +120,7 @@ const Acta: IActa = {
     }
 
     /* Update the interal id for future reference */
-    const internalID = tempHooksId++;
+    const internalID = tempStateHooksId++;
 
     /**
      * Try to get an initial value in Acta if the state already exists
@@ -429,6 +430,52 @@ const Acta: IActa = {
       throw new Error('Acta.hasState params => [0]: string');
     }
     return this.states.hasOwnProperty(stateKey);
+  },
+
+  /**
+   * Creates an event hook. A functional component can subscribe to
+   * and event. The functionnal passes a callback and when the
+   * event is dispatched from anywhere in the application,
+   * the callback is triggered.
+   *
+   * @param { String } eventKey - the event key
+   * @param { Function } callback - the callback after the event is dispatched
+   */
+  useActaEvent(eventKey, callback) {
+    /* Ensure the arguments */
+    if (
+      eventKey === '' ||
+      typeof eventKey !== 'string' ||
+      typeof callback !== 'function'
+    ) {
+      throw new Error(
+        `Acta.useActaEvent params =>
+[0]: string,
+[1]: function`
+      );
+    }
+
+    /* Update the interal id for future reference */
+    const internalID = tempEventHooksId++;
+
+    /* If this state does not already exists, creates it */
+    this.events[eventKey] = this.events[eventKey] || {};
+
+    /**
+     * Add the life cycle hook to subscribe to the state when
+     * the component is rendered and unsubscribe when the component
+     * is unmounted
+     */
+    window.React.useEffect(() => {
+      /* Subscribe */
+      this.events[eventKey][`__${internalID}`] = {
+        callback,
+      };
+      /* Unsubscribe */
+      return () => {
+        delete this.events[eventKey][`__${internalID}`];
+      };
+    });
   },
 
   /**

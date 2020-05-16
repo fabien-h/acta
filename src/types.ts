@@ -16,7 +16,7 @@ export interface IState {
 export interface IEvent {
   [contextID: string]: {
     callback: (value: TActaValue) => void;
-    context: IComponentWithID;
+    context?: IComponentWithID;
   };
 }
 
@@ -65,6 +65,8 @@ export interface IActa {
     stateKey: string,
     persistenceType?: 'localStorage' | 'sessionStorage'
   ) => void;
+
+  useActaEvent: (stateKey: string, callback: (value?: TActaValue) => void) => void | boolean;
 
   subscribeEvent: (
     eventKey: string,
