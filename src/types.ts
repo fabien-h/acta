@@ -66,7 +66,10 @@ export interface IActa {
     persistenceType?: 'localStorage' | 'sessionStorage'
   ) => void;
 
-  useActaEvent: (stateKey: string, callback: (value?: TActaValue) => void) => void | boolean;
+  useActaEvent: (
+    stateKey: string,
+    callback: (value?: TActaValue) => void
+  ) => void | boolean;
 
   subscribeEvent: (
     eventKey: string,
