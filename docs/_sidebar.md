@@ -1,4 +1,4 @@
-- [⮕Acta](README.md)
+- [⮕ Acta](README.md)
 
 - Getting started
 
