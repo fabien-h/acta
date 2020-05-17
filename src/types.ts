@@ -1,6 +1,14 @@
 import React from 'react';
 
-export type TActaValue = string | number | object | boolean | null | undefined;
+export type TActaValue =
+  | string
+  | number
+  | object
+  | boolean
+  | null
+  | undefined
+  | Array<TActaValue>
+  | { [key: string]: TActaValue };
 
 export interface IState {
   value: TActaValue;
