@@ -8,7 +8,7 @@
 [![badgen mit licence](https://badgen.net/badge/license/MIT/blue)](https://en.wikipedia.org/wiki/MIT_License)
 ![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
 [![badgen npm version](https://badgen.net/npm/v/acta)](https://www.npmjs.com/package/acta)
-[![Known Vulnerabilities](https://snyk.io/test/github/fabien-h/acta/badge.svg?targetFile=package.json)](https://snyk.io/test/github/fabien-h/acta?targetFile=package.json)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 # Acta API
 
