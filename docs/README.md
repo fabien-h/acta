@@ -23,12 +23,12 @@ Super light and dead simple state manager and event dispatcher for react.
 - Shared state between tabs and windows.
 - Great performances since the store contains references to the callbacks instead of having to iterate on every reducer and stop only when it find the corresponding ones.
 - Self cleaning methods to unsubscribe to states and events.
-- Exposed global object that you can call from anywhere without having to setup and pass providers or decorators.
-- Easy debuging from the browser console.
+- Exposed global object that you can call from anywhere without having to setup and pass providers, wrapers or decorators.
+- Easy debuging from the browser console. Juste type `Acta` and see the object and the internals.
 
 ## Why another state manager?
 
-React ecosystem already has excellent state managers. [Redux](https://redux.js.org/) and [MobX](https://mobx.js.org/README.html) are great tools. But teams tend to make a mess of their codebase with overcomplicated state management patterns because they have seen it work for big applications.
+React ecosystem already has excellent state managers. [Redux](https://redux.js.org/) and [MobX](https://mobx.js.org/README.html) are great tools. But teams tend to make a mess of their codebase with overcomplicated state management patterns because they have seen it work for big applications and online tutorials are encouraging premature scale optimization.
 
 Maintainability is the ability to make changes with confidence. If you cannot understand your dataflow instantly today and describe it in a simple sentence, it means that three months from now you will be lost in the layers of abstraction that you just created and that any modification will be a nightmare.
 
