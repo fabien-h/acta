@@ -35,3 +35,5 @@ Maintainability is the ability to make changes with confidence. If you cannot un
 If an action calls a dispatcher to push updated data in a middleware that will look into a bunch a reducers to find the one that will transform the updated data to push them into a provider that will trigger a mapping from the tranformed updated data into properties in a higher order function that wraps the parent of the current component where the data will be displayed... Well, congratulations, you made the life of the next guy a hell. And this is not a caricature, some applications have way more complicated dataflow. Sometimes it's required; but if I bet that it's not your case, I'll be right 99.9% of the time.
 
 The goal of acta is to make you forget about reducers, observers, maptoprops, providers, HOCs... Components are explicitely responsible for subscribing to the state or event. You can call for a complex data treatment inside the component. You can have actions that will be triggered. But the incoming data flow should be the most direcct possible.
+
+[![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
