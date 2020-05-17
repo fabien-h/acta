@@ -2,34 +2,39 @@
 
 You might need those methods for some edge cases, so they are exposed. But you should not have to.
 
-## Unsubscribe (state and event)
+- `Acta.unsubscribeState`:
+- `Acta.unsubscribeEvent`:
+- `Acta.hasState`:
+- `Acta.deleteState`:
 
-This will be called automatically when a component will unmount and has subscriptions to and event or a state.
+## Acta.unsubscribeState & Acta.unsubscribeEvent
+
+Kills the component subscription to a state or an event. This method will be called automatically when a component unmounts.
 
 **Example**
 
 ```typescript
-Acta.unsubscribeState('ACTA_KEY_TODOS', this);
-Acta.unsubscribeEvent('ACTA_KEY_NOTIFICATIONS_EVENT', this);
+Acta.unsubscribeState('ACTA_STATE_KEY', this);
+Acta.unsubscribeEvent('ACTA_EVENT_KEY', this);
 ```
 
 **Types**
 
 ```typescript
-  unsubscribeState: (stateKey: string, context: IComponentWithID) => void;
-  unsubscribeEvent: (eventKey: string, context: IComponentWithID) => void;
+unsubscribeState: (stateKey: string, context: React.Component) => void;
+unsubscribeEvent: (eventKey: string, context: React.Component) => void;
 ```
 
-If you want to explicitly unsubscribe. But Acta cleans after itself when the component will unmount.
+## Acta.HasState
 
-## HasState
+To check if a state exists; return true if it does, false if it does not.
 
-To check if a state exists
+Most of the time `Boolean(Acta.getState('ACTA_STATE_KEY'))` return the same value. But they are not equivalent. If a state exists but its value is `false`, `null`, `0` or `undefined`, `hasState` returns true.
 
 **Example**
 
 ```typescript
-Acta.hasState('ACTA_KEY_TODOS');
+Acta.hasState('ACTA_STATE_KEY');
 ```
 
 **Type**
@@ -38,16 +43,14 @@ Acta.hasState('ACTA_KEY_TODOS');
 hasState: (stateKey: string) => boolean;
 ```
 
-> Most of the time, this does not output the same thing than `Boolean(Acta.getState('ACTA_KEY_TODOS'))`. But they are not equivalent. If a state exists but has a falsy value, `hasState` will return true.
+## Acta.DeleteState
 
-## DeleteState
-
-If you need to clean up your store.
+If you need to clean up your store. It makes sense when the user logs out and you want to delete all thee keys in the local storage. But you can also set them all to `''`.
 
 **Example**
 
 ```typescript
-Acta.deleteState('ACTA_KEY_TODOS', 'localStorage');
+Acta.deleteState('ACTA_STATE_KEY', 'localStorage');
 ```
 
 **Type**

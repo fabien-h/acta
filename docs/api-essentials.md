@@ -1,10 +1,6 @@
 # Acta API essentials
 
-In **Acta** states, you can store string, numbers, and booleans; in object litterals and in arrays. Since all values stored have to be compatible with the local storage Maps, Sets or functions won’t work.
-
-You don't need tooling to debug **Acta**. In your browser developper tools, `Acta.states` will let you access to all the informations you need. The store methods like `Acta.setState` or `Acta.dispatchEvent` are available in the console.
-
-Main methods are :
+These are the main methods that you should use.
 
 - `Acta.subscribeState`: subscribe to a state in a class component
 - `Acta.useActaState`: subscribe to a state in a functional component
@@ -14,11 +10,15 @@ Main methods are :
 - `Acta.dispatchEvent`: dispatch an event
 - `Acta.getState`: get the value of a state in **Acta**
 
+> In the following document, the type `TActaValue` is `string | number | object | boolean | null | undefined | Array<TActaValue> | { [key: string]: TActaValue }`.
+
 ## Acta.subscribeState
 
 Called from a class component, usually in the `componentDidMount()` method. You always need to pass the current context with `this`.
 
 The simple way to call `subscribeState` is to pass an **Acta** key and a local state key. When the corresponding state change in **Acta** - after a `setState` for example - the local state is updated.
+
+**Example**
 
 ```typescript
 public componentDidMount(): void {
@@ -27,6 +27,8 @@ public componentDidMount(): void {
 ```
 
 If you need a more complex behaviour, you can pass a callback instead of the local state key. The callback will receive the updated state as argument.
+
+**Example**
 
 ```typescript
 public componentDidMount(): void {
@@ -65,7 +67,21 @@ The call returns the current value for the target state.
 
 Like `Acta.subscribeState` but for functional components.
 
+**Example**
+
+```typescript
+// valueFromActa will be updated when the state change
+const valueFromActa = Acta.useActaState('ACTA_STATE_KEY');
+```
+
+**Types**
+
+```typescript
 useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
+```
+
+- `ACTA_STATE_KEY`: the state key in **Acta**.
+- `defaultValue`: _optionnal_ if the state does not alreay exists in acta, you can set its value with this param.
 
 ## Acta.setState
 
@@ -105,7 +121,7 @@ setState: (
 ```typescript
 public componentDidMount(): void {
   Acta.subscribeEvent(
-    'ACTA_KEY_NOTIFICATIONS_EVENT',
+    'ACTA_EVENT_KEY',
     callback: (notification) => alert(notification),
     context: this,
   );
@@ -118,7 +134,7 @@ public componentDidMount(): void {
 subscribeEvent: (
   eventKey: string,
   callback: (valueToReturn: any) => void,
-  context: IComponentWithID,
+  context: React.Component,
 ) => void;
 ```
 
@@ -128,6 +144,28 @@ subscribeEvent: (
 
 > You can call `unsubscribeEvent` to explicitly stop the sub. But you don’t need to do any cleanup. When a component will unmount, **Acta** will call `unsubscribeEvent` for the component.
 
+## Acta.useActaEvent
+
+Like `Acta.subscribeEvent` but for functional components.
+
+**Example**
+
+```typescript
+Acta.useActaEvent('ACTA_EVENT_KEY', handler);
+```
+
+**Types**
+
+```typescript
+useActaEvent: (
+  stateKey: string,
+  callback: (value?: TActaValue) => void
+) => void | boolean;
+```
+
+- `ACTA_EVENT_KEY`: the event key in **Acta**.
+- `handler`: the callback that is trigerred when the event is dispatched
+
 ## Acta.dispatchEvent
 
 `Acta.dispatchEvent` is very similar to `Acta.setState()`.
@@ -136,7 +174,7 @@ subscribeEvent: (
 
 ```typescript
   Acta.dispatchEvent(
-    'ACTA_KEY_NOTIFICATIONS_EVENT',
+    'ACTA_EVENT_KEY',
     'Download is finished.',
     true
   ) => void;
@@ -163,7 +201,7 @@ subscribeEvent: (
 **Example**
 
 ```typescript
-Acta.getState('ACTA_KEY_TODOS');
+Acta.getState('ACTA_STATE_KEY');
 ```
 
 **Types**

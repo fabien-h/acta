@@ -24,7 +24,10 @@ Super light and dead simple state manager and event dispatcher for react.
 - Great performances since the store contains references to the callbacks instead of having to iterate on every reducer and stop only when it find the corresponding ones.
 - Self cleaning methods to unsubscribe to states and events.
 - Exposed global object that you can call from anywhere without having to setup and pass providers, wrapers or decorators.
-- Easy debuging from the browser console. Juste type `Acta` and see the object and the internals.
+
+In **Acta** states, you can store string, numbers, and booleans; in object litterals and in arrays. Since all values stored have to be compatible with the local storage Maps, Sets or functions won’t work.
+
+You don't need tooling to debug **Acta**. Juste type `Acta` in your browser console and see the object and the internals.
 
 ## Why another state manager?
 
