@@ -12,6 +12,7 @@ Super light and dead simple state manager and event dispatcher for react.
 
 Acta is providing:
 
+- A global state with keys indexed values.
 - A one line straight forward way of subscribing to the application state in a component `Acta.subscribeState('appStateKey', 'localStateKey');`.
 - A hook for functional components `const valueFromActa = Acta.useActaState('appStateKey');`
 - A simple way of setting / getting the state `Acta.setState({appStateKey: value})`
@@ -27,6 +28,10 @@ Acta is providing:
 
 ## Why another state manager?
 
-React ecosystem already has state managers. [Redux](https://redux.js.org/) and [MobX](https://mobx.js.org/README.html)
+React ecosystem already has excellent state managers. [Redux](https://redux.js.org/) and [MobX](https://mobx.js.org/README.html) are great tools. But teams tend to make a mess of their codebase with overcomplicated state management patterns because they have seen it work for big applications.
 
-The API of the most used application state managers (Redux and MobX) are great. But most teams using them are making a mess of their codebase. In the end, what matters for maintainability (the ability to make changes in your codebase confidently) is
+Maintainability is the ability to make changes with confidence. If you cannot understand your dataflow instantly today and describe it in a simple sentence, it means that three months from now you will be lost in the layers of abstraction that you just created and that any modification will be a nightmare.
+
+If an action calls a dispatcher to push updated data in a middleware that will look into a bunch a reducers to find the one that will transform the updated data to push them into a provider that will trigger a mapping from the tranformed updated data into properties in a higher order function that wraps the parent of the current component where the data will be displayed... Well, congratulations, you made the life of the next guy a hell. And this is not a caricature, some applications have way more complicated dataflow. Sometimes it's required; but if I bet that it's not your case, I'll be right 99.9% of the time.
+
+The goal of acta is to make you forget about reducers, observers, maptoprops, providers, HOCs... Components are explicitely responsible for subscribing to the state or event. You can call for a complex data treatment inside the component. You can have actions that will be triggered. But the incoming data flow should be the most direcct possible.

@@ -11,3 +11,4 @@
 
   - [With class components](tutorial-class-components.md)
   - [With functional components](tutorial-functional-components.md)
+  - [Good practicies](good_practices.md)
