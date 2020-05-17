@@ -1,6 +1,6 @@
 # Acta API internals
 
-You might need those methods for some edge cases, so they are exposed. But you should not have to
+You might need those methods for some edge cases, so they are exposed. But you should not have to.
 
 ## Unsubscribe (state and event)
 

@@ -1,43 +1,45 @@
 # Acta API essentials
 
-In Acta, you can store string, numbers, objects, and arrays. Since all values stored have to be compatible with the local storage (string ony) Maps, Sets, functions... won’t work.
+In **Acta** states, you can store string, numbers, and booleans; in object litterals and in arrays. Since all values stored have to be compatible with the local storage Maps, Sets or functions won’t work.
 
-There is only one global store. Since this is an indexed object, there are no performance issue. Even with big objects and many keys.
+You don't need tooling to debug **Acta**. In your browser developper tools, `Acta.states` will let you access to all the informations you need. The store methods like `Acta.setState` or `Acta.dispatchEvent` are available in the console.
 
-You don't need tooling to debug Acta. In your browser developper tools, `Acta.states` will let you access to all the informations you need. The store methods like `Acta.setState` or `Acta.dispatchEvent` are available in the console.
+Main methods are :
+
+- `Acta.subscribeState`: subscribe to a state in a class component
+- `Acta.useActaState`: subscribe to a state in a functional component
+- `Acta.setState`: set the value of a state in **Acta**
+- `Acta.subscribeEvent`: subscribe to an event in a class component
+- `Acta.useActaEvent`: subscribe to an event in a functional component
+- `Acta.dispatchEvent`: dispatch an event
+- `Acta.getState`: get the value of a state in **Acta**
 
 ## Acta.subscribeState
 
-`Acta.subscribeState()` must be called inside with a component reference. Usually in the `componentDidMount()` method. The component will then be explicitely subscribed to the state. Each time the state is set from anywhere in the application (even cross tabs), the callback will be triggered and pass the new value.
+Called from a class component, usually in the `componentDidMount()` method. You always need to pass the current context with `this`.
 
-The simple way to call `subscribeState` is to pass a state key. When a `dispatchedState` is called, the state of the component will be set to the disptached value.
-
-If you need a more custom behaviour, you can pass a callback that will pass the updated value as only argument.
-
-> If you pass `this` - as the context of the current component - in a closure, you can subscrive from anywhere. But this is not recommended. As is would make code harder to read.
-
-**Example**
+The simple way to call `subscribeState` is to pass an **Acta** key and a local state key. When the corresponding state change in **Acta** - after a `setState` for example - the local state is updated.
 
 ```typescript
 public componentDidMount(): void {
-  Acta.subscribeState(
-    'ACTA_KEY_TODOS_2',
-    'myTodos'
-    this
-  );
+  Acta.subscribeState('ACTA_STATE_KEY', 'local_state_key' this);
 }
 ```
 
+If you need a more complex behaviour, you can pass a callback instead of the local state key. The callback will receive the updated state as argument.
+
 ```typescript
 public componentDidMount(): void {
   Acta.subscribeState(
-    'ACTA_KEY_TODOS',
-    (todos) => this.setState(todos),
+    'ACTA_STATE_KEY',
+    updatedValue => handler(updatedValue),
     this,
     defaultValue: []
   );
 }
 ```
+
+> If you pass `this` - as the context of the current component - in a closure, you can subscrive from anywhere. But this is not recommended. As is would make the dataflow harder to understand.
 
 **Types**
 
@@ -45,13 +47,13 @@ public componentDidMount(): void {
 subscribeState: (
   stateKey: string,
   callbackOrStateKey: string | (valueToReturn: any) => void,
-  context: IComponentWithID,
-  defaultValue?: string | number | object
+  context: React.Component,
+  defaultValue?: TActaValue
 ) => TActaValue;
 ```
 
 - `stateKey`: this is a `string`, you should use constants like ACTA_KEY_USER_NAME to avoid collisions and make your life easy when refactoring.
-- `callback`: when the targeted state changes in **Acta**, the callback is called. The only parameter is the new value of the state. The callback will usually include a `this.setState(...)` somewhere.
+- `callbackOrStateKey`: when the targeted state changes in **Acta**, the callback is called. The only parameter is the new value of the state. The callback will usually include a `this.setState(...)` somewhere.
 - `context`: this is the subscribing component almost always `this`.
 - `defaultValue`: _optionnal_ if the state was not previously set and that you need a value, use it.
 
@@ -59,16 +61,22 @@ The call returns the current value for the target state.
 
 > You can call `unsubscribeState` to explicitly stop the sub. But you don’t need to do any cleanup. When a component will unmount, **Acta** will call `unsubscribeState` for the component.
 
+## Acta.useActaState
+
+Like `Acta.subscribeState` but for functional components.
+
+useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
+
 ## Acta.setState
 
-`Acta.setState` can be called from anywhere (including in your dev console) and will trigger the callback in all the components that have subscribed to this state.
+`Acta.setState` can be called from anywhere (including your dev console). It updates the value of the selected key in **Acta** and triggers the callbacks in all subscribing components.
 
 **Example**
 
 ```typescript
 Acta.setState(
   {
-    ACTA_KEY_TODOS: ['todo1', 'todo2'],
+    ACTA_STATE_KEY: 'value',
   },
   'localStorage'
 );

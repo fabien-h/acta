@@ -10,15 +10,15 @@ Super light and dead simple state manager and event dispatcher for react.
 [![badgen npm version](https://badgen.net/npm/v/acta)](https://www.npmjs.com/package/acta)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-Acta is providing:
+## Acta is providing
 
-- A global state with keys indexed values.
+- A unique global state with keys indexed values.
 - A one line straight forward way of subscribing to the application state in a component `Acta.subscribeState('appStateKey', 'localStateKey');`.
-- A hook for functional components `const valueFromActa = Acta.useActaState('appStateKey');`
-- A simple way of setting / getting the state `Acta.setState({appStateKey: value})`
+- A hook for functional components `const valueFromActa = Acta.useActaState('appStateKey');` that share states with class components.
+- A simple way of setting / getting the state `Acta.setState({appStateKey: value})`.
 - A one line straight forward way of subscribing application events in a component `Acta.subscribeState('appEventKey', handler);`.
-- A hook for functional components `Acta.useActaEvent('appEventKey', handler);`
-- A simple way of dispatching an event `Acta.dispatchEvent('appEventKey', value)`
+- A hook for functional components `Acta.useActaEvent('appEventKey', handler);` that share events. with class components.
+- A simple way of dispatching an event `Acta.dispatchEvent('appEventKey', value)`.
 - Optionnal Local or session storage persistence out of the box.
 - Shared state between tabs and windows.
 - Great performances since the store contains references to the callbacks instead of having to iterate on every reducer and stop only when it find the corresponding ones.

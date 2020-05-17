@@ -16,6 +16,10 @@ Examples:
 
 ## Managing my state and event keys
 
+### Case conventions
+
+Usually people go for the underscore full caps option. An acta state key would look like this: `ACTA_STATE_KEY_USER_DATA`.
+
 ### With TypeScript
 
 The best way to manage your keys is to use a TypeScript enum.

@@ -39,14 +39,14 @@ export interface IActa {
 
   ensureActaID: (context: IComponentWithID) => boolean | string;
 
-  useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
-
   subscribeState: (
     actaStateKey: string,
     callbackOrLocalStateKey: string | ((valueToReturn: any) => void),
     context: IComponentWithID,
     defaultValue?: TActaValue
   ) => void;
+
+  useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
 
   unsubscribeState: (stateKey: string, context: IComponentWithID) => void;
 
@@ -66,15 +66,15 @@ export interface IActa {
     persistenceType?: 'localStorage' | 'sessionStorage'
   ) => void;
 
-  useActaEvent: (
-    stateKey: string,
-    callback: (value?: TActaValue) => void
-  ) => void | boolean;
-
   subscribeEvent: (
     eventKey: string,
     callback: (valueToReturn: any) => void,
     context: IComponentWithID
+  ) => void | boolean;
+
+  useActaEvent: (
+    stateKey: string,
+    callback: (value?: TActaValue) => void
   ) => void | boolean;
 
   unsubscribeEvent: (eventKey: string, context: IComponentWithID) => void;
