@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
 import { IActa, TActaValue } from './types';
 import { isObject } from './isObject';
 
@@ -134,7 +134,7 @@ const Acta: IActa = {
      * Init the state hook that wll return the value and
      * trigger a re-render for the component
      */
-    const [actaValue, setActaValue] = useState(initialValue);
+    const [actaValue, setActaValue] = React.useState(initialValue);
 
     /* If this state does not already exists, creates it */
     this.states[actaStateKey] = this.states[actaStateKey] || {
@@ -148,7 +148,7 @@ const Acta: IActa = {
      * the component is rendered and unsubscribe when the component
      * is unmounted
      */
-    useEffect(() => {
+    React.useEffect(() => {
       /* Subscribe */
       this.states[actaStateKey].subscribtions[`__${internalID}`] = {
         callback: (value) => setActaValue(value),
@@ -466,7 +466,7 @@ const Acta: IActa = {
      * the component is rendered and unsubscribe when the component
      * is unmounted
      */
-    useEffect(() => {
+    React.useEffect(() => {
       /* Subscribe */
       this.events[eventKey][`__${internalID}`] = {
         callback,

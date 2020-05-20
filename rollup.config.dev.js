@@ -9,6 +9,7 @@ export default {
   },
   external: [
     ...Object.keys(_package.dependencies || {}),
+    ...Object.keys(_package.devDependencies || {}),
     ...Object.keys(_package.peerDependencies || {}),
   ],
   plugins,
