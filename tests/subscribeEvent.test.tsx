@@ -52,8 +52,9 @@ describe('Acta subscribeState.test method', () => {
 
   test('When a component has already subscribed to an event, a new subscritpion return false', () => {
     const actaEventSubs = Acta.events[ACTA_EVENT_KEY_MESSAGE];
-    const alreadyEventSubscribedContext =
-      actaEventSubs[Object.keys(actaEventSubs)[0]].context;
+    const alreadyEventSubscribedContext = actaEventSubs[
+      Object.keys(actaEventSubs)[0]
+    ].context as IComponentWithID;
 
     expect(
       Acta.subscribeEvent(

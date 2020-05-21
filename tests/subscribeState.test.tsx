@@ -8,7 +8,7 @@ import { IComponentWithID } from '../src/types';
 
 const paramsErrorMessage = `Acta.subscribeState params =>
 [0]: string,
-[1]: function,
+[1]: function or string,
 [2]: mounted react component`;
 
 describe('Acta subscribeState.test method', () => {
@@ -50,7 +50,8 @@ describe('Acta subscribeState.test method', () => {
 
   test('When a component has already subscribed to a state, a new subscritpion return false', () => {
     const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
-    const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]].context;
+    const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]]
+      .context as IComponentWithID;
 
     expect(
       Acta.subscribeState(
@@ -58,12 +59,13 @@ describe('Acta subscribeState.test method', () => {
         () => true,
         alreadySubscribedContext
       )
-    ).toBe(false);
+    ).toBeUndefined();
   });
 
   test('When a component unmounts, it should not be in the acta subs anymore', () => {
     const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
-    const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]].context;
+    const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]]
+      .context as IComponentWithID;
 
     // We should have one sub
     expect(Object.keys(actaSubs).length).toBe(1);
@@ -114,10 +116,6 @@ describe('Acta subscribeState.test method', () => {
   test('When the callback param is not a valid function, should throw an error', () => {
     expect(() => {
       // @ts-ignore
-      Acta.subscribeState('testKey', '', {} as IComponentWithID);
-    }).toThrowError(paramsErrorMessage);
-    expect(() => {
-      // @ts-ignore
       Acta.subscribeState('testKey', null, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
@@ -134,7 +132,7 @@ describe('Acta subscribeState.test method', () => {
     }).toThrowError(paramsErrorMessage);
   });
 
-  test('When the callback param is not a valid function, should throw an error', () => {
+  test('When the context is not param is not an object, should throw an error', () => {
     expect(() => {
       // @ts-ignore
       Acta.subscribeState('testKey', () => true);
@@ -153,7 +151,7 @@ describe('Acta subscribeState.test method', () => {
     }).toThrowError(paramsErrorMessage);
   });
 
-  test('When the initial value is a circular object, should return false', () => {
+  test('When the initial value is an object containing a circular object, should return false', () => {
     const circularObject: { item?: object } = {};
     circularObject.item = circularObject;
 
@@ -164,6 +162,6 @@ describe('Acta subscribeState.test method', () => {
         {} as IComponentWithID,
         circularObject
       )
-    ).toBe(false);
+    ).toBe(undefined);
   });
 });

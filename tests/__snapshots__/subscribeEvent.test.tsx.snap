@@ -10,9 +10,7 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
   />
   <p
     id="stateWithInitialValue"
-  >
-    THIS IS AN INITIAL VALUE
-  </p>
+  />
 </div>
 `;
 

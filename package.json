@@ -23,7 +23,7 @@
     "release": "yarn run build && release-it",
     "lint": "eslint src/*.ts --cache",
     "lint-md": "remark .",
-    "test": "jest --no-cache --verbose --runInBand --collectCoverage",
+    "test": "jest --verbose --runInBand --collectCoverage",
     "test:watch": "jest --watch --verbose --runInBand --collectCoverage"
   },
   "release-it": {
