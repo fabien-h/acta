@@ -7,7 +7,7 @@ You might need those methods for some edge cases, so they are exposed. But you s
 - `Acta.hasState`:
 - `Acta.deleteState`:
 
-## Acta.unsubscribeState & Acta.unsubscribeEvent
+## Acta.unsubscribeState // Acta.unsubscribeEvent
 
 Kills the component subscription to a state or an event. This method will be called automatically when a component unmounts.
 
@@ -25,7 +25,7 @@ unsubscribeState: (stateKey: string, context: React.Component) => void;
 unsubscribeEvent: (eventKey: string, context: React.Component) => void;
 ```
 
-## Acta.HasState
+## Acta.hasState
 
 To check if a state exists; return true if it does, false if it does not.
 
@@ -43,7 +43,7 @@ Acta.hasState('ACTA_STATE_KEY');
 hasState: (stateKey: string) => boolean;
 ```
 
-## Acta.DeleteState
+## Acta.deleteState
 
 If you need to clean up your store. It makes sense when the user logs out and you want to delete all thee keys in the local storage. But you can also set them all to `''`.
 
