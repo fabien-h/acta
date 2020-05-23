@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Acta subscribeState.test method When a state change, the callback is triggered in the component. 1`] = `
+<div>
+  <h1>
+    Elements
+  </h1>
+  <ul
+    id="listContainer"
+  />
+  <p
+    id="stateWithInitialValue"
+  />
+</div>
+`;
+
+exports[`Acta subscribeState.test method When a state change, the callback is triggered in the component. 2`] = `
+<div>
+  <h1>
+    Elements
+  </h1>
+  <ul
+    id="listContainer"
+  >
+    <li>
+      a
+    </li>
+    <li>
+      b
+    </li>
+  </ul>
+  <p
+    id="stateWithInitialValue"
+  >
+    THIS IS AN INITIAL VALUE
+  </p>
+</div>
+`;

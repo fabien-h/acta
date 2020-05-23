@@ -24,6 +24,22 @@ export const dispatchEventInActa = () =>
 export const dispatchEventInActaWithNullValue = () =>
   Acta.dispatchEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE);
 
+const FunctionalComponent: React.FC = () => {
+  const valueFromState = Acta.useActaState('actaStateKey');
+  let valueFromEvent = 'Not set yet';
+  Acta.useActaEvent(
+    'actaEventKey',
+    (value) => (valueFromEvent = value as string)
+  );
+
+  return (
+    <div>
+      <p id='valueFromState'>{valueFromState || 'Not set yet'}</p>
+      <p id='valueFromEvent'>{valueFromEvent || 'Not set yet'}</p>
+    </div>
+  );
+};
+
 export default class App extends React.Component<IProps, IState> {
   public state: IState = {
     elements: [],
@@ -80,6 +96,8 @@ export default class App extends React.Component<IProps, IState> {
         {message && <p id='message'>{message}</p>}
 
         <p id='stateWithInitialValue'>{stateWithInitialValue}</p>
+
+        <FunctionalComponent />
       </div>
     );
   }
