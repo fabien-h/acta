@@ -143,11 +143,6 @@ const Acta: IActa = {
       subscribtions: {},
     };
 
-    /* Subscribe to the acta state */
-    this.states[actaStateKey].subscribtions[`__${internalID}`] = {
-      callback: (value) => setActaValue(value),
-    };
-
     /**
      * Add the life cycle hook to subscribe to the state when
      * the component is rendered and unsubscribe when the component
@@ -155,6 +150,11 @@ const Acta: IActa = {
      */
     React.useEffect(
       () => {
+        /* Subscribe to the acta state */
+        this.states[actaStateKey].subscribtions[`__${internalID}`] = {
+          callback: (value) => setActaValue(value),
+        };
+
         /* Unsubscribe when the component will unmount */
         return () => {
           delete this.states[actaStateKey].subscribtions[String(internalID)];
@@ -466,11 +466,6 @@ const Acta: IActa = {
     /* If this state does not already exists, creates it */
     this.events[eventKey] = this.events[eventKey] || {};
 
-    /* Subscribe to the event */
-    this.events[eventKey][`__${internalID}`] = {
-      callback,
-    };
-
     /**
      * Add the life cycle hook to subscribe to the state when
      * the component is rendered and unsubscribe when the component
@@ -478,6 +473,11 @@ const Acta: IActa = {
      */
     React.useEffect(
       () => {
+        /* Subscribe to the event */
+        this.events[eventKey][`__${internalID}`] = {
+          callback,
+        };
+
         /* Unsubscribe */
         return () => {
           delete this.events[eventKey][`__${internalID}`];
