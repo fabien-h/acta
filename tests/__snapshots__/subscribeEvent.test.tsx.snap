@@ -11,6 +11,18 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
   <p
     id="stateWithInitialValue"
   />
+  <div>
+    <p
+      id="valueFromState"
+    >
+      Not set yet
+    </p>
+    <p
+      id="valueFromEvent"
+    >
+      Not set yet
+    </p>
+  </div>
 </div>
 `;
 
@@ -32,5 +44,17 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
   >
     THIS IS AN INITIAL VALUE
   </p>
+  <div>
+    <p
+      id="valueFromState"
+    >
+      Not set yet
+    </p>
+    <p
+      id="valueFromEvent"
+    >
+      Not set yet
+    </p>
+  </div>
 </div>
 `;
