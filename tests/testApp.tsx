@@ -31,6 +31,7 @@ export const dispatchEventInActa = () =>
 export const dispatchEventInActaWithNullValue = () =>
   Acta.dispatchEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FunctionalComponent: React.FC = () => {
   const valueFromState = Acta.useActaState(ACTA_KEY_FOR_STATE_HOOK);
 
