@@ -13,9 +13,16 @@ export const ACTA_STATE_WITH_INITIAL_VALUE = 'ACTA_STATE_WITH_INITIAL_VALUE';
 export const ACTA_EVENT_KEY_MESSAGE = 'ACTA_EVENT_KEY_MESSAGE';
 export const ACTA_EVENT_KEY_WITH_NULL_VALUE = 'ACTA_EVENT_KEY_WITH_NULL_VALUE';
 
+export const ACTA_KEY_FOR_STATE_HOOK = 'ACTA_KEY_FOR_STATE_HOOK';
+
 export const addElementsInActa = () =>
   Acta.setState({
     [ACTA_STATE_ELEMENTS_LIST]: ['a', 'b'],
+  });
+
+export const setHookValueInActa = () =>
+  Acta.setState({
+    [ACTA_KEY_FOR_STATE_HOOK]: 'Value from updated state',
   });
 
 export const dispatchEventInActa = () =>
@@ -25,7 +32,8 @@ export const dispatchEventInActaWithNullValue = () =>
   Acta.dispatchEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE);
 
 const FunctionalComponent: React.FC = () => {
-  const valueFromState = Acta.useActaState('actaStateKey');
+  const valueFromState = Acta.useActaState(ACTA_KEY_FOR_STATE_HOOK);
+
   let valueFromEvent = 'Not set yet';
   Acta.useActaEvent(
     'actaEventKey',
@@ -33,7 +41,7 @@ const FunctionalComponent: React.FC = () => {
   );
 
   return (
-    <div>
+    <div id='functionnalComponentRoot'>
       <p id='valueFromState'>{valueFromState || 'Not set yet'}</p>
       <p id='valueFromEvent'>{valueFromEvent || 'Not set yet'}</p>
     </div>

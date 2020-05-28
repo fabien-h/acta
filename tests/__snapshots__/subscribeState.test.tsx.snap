@@ -11,7 +11,9 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
   <p
     id="stateWithInitialValue"
   />
-  <div>
+  <div
+    id="functionnalComponentRoot"
+  >
     <p
       id="valueFromState"
     >
@@ -46,7 +48,9 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
   >
     THIS IS AN INITIAL VALUE
   </p>
-  <div>
+  <div
+    id="functionnalComponentRoot"
+  >
     <p
       id="valueFromState"
     >
