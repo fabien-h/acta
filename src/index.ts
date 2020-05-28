@@ -143,21 +143,26 @@ const Acta: IActa = {
       subscribtions: {},
     };
 
+    /* Subscribe to the acta state */
+    this.states[actaStateKey].subscribtions[`__${internalID}`] = {
+      callback: (value) => setActaValue(value),
+    };
+
     /**
      * Add the life cycle hook to subscribe to the state when
      * the component is rendered and unsubscribe when the component
      * is unmounted
      */
-    React.useEffect(() => {
-      /* Subscribe */
-      this.states[actaStateKey].subscribtions[`__${internalID}`] = {
-        callback: (value) => setActaValue(value),
-      };
-      /* Unsubscribe */
-      return () => {
-        delete this.states[actaStateKey].subscribtions[String(internalID)];
-      };
-    });
+    React.useEffect(
+      () => {
+        /* Unsubscribe when the component will unmount */
+        return () => {
+          delete this.states[actaStateKey].subscribtions[String(internalID)];
+        };
+      },
+      /* This empty array makes that the return triggers only on the final unmount */
+      []
+    );
 
     /* Returns the initial value for immediate use */
     return actaValue;
@@ -461,21 +466,26 @@ const Acta: IActa = {
     /* If this state does not already exists, creates it */
     this.events[eventKey] = this.events[eventKey] || {};
 
+    /* Subscribe to the event */
+    this.events[eventKey][`__${internalID}`] = {
+      callback,
+    };
+
     /**
      * Add the life cycle hook to subscribe to the state when
      * the component is rendered and unsubscribe when the component
      * is unmounted
      */
-    React.useEffect(() => {
-      /* Subscribe */
-      this.events[eventKey][`__${internalID}`] = {
-        callback,
-      };
-      /* Unsubscribe */
-      return () => {
-        delete this.events[eventKey][`__${internalID}`];
-      };
-    });
+    React.useEffect(
+      () => {
+        /* Unsubscribe */
+        return () => {
+          delete this.events[eventKey][`__${internalID}`];
+        };
+      },
+      /* This empty array makes that the return triggers only on the final unmount */
+      []
+    );
   },
 
   /**
