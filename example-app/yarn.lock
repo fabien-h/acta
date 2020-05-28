@@ -1875,10 +1875,10 @@ acorn@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.1.tgz#e35668de0b402f359de515c5482a1ab9f89a69bf"
   integrity sha512-add7dgA5ppRPxCFJoAGfMDi7PIBXq1RtGo7BhbLaxwrXPOmw8gq48Y9ozT01hUKy9byMjlR20EJhu5zlkErEkg==
 
-acta@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/acta/-/acta-3.0.2.tgz#4ad576ca3614db163405f4c9b46860bab34a1ff9"
-  integrity sha512-LbwRdbXmZN19uTVMUQYA30YmYVJ/p1JHqahwAO5R3u7g4ARWlBAqfeJyvz1yyToZCXf+EFM7nhqkxNFbv7xQFg==
+acta@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/acta/-/acta-3.0.3.tgz#c28a083634b5f4cea387101a11ed9e5d17a74405"
+  integrity sha512-z+R0iXxv557D4eAkO5iCXOzB9e4Sukq9VNWBW9RM0HAmuBkfJMuB29dyurOITo+Wul6z9wuxiYWAj3x3ggGltA==
 
 address@1.1.2, address@^1.0.1:
   version "1.1.2"

@@ -12,13 +12,17 @@ export const FunctionalTodosList = () => {
 
   return (
     <div>
-      FunctionalTodosList
+      <h2>Functional component</h2>
+
       {(!todos || todos.length === 0) && <p>No todo yet. Add one to start!</p>}
+
       {todos.map((todo) => (
         <div key={todo.date}>
-          <span>{todo.label}</span>
-          <span>{todo.date.toLocaleString()}</span>
-          <button onClick={() => deleteTodo(todo.date)}>- Delete</button>
+          <div>
+            <span>{todo.label}</span>
+            <span>{new Date(todo.date).toLocaleDateString()}</span>
+          </div>
+          <button onClick={() => deleteTodo(todo.date)}>Delete</button>
         </div>
       ))}
     </div>

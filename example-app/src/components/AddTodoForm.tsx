@@ -19,12 +19,15 @@ export class AddTodoForm extends React.Component {
   public render(): JSX.Element {
     return (
       <form onSubmit={this.onSubmit}>
+        <h3>Add todo</h3>
+
         <input
           type='text'
-          placeholder='todo label'
+          placeholder='Todo label'
           ref={(input) => (this.labelInput = input as HTMLInputElement)}
         />
-        <input type='submit' value='+ Add todo' />
+
+        <input type='submit' value='Add todo' />
       </form>
     );
   }
