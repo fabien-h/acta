@@ -11,6 +11,74 @@
     }
   }
 
+  > form {
+    padding: 20px;
+    border-bottom: 1px solid #000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: #eee;
+
+    > h3 {
+      width: 100%;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    > input[type='text'] {
+      display: block;
+      width: 100%;
+      border: 1px solid #000;
+      padding: 10px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    > p {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      > input[type='checkbox'] {
+        display: block;
+        margin-left: 5px;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        background-color: #fff;
+        border: 1px solid #000;
+        position: relative;
+        cursor: pointer;
+
+        &:checked {
+          &::after {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 11px;
+            height: 11px;
+            top: 1px;
+            left: 1px;
+            background-color: #000;
+          }
+        }
+      }
+    }
+
+    > input[type='submit'] {
+      border: none;
+      background: #000;
+      padding: 10px 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+
   > .todoLists {
     border-bottom: 1px solid #000;
     display: flex;
@@ -87,74 +155,6 @@
           }
         }
       }
-    }
-  }
-
-  > form {
-    padding: 20px;
-    border-bottom: 1px solid #000;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    background-color: #eee;
-
-    > h3 {
-      width: 100%;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    > input[type='text'] {
-      display: block;
-      width: 100%;
-      border: 1px solid #000;
-      padding: 10px;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    > p {
-      font-size: 12px;
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-
-      > input[type='checkbox'] {
-        display: block;
-        margin-left: 5px;
-        appearance: none;
-        width: 15px;
-        height: 15px;
-        background-color: #fff;
-        border: 1px solid #000;
-        position: relative;
-        cursor: pointer;
-
-        &:checked {
-          &:after {
-            content: '';
-            display: block;
-            position: absolute;
-            width: 11px;
-            height: 11px;
-            top: 1px;
-            left: 1px;
-            background-color: #000;
-          }
-        }
-      }
-    }
-
-    > input[type='submit'] {
-      border: none;
-      background: #000;
-      padding: 10px 20px;
-      font-weight: bold;
-      text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 1px;
-      cursor: pointer;
-      color: #fff;
     }
   }
 

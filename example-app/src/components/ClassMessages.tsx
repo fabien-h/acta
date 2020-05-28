@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Acta from 'acta';
 import { ACTA_EVENT_MESSAGE } from '../constants/actaKeys';
 import { Message } from './Message';
