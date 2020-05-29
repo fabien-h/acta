@@ -2,10 +2,6 @@
 
 Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?".
 
-- **Explicit over implicit.**
-- **Minimal dataflow: the component subscribing is the one using the data.**
-- **Zero setup, no provider or observable system.**
-
 [![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
 [![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org/)
 ![badgen types included](https://badgen.net/npm/types/acta)
@@ -14,6 +10,12 @@ Super light dead simple state manager and event dispatcher for react. May you ne
 [![badgen npm version](https://badgen.net/npm/v/acta)](https://www.npmjs.com/package/acta)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
+
+- **Explicit over implicit.**
+- **Minimal dataflow: the component subscribing is the one using the data.**
+- **Zero setup, no provider or observable system.**
+
+[Get to the quick start](https://fabien-h.github.io/acta/#/quickstart)
 
 ## Acta is providing
 
