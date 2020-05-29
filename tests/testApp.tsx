@@ -78,12 +78,7 @@ export default class App extends React.Component<IProps, IState> {
       'THIS IS AN INITIAL VALUE'
     );
 
-    Acta.subscribeState(
-      ACTA_STATE_WITH_INITIAL_VALUE,
-      () => false,
-      this,
-      'THIS IS AN INITIAL VALUE'
-    );
+    Acta.subscribeState(ACTA_SIMPLE_STATE_KEY, 'simpleValue', this);
 
     Acta.subscribeEvent(
       ACTA_EVENT_KEY_MESSAGE,
@@ -124,6 +119,13 @@ export default class App extends React.Component<IProps, IState> {
         {message && <p id='message'>{message}</p>}
 
         <p id='simpleValue'>{simpleValue}</p>
+
+        <button
+          id='setSimpleValueState'
+          onClick={() => this.setState({ simpleValue: 'Set' })}
+        >
+          set simple value
+        </button>
 
         <p id='stateWithInitialValue'>{stateWithInitialValue}</p>
 

@@ -13,6 +13,12 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
   >
     Not Set
   </p>
+  <button
+    id="setSimpleValueState"
+    onClick={[Function]}
+  >
+    set simple value
+  </button>
   <p
     id="stateWithInitialValue"
   />
@@ -59,6 +65,12 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
   >
     Not Set
   </p>
+  <button
+    id="setSimpleValueState"
+    onClick={[Function]}
+  >
+    set simple value
+  </button>
   <p
     id="stateWithInitialValue"
   >

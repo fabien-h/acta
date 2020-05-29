@@ -1,4 +1,5 @@
 // @ts-nocheck
+import Acta from '../src';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
 import renderer, { ReactTestRenderer } from 'react-test-renderer';
@@ -99,56 +100,4 @@ describe('Acta useActaState hook test', () => {
       Acta.useActaState(() => true);
     }).toThrowError(paramsErrorMessage);
   });
-
-  //   test('When the callback param is not a valid function, should throw an error', () => {
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', null, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', undefined, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', [], {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', {}, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //   });
-
-  //   test('When the context is not param is not an object, should throw an error', () => {
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', () => true);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', () => true, '');
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', () => true, []);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('testKey', () => true, null);
-  //     }).toThrowError(paramsErrorMessage);
-  //   });
-
-  //   test('When the initial value is an object containing a circular object, should return false', () => {
-  //     const circularObject: { item?: object } = {};
-  //     circularObject.item = circularObject;
-
-  //     expect(
-  //       Acta.subscribeState(
-  //         'testKey',
-  //         () => true,
-  //         {} as IComponentWithID,
-  //         circularObject
-  //       )
-  //     ).toBe(undefined);
-  //   });
 });

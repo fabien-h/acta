@@ -13,6 +13,12 @@ exports[`Acta useActaState hook test When a state change, the value in the the c
   >
     Not Set
   </p>
+  <button
+    id="setSimpleValueState"
+    onClick={[Function]}
+  >
+    set simple value
+  </button>
   <p
     id="stateWithInitialValue"
   />
@@ -52,6 +58,12 @@ exports[`Acta useActaState hook test When a state change, the value in the the c
   >
     Not Set
   </p>
+  <button
+    id="setSimpleValueState"
+    onClick={[Function]}
+  >
+    set simple value
+  </button>
   <p
     id="stateWithInitialValue"
   />

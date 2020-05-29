@@ -51,6 +51,25 @@ describe('Acta subscribeState.test method', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  test('When a component subscribe with a string, the corresponding local state key should be updated', () => {
+    const app = renderer.create(<App />);
+
+    // Before the unmount, we should have the base value for the paragraph
+    expect(app.root.findByProps({ id: 'simpleValue' }).props.children).toBe(
+      'Not Set'
+    );
+
+    // Set the new value
+    renderer.act(() => {
+      app.root.findByProps({ id: 'setSimpleValueState' }).props.onClick();
+    });
+
+    // Check if the value has changed
+    expect(app.root.findByProps({ id: 'simpleValue' }).props.children).toBe(
+      'Set'
+    );
+  });
+
   test('When a component has already subscribed to a state, a new subscritpion return false', () => {
     const actaSubs =
       Acta.states[ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK].subscribtions;
@@ -73,7 +92,7 @@ describe('Acta subscribeState.test method', () => {
       .context as IComponentWithID;
 
     // We should have one sub
-    expect(Object.keys(actaSubs).length).toBe(1);
+    const baseSubCount = Object.keys(actaSubs).length;
 
     if (
       alreadySubscribedContext &&
@@ -82,8 +101,8 @@ describe('Acta subscribeState.test method', () => {
       alreadySubscribedContext?.componentWillUnmount();
     }
 
-    // We should not has subs anymore
-    expect(Object.keys(actaSubs).length).toBe(0);
+    // We should have one less sub
+    expect(Object.keys(actaSubs).length).toBe(baseSubCount - 1);
   });
 
   /**
