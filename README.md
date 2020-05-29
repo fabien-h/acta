@@ -1,21 +1,22 @@
+To get started in 3 minutes : [get to the quick start](https://fabien-h.github.io/acta/#/quickstart).
+
 # Acta
 
 Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?".
 
 [![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
+[![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
+[![Coverage Status](https://coveralls.io/repos/github/fabien-h/acta/badge.svg?branch=master)](https://coveralls.io/github/fabien-h/acta?branch=master)
+![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
 [![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org/)
 ![badgen types included](https://badgen.net/npm/types/acta)
 [![badgen mit licence](https://badgen.net/badge/license/MIT/blue)](https://en.wikipedia.org/wiki/MIT_License)
-![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
 [![badgen npm version](https://badgen.net/npm/v/acta)](https://www.npmjs.com/package/acta)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
 
 - **Explicit over implicit.**
 - **Minimal dataflow: the component subscribing is the one using the data.**
 - **Zero setup, no provider or observable system.**
-
-[Get to the quick start](https://fabien-h.github.io/acta/#/quickstart)
 
 ## Acta is providing
 
