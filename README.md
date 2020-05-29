@@ -1,3 +1,5 @@
+# <a href='https://fabien-h.github.io/acta/#/'><img src='https://fabien-h.github.io/acta/_media/acta-logo.png' height='60' alt='Acta Logo' aria-label='fabien-h.github.io/acta/' /></a>
+
 To get started in 3 minutes : [get to the quick start](https://fabien-h.github.io/acta/#/quickstart).
 
 # Acta
