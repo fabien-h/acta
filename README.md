@@ -2,8 +2,6 @@
 
 To get started in 3 minutes : [get to the quick start](https://fabien-h.github.io/acta/#/quickstart).
 
-# Acta
-
 Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?".
 
 [![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
