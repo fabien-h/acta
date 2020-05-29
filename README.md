@@ -1,4 +1,4 @@
-# <a href='https://fabien-h.github.io/acta/#/'><img src='https://github.com/fabien-h/acta/blob/master/docs/_media/acta-logo.png' height='60' alt='Acta Logo' aria-label='fabien-h.github.io/acta/' /></a>
+# <a href='https://fabien-h.github.io/acta/#/'><img src='https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/acta-logo.png' height='60' alt='Acta Logo' aria-label='fabien-h.github.io/acta/' /></a>
 
 To get started in 3 minutes : [get to the quick start](https://fabien-h.github.io/acta/#/quickstart).
 
