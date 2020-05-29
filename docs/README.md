@@ -13,6 +13,7 @@ Super light dead simple state manager and event dispatcher for react. May you ne
 ![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
 [![badgen npm version](https://badgen.net/npm/v/acta)](https://www.npmjs.com/package/acta)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
 
 ## Acta is providing
 
