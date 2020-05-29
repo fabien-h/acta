@@ -157,7 +157,7 @@ const Acta: IActa = {
 
         /* Unsubscribe when the component will unmount */
         return () => {
-          delete this.states[actaStateKey].subscribtions[String(internalID)];
+          delete this.states[actaStateKey].subscribtions[`__${internalID}`];
         };
       },
       /* This empty array makes that the return triggers only on the final unmount */
