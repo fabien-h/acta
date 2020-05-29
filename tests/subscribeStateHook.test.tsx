@@ -3,7 +3,11 @@
 import React from 'react';
 import renderer, { ReactTestRenderer } from 'react-test-renderer';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import App, { setHookValueInActa } from './testApp';
+import App, { setHookValueInActa, ACTA_KEY_FOR_STATE_HOOK } from './testApp';
+
+const paramsErrorMessage = `Acta.useActaState params =>
+[0]: string,
+[1]: optionnal, string | number | object | boolean | null | undefined`;
 
 describe('Acta useActaState hook test', () => {
   /**
@@ -59,72 +63,42 @@ describe('Acta useActaState hook test', () => {
       'Value from updated state'
     );
     expect(tree).toMatchSnapshot();
+
+    // Get the base number of subscribtions for the state
+    const subscribtionCount = Object.keys(
+      Acta.states[ACTA_KEY_FOR_STATE_HOOK].subscribtions
+    ).length;
+
+    // Unmount the functionnal component
+    renderer.act(() => {
+      app.root
+        .findByProps({ id: 'unmountFunctionalComponent' })
+        .props.onClick();
+    });
+
+    // Subs count should have decreased by one
+    expect(
+      Object.keys(Acta.states[ACTA_KEY_FOR_STATE_HOOK].subscribtions).length
+    ).toBe(subscribtionCount - 1);
   });
 
-  //   test('When a component has already subscribed to a state, a new subscritpion return false', () => {
-  //     const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
-  //     const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]]
-  //       .context as IComponentWithID;
-
-  //     expect(
-  //       Acta.subscribeState(
-  //         ACTA_STATE_ELEMENTS_LIST,
-  //         () => true,
-  //         alreadySubscribedContext
-  //       )
-  //     ).toBeUndefined();
-  //   });
-
-  //   test('When a component unmounts, it should not be in the acta subs anymore', () => {
-  //     const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
-  //     const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]]
-  //       .context as IComponentWithID;
-
-  //     // We should have one sub
-  //     expect(Object.keys(actaSubs).length).toBe(1);
-
-  //     if (
-  //       alreadySubscribedContext &&
-  //       alreadySubscribedContext.componentWillUnmount
-  //     ) {
-  //       alreadySubscribedContext?.componentWillUnmount();
-  //     }
-
-  //     // We should not has subs anymore
-  //     expect(Object.keys(actaSubs).length).toBe(0);
-  //   });
-
-  //   /**
-  //    * Errors management
-  //    */
-  //   test('When the stateKey param is not a valid string, should throw an error', () => {
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState(null, () => true, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState('', () => true, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState([], () => true, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       // @ts-ignore
-  //       Acta.subscribeState({}, () => true, {} as IComponentWithID);
-  //     }).toThrowError(paramsErrorMessage);
-  //     expect(() => {
-  //       Acta.subscribeState(
-  //         // @ts-ignore
-  //         () => true,
-  //         // @ts-ignore
-  //         () => true,
-  //         // @ts-ignore
-  //         {} as IComponentWithID
-  //       );
-  //     }).toThrowError(paramsErrorMessage);
-  //   });
+  /**
+   * Errors management
+   */
+  test('When the stateKey param is not a valid string, should throw an error', () => {
+    expect(() => {
+      Acta.useActaState(null);
+    }).toThrowError(paramsErrorMessage);
+    expect(() => {
+      Acta.useActaState([]);
+    }).toThrowError(paramsErrorMessage);
+    expect(() => {
+      Acta.useActaState({});
+    }).toThrowError(paramsErrorMessage);
+    expect(() => {
+      Acta.useActaState(() => true);
+    }).toThrowError(paramsErrorMessage);
+  });
 
   //   test('When the callback param is not a valid function, should throw an error', () => {
   //     expect(() => {

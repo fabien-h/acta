@@ -9,6 +9,11 @@ exports[`Acta useActaState hook test When a state change, the value in the the c
     id="listContainer"
   />
   <p
+    id="simpleValue"
+  >
+    Not Set
+  </p>
+  <p
     id="stateWithInitialValue"
   />
   <div
@@ -25,6 +30,12 @@ exports[`Acta useActaState hook test When a state change, the value in the the c
       Not set yet
     </p>
   </div>
+  <button
+    id="unmountFunctionalComponent"
+    onClick={[Function]}
+  >
+    unmount functionnal component
+  </button>
 </div>
 `;
 
@@ -36,6 +47,11 @@ exports[`Acta useActaState hook test When a state change, the value in the the c
   <ul
     id="listContainer"
   />
+  <p
+    id="simpleValue"
+  >
+    Not Set
+  </p>
   <p
     id="stateWithInitialValue"
   />
@@ -53,5 +69,11 @@ exports[`Acta useActaState hook test When a state change, the value in the the c
       Not set yet
     </p>
   </div>
+  <button
+    id="unmountFunctionalComponent"
+    onClick={[Function]}
+  >
+    unmount functionnal component
+  </button>
 </div>
 `;

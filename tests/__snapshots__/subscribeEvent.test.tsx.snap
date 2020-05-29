@@ -9,6 +9,11 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
     id="listContainer"
   />
   <p
+    id="simpleValue"
+  >
+    Not Set
+  </p>
+  <p
     id="stateWithInitialValue"
   />
   <div
@@ -25,6 +30,12 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
       Not set yet
     </p>
   </div>
+  <button
+    id="unmountFunctionalComponent"
+    onClick={[Function]}
+  >
+    unmount functionnal component
+  </button>
 </div>
 `;
 
@@ -40,6 +51,11 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
     id="message"
   >
     A message from an Acta event.
+  </p>
+  <p
+    id="simpleValue"
+  >
+    Not Set
   </p>
   <p
     id="stateWithInitialValue"
@@ -60,5 +76,11 @@ exports[`Acta subscribeState.test method When an event is dispatched, the callba
       Not set yet
     </p>
   </div>
+  <button
+    id="unmountFunctionalComponent"
+    onClick={[Function]}
+  >
+    unmount functionnal component
+  </button>
 </div>
 `;

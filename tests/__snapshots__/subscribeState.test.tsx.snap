@@ -9,6 +9,11 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
     id="listContainer"
   />
   <p
+    id="simpleValue"
+  >
+    Not Set
+  </p>
+  <p
     id="stateWithInitialValue"
   />
   <div
@@ -25,6 +30,12 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
       Not set yet
     </p>
   </div>
+  <button
+    id="unmountFunctionalComponent"
+    onClick={[Function]}
+  >
+    unmount functionnal component
+  </button>
 </div>
 `;
 
@@ -44,6 +55,11 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
     </li>
   </ul>
   <p
+    id="simpleValue"
+  >
+    Not Set
+  </p>
+  <p
     id="stateWithInitialValue"
   >
     THIS IS AN INITIAL VALUE
@@ -62,5 +78,11 @@ exports[`Acta subscribeState.test method When a state change, the callback is tr
       Not set yet
     </p>
   </div>
+  <button
+    id="unmountFunctionalComponent"
+    onClick={[Function]}
+  >
+    unmount functionnal component
+  </button>
 </div>
 `;

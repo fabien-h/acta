@@ -2,7 +2,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import App, { addElementsInActa, ACTA_STATE_ELEMENTS_LIST } from './testApp';
+import App, {
+  addElementsInActa,
+  ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK,
+} from './testApp';
 import Acta from '../src';
 import { IComponentWithID } from '../src/types';
 
@@ -49,13 +52,14 @@ describe('Acta subscribeState.test method', () => {
   });
 
   test('When a component has already subscribed to a state, a new subscritpion return false', () => {
-    const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
+    const actaSubs =
+      Acta.states[ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK].subscribtions;
     const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]]
       .context as IComponentWithID;
 
     expect(
       Acta.subscribeState(
-        ACTA_STATE_ELEMENTS_LIST,
+        ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK,
         () => true,
         alreadySubscribedContext
       )
@@ -63,7 +67,8 @@ describe('Acta subscribeState.test method', () => {
   });
 
   test('When a component unmounts, it should not be in the acta subs anymore', () => {
-    const actaSubs = Acta.states[ACTA_STATE_ELEMENTS_LIST].subscribtions;
+    const actaSubs =
+      Acta.states[ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK].subscribtions;
     const alreadySubscribedContext = actaSubs[Object.keys(actaSubs)[0]]
       .context as IComponentWithID;
 

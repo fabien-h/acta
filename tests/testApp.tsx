@@ -5,9 +5,13 @@ interface IProps {}
 interface IState {
   elements: Array<string>;
   message?: string;
+  functionalComponentDisplayed: boolean;
+  simpleValue: string;
 }
 
-export const ACTA_STATE_ELEMENTS_LIST = 'ACTA_STATE_ELEMENTS_LIST';
+export const ACTA_SIMPLE_STATE_KEY = 'ACTA_SIMPLE_STATE_KEY';
+export const ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK =
+  'ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK';
 export const ACTA_STATE_WITH_INITIAL_VALUE = 'ACTA_STATE_WITH_INITIAL_VALUE';
 
 export const ACTA_EVENT_KEY_MESSAGE = 'ACTA_EVENT_KEY_MESSAGE';
@@ -17,7 +21,7 @@ export const ACTA_KEY_FOR_STATE_HOOK = 'ACTA_KEY_FOR_STATE_HOOK';
 
 export const addElementsInActa = () =>
   Acta.setState({
-    [ACTA_STATE_ELEMENTS_LIST]: ['a', 'b'],
+    [ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK]: ['a', 'b'],
   });
 
 export const setHookValueInActa = () =>
@@ -36,6 +40,7 @@ const FunctionalComponent: React.FC = () => {
   const valueFromState = Acta.useActaState(ACTA_KEY_FOR_STATE_HOOK);
 
   let valueFromEvent = 'Not set yet';
+
   Acta.useActaEvent(
     'actaEventKey',
     (value) => (valueFromEvent = value as string)
@@ -52,16 +57,25 @@ const FunctionalComponent: React.FC = () => {
 export default class App extends React.Component<IProps, IState> {
   public state: IState = {
     elements: [],
+    functionalComponentDisplayed: true,
+    simpleValue: 'Not Set',
   };
 
   public componentDidMount() {
     Acta.subscribeState(
-      ACTA_STATE_ELEMENTS_LIST,
+      ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK,
       (elements) =>
         this.setState({
           elements,
         }),
       this
+    );
+
+    Acta.subscribeState(
+      ACTA_STATE_WITH_INITIAL_VALUE,
+      () => false,
+      this,
+      'THIS IS AN INITIAL VALUE'
     );
 
     Acta.subscribeState(
@@ -88,7 +102,12 @@ export default class App extends React.Component<IProps, IState> {
   }
 
   public render(): JSX.Element {
-    const { elements, message } = this.state;
+    const {
+      elements,
+      message,
+      functionalComponentDisplayed,
+      simpleValue,
+    } = this.state;
 
     const stateWithInitialValue = Acta.getState(ACTA_STATE_WITH_INITIAL_VALUE);
 
@@ -104,9 +123,18 @@ export default class App extends React.Component<IProps, IState> {
 
         {message && <p id='message'>{message}</p>}
 
+        <p id='simpleValue'>{simpleValue}</p>
+
         <p id='stateWithInitialValue'>{stateWithInitialValue}</p>
 
-        <FunctionalComponent />
+        {functionalComponentDisplayed && <FunctionalComponent />}
+
+        <button
+          id='unmountFunctionalComponent'
+          onClick={() => this.setState({ functionalComponentDisplayed: false })}
+        >
+          unmount functionnal component
+        </button>
       </div>
     );
   }
