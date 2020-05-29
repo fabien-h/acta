@@ -360,14 +360,7 @@ const Acta: IActa = {
         Object.keys(this.states[stateKey].subscribtions).forEach((actaID) => {
           try {
             this.states[stateKey].subscribtions[actaID].callback(value);
-          } catch (err) {
-            if (
-              !this.states[stateKey].subscribtions[actaID]?.context ||
-              !this.states[stateKey].subscribtions[actaID].callback
-            ) {
-              delete this.states[stateKey].subscribtions[actaID];
-            }
-          }
+          } catch (err) {}
         });
       }
     }
@@ -610,14 +603,7 @@ const Acta: IActa = {
     Object.keys(this.events[eventKey] || {}).forEach((actaID) => {
       try {
         this.events[eventKey][actaID].callback(data || null);
-      } catch (err) {
-        if (
-          !this.events[eventKey][actaID].context ||
-          !this.events[eventKey][actaID].callback
-        ) {
-          delete this.events[eventKey][actaID];
-        }
-      }
+      } catch (err) {}
     });
   },
 
