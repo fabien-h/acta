@@ -17,6 +17,7 @@
     "node": ">=10.0.0"
   },
   "scripts": {
+    "coveralls": "jest --verbose --runInBand --collectCoverage && cat ./coverage/lcov.info | coveralls",
     "build:dev-watch": "rollup -w --config rollup.config.dev.js",
     "build": "rimraf dist && tsc --module commonjs && rollup --config rollup.config.build.js",
     "dev": "rimraf dist && concurrently \"yarn run build:dev-watch\" \"jest --watch --config ./jest.config.js\" --kill-others --restartTries 2 --restartDelay 200",
@@ -82,6 +83,7 @@
     "@typescript-eslint/parser": "^2.33.0",
     "babel-jest": "^26.0.1",
     "concurrently": "^5.2.0",
+    "coveralls": "^3.1.0",
     "eslint": "^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",
