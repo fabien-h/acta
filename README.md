@@ -27,13 +27,13 @@ Super light dead simple state manager and event dispatcher for react. May you ne
 - A one line straight forward way of subscribing application events in a class component `Acta.subscribeState('appEventKey', handler);`.
 - A hook for functional components `Acta.useActaEvent('appEventKey', handler);` that share events. with class components.
 - A simple way of dispatching an event `Acta.dispatchEvent('appEventKey', value)`.
-- Optionnal local/session storage persistence.
+- Optional local/session storage persistence.
 - Shared states and events between tabs and windows.
 - Great performances since the store contains references to the callbacks instead of having to iterate on every reducer and stop only when it find the corresponding ones.
 - Self cleaning methods unsubscribing to states and events.
-- Exposed global object that you can call from anywhere without having to setup and pass providers, wrapers or decorators.
+- Exposed global object that you can call from anywhere without having to setup and pass providers, wrappers or decorators.
 
-In **Acta** states, you can store string, numbers, and booleans; in object litterals and in arrays. Since all values stored have to be compatible with the local storage Maps, Sets or functions won’t work.
+In **Acta** states, you can store string, numbers, and booleans; in object literals and in arrays. Since all values stored have to be compatible with the local storage Maps, Sets or functions won’t work.
 
 You don't need tooling to debug **Acta**. Juste type `Acta` in your browser console and see the object and the internals.
 
@@ -43,8 +43,8 @@ React ecosystem already has excellent state managers. [Redux](https://redux.js.o
 
 Maintainability is the ability to make changes with confidence. If you cannot understand your dataflow instantly today and describe it in a simple sentence, it means that three months from now you will be lost in the layers of abstraction that you just created and that any modification will be a nightmare.
 
-If an action calls a dispatcher to push updated data in a middleware that will look into a bunch a reducers to find the one that will transform the updated data to push them into a provider that will trigger a mapping from the tranformed updated data into properties in a higher order function that wraps the parent of the component where the data will be displayed... Well, congratulations, you made the life of the next guy hell. And this is not a caricature, some applications have way more complicated dataflow. Sometimes it's required; but if I bet that it's not your case, I'll be right 99.9% of the time.
+If an action calls a dispatcher to push updated data in a middleware that will look into a bunch a reducers to find the one that will transform the updated data to push them into a provider that will trigger a mapping from the transformed updated data into properties in a higher order function that wraps the parent of the component where the data will be displayed... Well, congratulations, you made the life of the next guy hell. And this is not a caricature, some applications have way more complicated dataflow. Sometimes it's required; but if I bet that it's not your case, I'll be right 99.9% of the time.
 
-The goal of **Acta** is to make you forget about reducers, observers, maptoprops, providers, HOCs... Components are explicitely responsible for subscribing to the state or event. You can call for a complex data treatment inside the component. You can have actions that will be triggered. But the incoming data flow should be the most direcct possible.
+The goal of **Acta** is to make you forget about reducers, observers, maptoprops, providers, HOCs... Components are explicitly responsible for subscribing to the state or event. You can call for a complex data treatment inside the component. You can have actions that will be triggered. But the incoming data flow should be the most direct possible.
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
