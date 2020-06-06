@@ -1,7 +1,7 @@
 /**
  * Utility to check that the target is a plain object;
  */
-export const isObject = (target: any): boolean => {
+export const isObject = (target?: unknown): boolean => {
   /**
    * Check for:
    *  - undefined

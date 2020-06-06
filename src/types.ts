@@ -3,7 +3,7 @@ import React from 'react';
 export type TActaValue =
   | string
   | number
-  | object
+  | Record<string, unknown>
   | boolean
   | null
   | undefined
