@@ -1,8 +1,15 @@
-# <a href='https://fabien-h.github.io/acta/#/'><img src='https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/acta-logo.png' height='60' alt='Acta Logo' aria-label='fabien-h.github.io/acta/' /></a>
+<p align="center">
+  <a href="https://fabien-h.github.io/acta/#/">
+    <br/><br/><br/>
+    <img src="https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/acta-logo.png" alt="Storybook" width="220" />
+    <br/><br/><br/>
+  </a>
+</p>
 
-To get started in 3 minutes : [get to the quick start](https://fabien-h.github.io/acta/#/quickstart).
+<p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". To get started in 3 minutes : <a href="https://fabien-h.github.io/acta/#/quickstart">get to the quick start</a>.</p>
 
-Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?".
+<br/>
+
 
 [![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
 [![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
