@@ -62,53 +62,53 @@ describe('Acta deleteState test method', () => {
    */
   test('When passing a stateKey that is an empty string, should throw an error.', () => {
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState('');
     }).toThrowError('Acta.deleteState params => [0]: string');
   });
 
   test('When passing a stateKey that is not a string, should throw an error.', () => {
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState();
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState(false);
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState({ a: 1 });
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState([]);
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState({});
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState(new Date());
     }).toThrowError('Acta.deleteState params => [0]: string');
   });
 
   test('When passing an invalid persistence target, throw an error.', () => {
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState('validKey', 'invalidPersistence');
     }).toThrowError(
       'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".'
     );
 
     expect(() => {
-      //@ts-ignore
+      // @ts-ignore : should error
       Acta.deleteState('validKey', {});
     }).toThrowError(
       'Acta.deleteState params => [1]: "sessionStorage" | "localStorage".'

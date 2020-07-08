@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Acta from '../src';
 import { IComponentWithID } from '../src/types';
 
@@ -39,39 +40,39 @@ describe('Acta unsubscribeEvent.test method', () => {
    */
   test('If the eventKey passed is not a valid string, should return an error.', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent();
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent({}, {});
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent(null, {});
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent(undefined, {});
     }).toThrowError(paramError);
   });
 
   test('If the context passed is not a valid object, should return an error.', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent('a');
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent('a', []);
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeEvent('a', () => true);
     }).toThrowError(paramError);
   });

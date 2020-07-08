@@ -1,7 +1,6 @@
 import React from 'react';
 import Acta from '../src';
 
-interface IProps {}
 interface IState {
   elements: Array<string>;
   message?: string;
@@ -19,24 +18,24 @@ export const ACTA_EVENT_KEY_WITH_NULL_VALUE = 'ACTA_EVENT_KEY_WITH_NULL_VALUE';
 
 export const ACTA_KEY_FOR_STATE_HOOK = 'ACTA_KEY_FOR_STATE_HOOK';
 
-export const addElementsInActa = () =>
+export const addElementsInActa = (): void =>
   Acta.setState({
     [ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK]: ['a', 'b'],
   });
 
-export const setHookValueInActa = () =>
+export const setHookValueInActa = (): void =>
   Acta.setState({
     [ACTA_KEY_FOR_STATE_HOOK]: 'Value from updated state',
   });
 
-export const dispatchEventInActa = () =>
+export const dispatchEventInActa = (): void =>
   Acta.dispatchEvent(ACTA_EVENT_KEY_MESSAGE, 'A message from an Acta event.');
 
-export const dispatchEventInActaWithNullValue = () =>
+export const dispatchEventInActaWithNullValue = (): void =>
   Acta.dispatchEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const FunctionalComponent: React.FC = () => {
+const FunctionalComponent: React.FC = (): JSX.Element => {
   const valueFromState = Acta.useActaState(ACTA_KEY_FOR_STATE_HOOK);
 
   let valueFromEvent = 'Not set yet';
@@ -54,14 +53,14 @@ const FunctionalComponent: React.FC = () => {
   );
 };
 
-export default class App extends React.Component<IProps, IState> {
+export default class App extends React.Component<unknown, IState> {
   public state: IState = {
     elements: [],
     functionalComponentDisplayed: true,
     simpleValue: 'Not Set',
   };
 
-  public componentDidMount() {
+  public componentDidMount(): void {
     Acta.subscribeState(
       ACTA_STATE_ELEMENTS_LIST_WITH_CALLBACK,
       (elements) =>
@@ -73,7 +72,7 @@ export default class App extends React.Component<IProps, IState> {
 
     Acta.subscribeState(
       ACTA_STATE_WITH_INITIAL_VALUE,
-      () => false,
+      (): boolean => false,
       this,
       'THIS IS AN INITIAL VALUE'
     );
@@ -89,10 +88,14 @@ export default class App extends React.Component<IProps, IState> {
       this
     );
 
-    Acta.subscribeEvent(ACTA_EVENT_KEY_WITH_NULL_VALUE, () => false, this);
+    Acta.subscribeEvent(
+      ACTA_EVENT_KEY_WITH_NULL_VALUE,
+      (): boolean => false,
+      this
+    );
   }
 
-  public componentWillUnmount() {
+  public componentWillUnmount(): boolean {
     return false;
   }
 
@@ -122,7 +125,7 @@ export default class App extends React.Component<IProps, IState> {
 
         <button
           id='setSimpleValueState'
-          onClick={() => this.setState({ simpleValue: 'Set' })}
+          onClick={(): void => this.setState({ simpleValue: 'Set' })}
         >
           set simple value
         </button>
@@ -133,7 +136,9 @@ export default class App extends React.Component<IProps, IState> {
 
         <button
           id='unmountFunctionalComponent'
-          onClick={() => this.setState({ functionalComponentDisplayed: false })}
+          onClick={(): void =>
+            this.setState({ functionalComponentDisplayed: false })
+          }
         >
           unmount functionnal component
         </button>

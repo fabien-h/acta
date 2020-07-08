@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck : test file
 import Acta from '../src';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 // import React from 'react';

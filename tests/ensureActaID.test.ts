@@ -3,7 +3,7 @@ import Acta from '../src';
 describe('Acta ensureActaID method', () => {
   test('Call the method without a context returns false. This is for debuging purpose for this internal method.', () => {
     // Try to call the method with no context
-    // @ts-ignore
+    // @ts-ignore : should error
     const id = Acta.ensureActaID();
     // Should return false
     expect(id).toBe(false);
@@ -11,7 +11,7 @@ describe('Acta ensureActaID method', () => {
 
   test('Call the method with a context that already has an id returns false.', () => {
     // Try to call the method with no context
-    // @ts-ignore
+    // @ts-ignore : should error
     const id = Acta.ensureActaID({
       actaID: 'id',
     });
@@ -30,7 +30,7 @@ describe('Acta ensureActaID method', () => {
     } = {};
 
     // Call the method
-    // @ts-ignore
+    // @ts-ignore : should error
     const id = Acta.ensureActaID(context);
 
     // Test the id

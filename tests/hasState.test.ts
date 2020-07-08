@@ -46,7 +46,7 @@ describe('Acta hasState method', () => {
   test('Calling hasState without key should throw an error.', () => {
     expect(() => {
       // Try to call without a key
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.hasState();
     }).toThrowError('Acta.hasState params => [0]: string');
   });
@@ -54,25 +54,25 @@ describe('Acta hasState method', () => {
   test('Calling hasState with a non string key should throw an error.', () => {
     expect(() => {
       // Try to call with null
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.hasState(null);
     }).toThrowError('Acta.hasState params => [0]: string');
 
     expect(() => {
       // Try to call with undefined
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.hasState(undefined);
     }).toThrowError('Acta.hasState params => [0]: string');
 
     expect(() => {
       // Try to call with a number
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.hasState(10);
     }).toThrowError('Acta.hasState params => [0]: string');
 
     expect(() => {
       // Try to call with an object
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.hasState({ a: 1 });
     }).toThrowError('Acta.hasState params => [0]: string');
   });

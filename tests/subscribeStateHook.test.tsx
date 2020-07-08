@@ -1,4 +1,4 @@
-// @ts-nocheck
+// @ts-nocheck : test file
 import Acta from '../src';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
@@ -21,17 +21,17 @@ describe('Acta useActaState hook test', () => {
     });
 
     // Render the app with an empty elements array
-    // @ts-ignore
+    // @ts-ignore : should error
     let tree = app.toJSON();
 
     // Get the target paragraph
     let functionnalComponentRoot = tree?.children?.find(
-      // @ts-ignore
+      // @ts-ignore : should error
       (child) => child.props.id === 'functionnalComponentRoot'
     );
-    // @ts-ignore
+    // @ts-ignore : should error
     let valueFromStateParagraph = functionnalComponentRoot.children.find(
-      // @ts-ignore
+      // @ts-ignore : should error
       (child) => child.props.id === 'valueFromState'
     );
 
@@ -50,12 +50,12 @@ describe('Acta useActaState hook test', () => {
 
     // Get the target paragraph
     functionnalComponentRoot = tree?.children?.find(
-      // @ts-ignore
+      // @ts-ignore : should error
       (child) => child.props.id === 'functionnalComponentRoot'
     );
-    // @ts-ignore
+    // @ts-ignore : should error
     valueFromStateParagraph = functionnalComponentRoot.children.find(
-      // @ts-ignore
+      // @ts-ignore : should error
       (child) => child.props.id === 'valueFromState'
     );
 

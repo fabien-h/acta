@@ -26,7 +26,7 @@ describe('Acta subscribeState.test method', () => {
     let tree = app.toJSON();
     // The p#message should not be displayed
     expect(
-      // @ts-ignore
+      // @ts-ignore : should error
       tree.children.find((child) => child.props.id === 'message')
     ).toBeUndefined();
     // Snapshot the resulting markup
@@ -43,7 +43,7 @@ describe('Acta subscribeState.test method', () => {
     tree = app.toJSON();
     // The p#message should not be displayed
     expect(
-      // @ts-ignore
+      // @ts-ignore : should error
       tree.children.find((child) => child.props.id === 'message')
     ).toBeDefined();
     // Snapshot the resulting markup
@@ -89,28 +89,28 @@ describe('Acta subscribeState.test method', () => {
    */
   test('When the stateKey param is not a valid string, should throw an error', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent(null, () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('', () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent([], () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent({}, () => true, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
       Acta.subscribeEvent(
-        // @ts-ignore
+        // @ts-ignore : should error
         () => true,
-        // @ts-ignore
+        // @ts-ignore : should error
         () => true,
-        // @ts-ignore
+        // @ts-ignore : should error
         {} as IComponentWithID
       );
     }).toThrowError(paramsErrorMessage);
@@ -118,42 +118,42 @@ describe('Acta subscribeState.test method', () => {
 
   test('When the callback param is not a valid function, should throw an error', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', '', {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', null, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', undefined, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', [], {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', {}, {} as IComponentWithID);
     }).toThrowError(paramsErrorMessage);
   });
 
   test('When the callback param is not a valid function, should throw an error', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', () => true);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', () => true, '');
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', () => true, []);
     }).toThrowError(paramsErrorMessage);
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.subscribeEvent('testKey', () => true, null);
     }).toThrowError(paramsErrorMessage);
   });

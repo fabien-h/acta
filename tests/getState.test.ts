@@ -33,7 +33,7 @@ describe('Acta getState.test method', () => {
   test('When trying to call without a key; we should get an error.', () => {
     expect(() => {
       // Call with no param
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.getState();
     }).toThrowError('Acta.deleteState params => [0]: string');
   });
@@ -41,25 +41,25 @@ describe('Acta getState.test method', () => {
   test('When trying to call with a param that is not a string; we should get an error.', () => {
     expect(() => {
       // Call with a non existing key
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.getState([]);
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       // Call with a non existing key
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.getState({});
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       // Call with a non existing key
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.getState(10);
     }).toThrowError('Acta.deleteState params => [0]: string');
 
     expect(() => {
       // Call with a non existing key
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.getState(new Date());
     }).toThrowError('Acta.deleteState params => [0]: string');
   });

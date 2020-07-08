@@ -360,6 +360,7 @@ const Acta: IActa = {
         Object.keys(this.states[stateKey].subscribtions).forEach((actaID) => {
           try {
             this.states[stateKey].subscribtions[actaID].callback(value);
+            // eslint-disable-next-line no-empty
           } catch (err) {}
         });
       }
@@ -427,6 +428,7 @@ const Acta: IActa = {
     if (typeof stateKey !== 'string') {
       throw new Error('Acta.hasState params => [0]: string');
     }
+    // eslint-disable-next-line no-prototype-builtins
     return this.states.hasOwnProperty(stateKey);
   },
 
@@ -603,6 +605,7 @@ const Acta: IActa = {
     Object.keys(this.events[eventKey] || {}).forEach((actaID) => {
       try {
         this.events[eventKey][actaID].callback(data || null);
+        // eslint-disable-next-line no-empty
       } catch (err) {}
     });
   },

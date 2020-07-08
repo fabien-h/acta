@@ -21,31 +21,31 @@ describe('Acta.dispatchEvent method', () => {
    */
   test('Dispatch event requires the event key params to be a string', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.dispatchEvent(null);
     }).toThrow(
-      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
+      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events'
     );
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.dispatchEvent();
     }).toThrow(
-      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
+      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events'
     );
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.dispatchEvent({});
     }).toThrow(
-      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
+      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events'
     );
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.dispatchEvent(() => true);
     }).toThrow(
-      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events',
+      'Acta.dispatchEvent params => [0]: string & must exist in Acta.events'
     );
   });
 });

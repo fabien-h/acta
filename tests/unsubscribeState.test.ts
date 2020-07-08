@@ -39,39 +39,39 @@ describe('Acta unSubscribeState.test method', () => {
    */
   test('If the state key passed is not a valid string, should return an error.', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState();
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState({});
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState(null);
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState(undefined);
     }).toThrowError(paramError);
   });
 
   test('If the context passed is not a valid object, should return an error.', () => {
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState('a');
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState('a', []);
     }).toThrowError(paramError);
 
     expect(() => {
-      // @ts-ignore
+      // @ts-ignore : should error
       Acta.unsubscribeState('a', () => true);
     }).toThrowError(paramError);
   });
