@@ -22,7 +22,7 @@ describe('Acta subscribeState.test method', () => {
     const app = renderer.create(<App />);
 
     // Render the app with an empty elements array
-    let tree = app.toJSON();
+    let tree = app.toJSON() as renderer.ReactTestRendererJSON;
     // The ul child should have no children
     let children = tree?.children?.find(
       // @ts-ignore : should error
@@ -38,7 +38,7 @@ describe('Acta subscribeState.test method', () => {
     addElementsInActa();
 
     // Render the app with an elements array containing strings now
-    tree = app.toJSON();
+    tree = app.toJSON() as renderer.ReactTestRendererJSON;
     // The ul child should have children now
     children = tree?.children?.find(
       // @ts-ignore : should error
