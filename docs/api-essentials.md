@@ -122,8 +122,8 @@ setState: (
 public componentDidMount(): void {
   Acta.subscribeEvent(
     'ACTA_EVENT_KEY',
-    callback: (notification) => alert(notification),
-    context: this,
+    (notification) => alert(notification),
+    this,
   );
 }
 ```
