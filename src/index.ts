@@ -76,6 +76,7 @@ const Acta: IActa = {
             event.newValue ? JSON.parse(event.newValue) : event.newValue,
             false
           );
+          localStorage.removeItem(event.key);
         }
       },
       false
@@ -593,10 +594,7 @@ const Acta: IActa = {
      * it will come back instantly
      */
     if (isShared && isInDOM) {
-      localStorage.setItem(
-        `${actaEventPrefix}${eventKey}`,
-        JSON.stringify(data)
-      );
+      localStorage.setItem(actaEventPrefix + eventKey, JSON.stringify(data));
     }
 
     /**
