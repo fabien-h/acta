@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". To get started in 3 minutes : <a href="https://fabien-h.github.io/acta/#/quickstart">get to the quick start</a>.</p>
+<p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". To get started in 3 minutes : <a href="http://acta.js.org/#/quickstart">get to the quick start</a>.</p>
 
 <br/>
 
