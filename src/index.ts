@@ -48,35 +48,31 @@ const Acta: IActa = {
     window.addEventListener(
       'storage',
       (event) => {
+        const key = event.key;
+        const newValue = event.newValue;
         if (
-          event.key &&
-          event.key.slice(0, actaStoragePrefixLength) === actaStoragePrefix
+          key &&
+          key.slice(0, actaStoragePrefixLength) === actaStoragePrefix
         ) {
-          if (
-            event.newValue !== null &&
-            event.newValue !== '' &&
-            event.newValue !== 'null'
-          ) {
+          if (newValue !== null && newValue !== '' && newValue !== 'null') {
             this.setState({
-              [event.key.slice(actaStoragePrefixLength)]: JSON.parse(
-                event.newValue
-              ),
+              [key.slice(actaStoragePrefixLength)]: JSON.parse(newValue),
             });
           } else {
             this.setState({
-              [event.key.slice(actaStoragePrefixLength)]: null,
+              [key.slice(actaStoragePrefixLength)]: null,
             });
           }
         } else if (
-          event.newValue !== null &&
-          event.key?.slice(0, actaEventPrefixLength) === actaEventPrefix
+          newValue !== null &&
+          key?.slice(0, actaEventPrefixLength) === actaEventPrefix
         ) {
           this.dispatchEvent(
-            event.key.slice(actaEventPrefixLength),
-            event.newValue ? JSON.parse(event.newValue) : event.newValue,
+            key.slice(actaEventPrefixLength),
+            newValue ? JSON.parse(newValue) : newValue,
             false
           );
-          localStorage.removeItem(event.key);
+          localStorage.removeItem(key);
         }
       },
       false
