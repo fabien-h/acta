@@ -68,8 +68,8 @@ const Acta: IActa = {
             });
           }
         } else if (
-          event.key &&
-          event.key.slice(0, actaEventPrefixLength) === actaEventPrefix
+          event.newValue !== null &&
+          event.key?.slice(0, actaEventPrefixLength) === actaEventPrefix
         ) {
           this.dispatchEvent(
             event.key.slice(actaEventPrefixLength),
