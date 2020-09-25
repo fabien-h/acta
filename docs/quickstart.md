@@ -4,7 +4,7 @@ This quickstart cover most of **Acta** in 2 minutes.
 
 There is also a short video if you prefer that format.
 
-<p align="center">
+<p>
   <a href="https://www.youtube.com/watch?v=dHPcp_7UmDM" target="_blank" rel="noopener noreferrer">
     <img src="/_media/short_tuto_video.jpg" alt="short tutorial thumbnail" width="300" />
   </a>
