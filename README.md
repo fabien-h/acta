@@ -1,15 +1,18 @@
 <p align="center">
-  <a href="https://fabien-h.github.io/acta/#/">
+  <a href="https://fabien-h.github.io/acta/#/" target="_blank" rel="noopener noreferrer" >
     <br/>
     <img src="https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/acta-logo.png" alt="Storybook" width="220" />
     <br/><br/><br/>
   </a>
 </p>
 
-<p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". To get started in 3 minutes : <a href="http://acta.js.org/#/quickstart">get to the quick start</a>.</p>
+<p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". <a href="http://acta.js.org/#/quickstart">Get to the quick start</a>. Or watch the 2 minutes video.</p>
+
+<a href="https://www.youtube.com/watch?v=dHPcp_7UmDM" target="_blank" rel="noopener noreferrer">
+  <img src="https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/short_tuto_video.jpg" alt="short tutorial thumbnail" width="300" />
+</a>
 
 <br/>
-
 
 [![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
 [![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
