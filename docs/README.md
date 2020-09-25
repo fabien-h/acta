@@ -1,4 +1,4 @@
-# Acta
+<img src="/_media/acta-logo.png" alt="Acta logo" width="220" />
 
 Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?".
 

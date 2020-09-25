@@ -1,1 +1,0 @@
-# Acta tutorial functional components

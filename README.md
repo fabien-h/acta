@@ -1,7 +1,7 @@
 <p align="center">
   <a href="https://fabien-h.github.io/acta/#/" target="_blank" rel="noopener noreferrer" >
     <br/>
-    <img src="https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/acta-logo.png" alt="Storybook" width="220" />
+    <img src="https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/acta-logo.png" alt="Acta logo" width="220" />
     <br/><br/><br/>
   </a>
 </p>
