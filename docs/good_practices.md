@@ -7,9 +7,9 @@ The states that should be shared between all components or all routes or all tab
 Examples:
 
 - ✅ The data related to the user and its logged status should persist.
-- 🚫The hover state of a button should be in a temporary local state.
+- 🚫 The hover state of a button should be in a temporary local state.
 - ✅ The checkout funnel state for an e-commerce website should persist.
-- 🚫The loading state of a view is temporary and should not affect the other parts of the application.
+- 🚫 The loading state of a view is temporary and should not affect the other parts of the application.
 - ⚠️ The specific data fetched for a view could persist. It depends on you.
 
 > You can keep the data fetched for a specific view as a way of memoize of a datacall. It will allow you to instantly display old data while the fresh ones are loading. But this is a poors man solution and you should implement this behaviour in your data layer or use a service worker.
