@@ -6,9 +6,10 @@ import { ACTA_STATE_TODOS } from '../constants/actaKeys';
 import { ITodo } from '../types';
 
 export const FunctionalTodosList = () => {
-  const todos: Array<ITodo> = Acta.useActaState(ACTA_STATE_TODOS, []) as Array<
-    ITodo
-  >;
+  const todos: Array<ITodo> = Acta.useActaState(
+    ACTA_STATE_TODOS,
+    []
+  ) as Array<ITodo>;
 
   return (
     <div>
