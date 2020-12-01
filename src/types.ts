@@ -1,14 +1,14 @@
 import React from 'react';
 
-export type TActaValue =
+export declare type TActaValue =
   | string
   | number
-  | Record<string, unknown>
   | boolean
   | null
   | undefined
-  | Array<TActaValue>
-  | { [key: string]: TActaValue };
+  | { [key: string]: TActaValue }
+  | Record<string, any>
+  | Array<TActaValue>;
 
 export interface IState {
   value: TActaValue;
