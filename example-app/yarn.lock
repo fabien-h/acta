@@ -2490,10 +2490,10 @@ acorn@^7.1.1:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.1.tgz#e35668de0b402f359de515c5482a1ab9f89a69bf"
   integrity sha512-add7dgA5ppRPxCFJoAGfMDi7PIBXq1RtGo7BhbLaxwrXPOmw8gq48Y9ozT01hUKy9byMjlR20EJhu5zlkErEkg==
 
-acta@^3.0.10:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/acta/-/acta-3.0.10.tgz#ff7087ae082285fe9ac0a747b5608166e140c082"
-  integrity sha512-loKLIbexRbyYJ9zXUtK1I7oZvGMNzkUZy/XEcQ61ratCAm6bA8xsyHIKjs2aOSg/tv9PFZpyG7IdUw7lcpCXaA==
+acta@^3.0.11:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/acta/-/acta-3.0.11.tgz#5c150f907e19a1b019a21dd13e20b4bd97a05e5e"
+  integrity sha512-mPBFT73FCIkqHmVNuwC3uTOCulnXD129LYRCJdUz+bhgL7vMqzeLNQ05o2NtMCdqbHNYpX6T/5CVP6JFhUL49A==
 
 address@1.1.2, address@^1.0.1:
   version "1.1.2"
