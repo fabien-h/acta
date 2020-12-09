@@ -17,7 +17,6 @@
 <br/>
 
 [![badgen minzip](https://badgen.net/bundlephobia/minzip/acta)](https://bundlephobia.com/result?p=acta)
-[![Build Status](https://travis-ci.org/fabien-h/acta.svg?branch=master)](https://travis-ci.org/fabien-h/acta)
 [![Coverage Status](https://coveralls.io/repos/github/fabien-h/acta/badge.svg?branch=master)](https://coveralls.io/github/fabien-h/acta?branch=master)
 ![codacy code quality](https://api.codacy.com/project/badge/Grade/73e7fdaa376448c2835a23c3f4749c8f)
 [![badgen typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)](https://www.typescriptlang.org/)
