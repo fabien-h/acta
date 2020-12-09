@@ -15,6 +15,12 @@ Super light dead simple state manager and event dispatcher for react. May you ne
 - **Minimal dataflow: the component subscribing is the one using the data.**
 - **Zero setup, no provider or observable system.**
 
+<p>
+  <a href="https://www.youtube.com/watch?v=3rSafOVOFS8" target="_blank" rel="noopener noreferrer">
+    <img src="/_media/short_tuto_video.jpg" alt="short tutorial thumbnail" width="300" />
+  </a>
+</p>
+
 ## Acta is providing
 
 - A unique global store with keys indexed values.

@@ -9,7 +9,7 @@
 <p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". <a href="http://acta.js.org/#/quickstart">Get to the quick start</a>. Or watch the 2 minutes video.</p>
 
 <p align="center">
-  <a href="https://www.youtube.com/watch?v=dHPcp_7UmDM" target="_blank" rel="noopener noreferrer">
+  <a href="https://www.youtube.com/watch?v=3rSafOVOFS8" target="_blank" rel="noopener noreferrer">
     <img src="https://raw.githubusercontent.com/fabien-h/acta/master/docs/_media/short_tuto_video.jpg" alt="short tutorial thumbnail" width="300" />
   </a>
 </p>
