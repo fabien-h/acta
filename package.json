@@ -1,6 +1,6 @@
 {
   "name": "acta",
-  "version": "3.0.12",
+  "version": "3.0.13",
   "description": "Super light and dead simple state manager and event dispatcher for react.",
   "main": "dist/index.umd.js",
   "module": "dist/index.es5.js",
