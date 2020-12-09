@@ -6,7 +6,7 @@
   </a>
 </p>
 
-<p align="center">Super light dead simple state manager and event dispatcher for react. May you never ask yourself again "where are those props coming from?". <a href="http://acta.js.org/#/quickstart">Get to the quick start</a>. Or watch the 2 minutes video.</p>
+<p align="center">Super light dead simple state manager and event dispatcher for React. May you never ask yourself again "where are those props coming from?". <a href="http://acta.js.org/#/quickstart">Get to the quick start</a>. Or watch the 2 minutes video.</p>
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=3rSafOVOFS8" target="_blank" rel="noopener noreferrer">
@@ -27,7 +27,7 @@
 
 - **Explicit over implicit.**
 - **Minimal dataflow: the component subscribing is the one using the data.**
-- **Zero setup, no provider or observable system.**
+- **Zero setups, no provider or observable system.**
 
 ## Acta is providing
 
@@ -40,13 +40,13 @@
 - A simple way of dispatching an event `Acta.dispatchEvent('appEventKey', value)`.
 - Optional local/session storage persistence.
 - Shared states and events between tabs and windows.
-- Great performances since the store contains references to the callbacks instead of having to iterate on every reducer and stop only when it find the corresponding ones.
-- Self cleaning methods unsubscribing to states and events.
-- Exposed global object that you can call from anywhere without having to setup and pass providers, wrappers or decorators.
+- Great performances since the store contains references to the callbacks instead of having to iterate on every reducer and stop only when it finds the corresponding ones.
+- Self-cleaning methods unsubscribing to states and events.
+- An exposed global object that you can call from anywhere without having to set up and pass providers, wrappers, or decorators.
 
 In **Acta** states, you can store string, numbers, and booleans; in object literals and in arrays. Since all values stored have to be compatible with the local storage Maps, Sets or functions won’t work.
 
-You don't need tooling to debug **Acta**. Juste type `Acta` in your browser console and see the object and the internals.
+You don't need tooling to debug **Acta**. Just type `Acta` in your browser console and see the object and the internals.
 
 ## Why another state manager?
 
@@ -54,8 +54,8 @@ React ecosystem already has excellent state managers. [Redux](https://redux.js.o
 
 Maintainability is the ability to make changes with confidence. If you cannot understand your dataflow instantly today and describe it in a simple sentence, it means that three months from now you will be lost in the layers of abstraction that you just created and that any modification will be a nightmare.
 
-If an action calls a dispatcher to push updated data in a middleware that will look into a bunch a reducers to find the one that will transform the updated data to push them into a provider that will trigger a mapping from the transformed updated data into properties in a higher order function that wraps the parent of the component where the data will be displayed... Well, congratulations, you made the life of the next guy hell. And this is not a caricature, some applications have way more complicated dataflow. Sometimes it's required; but if I bet that it's not your case, I'll be right 99.9% of the time.
+If an action calls a dispatcher to push updated data in a middleware that will look into a bunch of reducers to find the one that will transform the updated data to push them into a provider that will trigger a mapping from the transformed updated data into properties in a higher-order function that wraps the parent of the component where the data will be displayed... Well, congratulations, you made the life of the next guy hell. And this is not a caricature, some applications have way more complicated dataflow. Sometimes it's required; but if I bet that it's not your case, I'll be right 99.9% of the time.
 
-The goal of **Acta** is to make you forget about reducers, observers, maptoprops, providers, HOCs... Components are explicitly responsible for subscribing to the state or event. You can call for a complex data treatment inside the component. You can have actions that will be triggered. But the incoming data flow should be the most direct possible.
+The goal of **Acta** is to make you forget about reducers, observers, map to props, providers, HOCs... Components are explicitly responsible for subscribing to the state or event. You can call for a complex data treatment inside the component. You can have actions that will be triggered. But the incoming data flow should be the most direct possible.
 
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)

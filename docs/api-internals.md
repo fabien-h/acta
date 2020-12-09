@@ -27,7 +27,7 @@ unsubscribeEvent: (eventKey: string, context: React.Component) => void;
 
 ## Acta.hasState
 
-To check if a state exists; return true if it does, false if it does not.
+To check if a state exists, return true if it does, false if it does not.
 
 Most of the time `Boolean(Acta.getState('ACTA_STATE_KEY'))` return the same value. But they are not equivalent. If a state exists but its value is `false`, `null`, `0` or `undefined`, `hasState` returns true.
 
@@ -45,7 +45,7 @@ hasState: (stateKey: string) => boolean;
 
 ## Acta.deleteState
 
-If you need to clean up your store. It makes sense when the user logs out and you want to delete all thee keys in the local storage. But you can also set them all to `''`.
+When you need to clean up your store. It makes sense when the user logs out and you want to delete all the keys in the local storage. But you can also set them all to `''`.
 
 **Example**
 

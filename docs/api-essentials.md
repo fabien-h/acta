@@ -26,7 +26,7 @@ public componentDidMount(): void {
 }
 ```
 
-If you need a more complex behaviour, you can pass a callback instead of the local state key. The callback will receive the updated state as argument.
+If you need a more complex behavior, you can pass a callback instead of the local state key. The callback will receive the updated state as an argument.
 
 **Example**
 
@@ -41,7 +41,7 @@ public componentDidMount(): void {
 }
 ```
 
-> If you pass `this` - as the context of the current component - in a closure, you can subscrive from anywhere. But this is not recommended. As is would make the dataflow harder to understand.
+> If you pass `this` - as the context of the current component - in a closure, you can subscribe from anywhere. But this is not recommended. As it would make the dataflow harder to understand.
 
 **Types**
 
@@ -57,7 +57,7 @@ subscribeState: (
 - `stateKey`: this is a `string`, you should use constants like ACTA_KEY_USER_NAME to avoid collisions and make your life easy when refactoring.
 - `callbackOrStateKey`: when the targeted state changes in **Acta**, the callback is called. The only parameter is the new value of the state. The callback will usually include a `this.setState(...)` somewhere.
 - `context`: this is the subscribing component almost always `this`.
-- `defaultValue`: _optionnal_ if the state was not previously set and that you need a value, use it.
+- `defaultValue`: _optional_ if the state was not previously set and that you need a value, use it.
 
 The call returns the current value for the target state.
 
@@ -81,7 +81,7 @@ useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
 ```
 
 - `ACTA_STATE_KEY`: the state key in **Acta**.
-- `defaultValue`: _optionnal_ if the state does not alreay exists in acta, you can set its value with this param.
+- `defaultValue`: _optional_ if the state does not alreay exists in acta, you can set its value with this param.
 
 ## Acta.setState
 
@@ -110,11 +110,11 @@ setState: (
 ```
 
 - `states`: a key/values pairs object where each key is a state.
-- `persistenceType`: _optionnal_ if you want the state to persist or if you want to share it with other windows/tabs, set a persistence.
+- `persistenceType`: _optional_ if you want the state to persist or if you want to share it with other windows/tabs, set a persistence.
 
 ## Acta.subscribeEvent
 
-`Acta.subscribeEvent()` is very similar to `Acta.subscribeState()`. The main difference is that the event value does not persists. It is used to communicate between components like notification managers.
+`Acta.subscribeEvent()` is very similar to `Acta.subscribeState()`. The main difference is that the event value does not persist. It is used to communicate between components like notification managers.
 
 **Example**
 
@@ -191,8 +191,8 @@ useActaEvent: (
 ```
 
 - `eventKey`: the key for the target event.
-- `data`: _optionnal_ the data to pass.
-- `isShared`: _optionnal_ if you want to share this event between windows and tabs.
+- `data`: _optional_ the data to pass.
+- `isShared`: _optional_ if you want to share this event between windows and tabs.
 
 ## Acta.getState
 

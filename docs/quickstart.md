@@ -1,8 +1,8 @@
 # Quickstart
 
-This quickstart cover most of **Acta** in 2 minutes.
+This quickstart covers most of **Acta** in 2 minutes.
 
-There is also a short video if you prefer that format.
+There is also a long video if you prefer that format.
 
 <p>
   <a href="https://www.youtube.com/watch?v=3rSafOVOFS8" target="_blank" rel="noopener noreferrer">
@@ -12,7 +12,7 @@ There is also a short video if you prefer that format.
 
 ## Install
 
-This quickstart assumes that you already have a functionning [React](https://reactjs.org/) application. If not, you can initialize one with [create react app](https://create-react-app.dev/docs/getting-started/).
+This quickstart assumes that you already have a functioning [React](https://reactjs.org/) application. If not, you can initialize one with [create react app](https://create-react-app.dev/docs/getting-started/).
 
 Run `npm install acta` or `yarn add acta`.
 

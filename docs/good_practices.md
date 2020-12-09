@@ -12,13 +12,13 @@ Examples:
 - 🚫 The loading state of a view is temporary and should not affect the other parts of the application.
 - ⚠️ The specific data fetched for a view could persist. It depends on you.
 
-> You can keep the data fetched for a specific view as a way of memoize of a datacall. It will allow you to instantly display old data while the fresh ones are loading. But this is a poors man solution and you should implement this behaviour in your data layer or use a service worker.
+> You can keep the data fetched for a specific view as a way of memoizing of a data call. It will allow you to instantly display old data while the fresh ones are loading. But this is a poor's man solution and you should implement this behavior in your data layer or use a service worker.
 
 ## Managing my state and event keys
 
 ### Case conventions
 
-Usually people go for the underscore full caps option. An acta state key would look like this: `ACTA_STATE_KEY_USER_DATA`.
+Usually, people go for the underscore full caps option. An acta state key would look like this: `ACTA_STATE_KEY_USER_DATA`.
 
 ### With TypeScript
 
@@ -41,7 +41,7 @@ Acta.subscribeState(ActaStateKey.USER_DATA, 'localStateKey');
 
 ```
 
-You will enjoy your IDE tooling, refactoring will be easier and after compilation the enum will be replaced by the corresponding values.
+You will enjoy your IDE tooling, refactoring will be easier and after compilation, the enum will be replaced by the corresponding values.
 
 > You should have only one enum to avoid collisions.
 
@@ -66,4 +66,4 @@ Acta.subscribeState(ActaStateKey.USER_DATA, 'localStateKey');
 
 ```
 
-> Remember that `Object.freeze` does not deepfreeze.
+> Remember that `Object.freeze` does not deep freeze.
