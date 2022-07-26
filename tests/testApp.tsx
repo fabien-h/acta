@@ -47,7 +47,9 @@ const FunctionalComponent: React.FC = (): JSX.Element => {
 
   return (
     <div id='functionnalComponentRoot'>
-      <p id='valueFromState'>{valueFromState || 'Not set yet'}</p>
+      <p id='valueFromState'>
+        {valueFromState ? String(valueFromState) : 'Not set yet'}
+      </p>
       <p id='valueFromEvent'>{valueFromEvent || 'Not set yet'}</p>
     </div>
   );
@@ -100,12 +102,8 @@ export default class App extends React.Component<unknown, IState> {
   }
 
   public render(): JSX.Element {
-    const {
-      elements,
-      message,
-      functionalComponentDisplayed,
-      simpleValue,
-    } = this.state;
+    const { elements, message, functionalComponentDisplayed, simpleValue } =
+      this.state;
 
     const stateWithInitialValue = Acta.getState(ACTA_STATE_WITH_INITIAL_VALUE);
 
@@ -130,7 +128,9 @@ export default class App extends React.Component<unknown, IState> {
           set simple value
         </button>
 
-        <p id='stateWithInitialValue'>{stateWithInitialValue}</p>
+        <p id='stateWithInitialValue'>
+          {stateWithInitialValue ? String(stateWithInitialValue) : undefined}
+        </p>
 
         {functionalComponentDisplayed && <FunctionalComponent />}
 
