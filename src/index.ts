@@ -99,12 +99,14 @@ const Acta: IActa = {
     const storageKeys = Object.keys(storage);
     for (const storageKey of storageKeys) {
       if (storageKey.slice(0, actaStoragePrefixLength) === actaStoragePrefix) {
-        const value = JSON.parse(storage[storageKey]);
-        if (value !== undefined && value !== null) {
-          this.setState({
-            [storageKey.slice(actaStoragePrefixLength)]: value,
-          });
-        }
+        try {
+          const value = JSON.parse(storage[storageKey]);
+          if (value !== undefined && value !== null) {
+            this.setState({
+              [storageKey.slice(actaStoragePrefixLength)]: value,
+            });
+          }
+        } catch (_e) {}
       }
     }
   },
