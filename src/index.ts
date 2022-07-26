@@ -50,15 +50,18 @@ const Acta: IActa = {
       (event) => {
         const key = event.key;
         const newValue = event.newValue;
+
         if (
           key &&
           key.slice(0, actaStoragePrefixLength) === actaStoragePrefix
         ) {
-          if (newValue !== null && newValue !== '' && newValue !== 'null') {
+          try {
             this.setState({
-              [key.slice(actaStoragePrefixLength)]: JSON.parse(newValue),
+              [key.slice(actaStoragePrefixLength)]: JSON.parse(
+                newValue as unknown as string
+              ),
             });
-          } else {
+          } catch (_e) {
             this.setState({
               [key.slice(actaStoragePrefixLength)]: null,
             });
@@ -67,11 +70,19 @@ const Acta: IActa = {
           newValue !== null &&
           key?.slice(0, actaEventPrefixLength) === actaEventPrefix
         ) {
-          this.dispatchEvent(
-            key.slice(actaEventPrefixLength),
-            newValue ? JSON.parse(newValue) : newValue,
-            false
-          );
+          try {
+            this.dispatchEvent(
+              key.slice(actaEventPrefixLength),
+              JSON.parse(newValue),
+              false
+            );
+          } catch (_e) {
+            this.dispatchEvent(
+              key.slice(actaEventPrefixLength),
+              newValue,
+              false
+            );
+          }
           localStorage.removeItem(key);
         }
       },
