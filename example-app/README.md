@@ -1,3 +1,3 @@
 # Acta test application
 
-Run `yarn && yarn run start`.
+Run `pnpm i && pnpm run dev`.

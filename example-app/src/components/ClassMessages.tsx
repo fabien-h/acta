@@ -12,7 +12,7 @@ interface IState {
   messages: Array<IMessage>;
 }
 
-export class ClassMessages extends React.Component<{}, IState> {
+export class ClassMessages extends React.Component<unknown, IState> {
   public state: IState = {
     messages: [],
   };

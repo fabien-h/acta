@@ -1,4 +1,3 @@
-import React from 'react';
 import Acta from 'acta';
 
 import { deleteTodo } from '../actions/deleteTodo';

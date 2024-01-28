@@ -9,7 +9,7 @@ interface IState {
   todos: Array<ITodo>;
 }
 
-export class ClassTodoList extends React.Component<{}, IState> {
+export class ClassTodoList extends React.Component<unknown, IState> {
   public state: IState = {
     todos: (Acta.getState(ACTA_STATE_TODOS) as Array<ITodo>) || [],
   };

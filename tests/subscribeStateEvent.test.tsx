@@ -1,10 +1,5 @@
 // @ts-nocheck : test file
 import Acta from '../src';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// import React from 'react';
-// import renderer, { ReactTestRenderer } from 'react-test-renderer';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-// import App, { setHookValueInActa, ACTA_KEY_FOR_STATE_HOOK } from './testApp';
 
 const paramsErrorMessage = `Acta.useActaEvent params =>
 [0]: string,
