@@ -12,6 +12,26 @@ These are the main methods that you should use.
 
 > In the following document, the type `TActaValue` is `string | number | object | boolean | null | undefined | Array<TActaValue> | { [key: string]: TActaValue }`.
 
+## Acta.useActaState hook
+
+Hook called in a functionnal component to create a reactive variable. This reactive variable can be updated from anywhere in the application with a `Acta.setState`. Any update will triger a re-render of the component.
+
+**Example**
+
+```typescript
+// valueFromActa will be updated when the state change
+const valueFromActa = Acta.useActaState('ACTA_STATE_KEY');
+```
+
+**Types**
+
+```typescript
+useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
+```
+
+- `ACTA_STATE_KEY`: the state key in **Acta**.
+- `defaultValue`: _optional_ if the state does not alreay exists in acta, you can set its value with this param.
+
 ## Acta.subscribeState
 
 Called from a class component, usually in the `componentDidMount()` method. You always need to pass the current context with `this`.
@@ -62,26 +82,6 @@ subscribeState: (
 The call returns the current value for the target state.
 
 > You can call `unsubscribeState` to explicitly stop the sub. But you don’t need to do any cleanup. When a component will unmount, **Acta** will call `unsubscribeState` for the component.
-
-## Acta.useActaState
-
-Like `Acta.subscribeState` but for functional components.
-
-**Example**
-
-```typescript
-// valueFromActa will be updated when the state change
-const valueFromActa = Acta.useActaState('ACTA_STATE_KEY');
-```
-
-**Types**
-
-```typescript
-useActaState: (actaStateKey: string, defaultValue?: TActaValue) => TActaValue;
-```
-
-- `ACTA_STATE_KEY`: the state key in **Acta**.
-- `defaultValue`: _optional_ if the state does not alreay exists in acta, you can set its value with this param.
 
 ## Acta.setState
 
