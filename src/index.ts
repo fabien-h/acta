@@ -1,5 +1,5 @@
 import React from 'react';
-import { IActa, TActaValue } from './types';
+import type { IActa, TActaValue } from './types';
 import { isObject } from './isObject';
 
 const actaStoragePrefix = '__acta__';
@@ -40,7 +40,7 @@ const Acta: IActa = {
     /**
      * Attach to the window for global public access
      */
-    (window as any).Acta = Acta;
+    (window as any).Acta = Acta as IActa;
 
     /**
      * Listen to the storage to synchronise Acta between tabs
@@ -106,7 +106,7 @@ const Acta: IActa = {
               [storageKey.slice(actaStoragePrefixLength)]: value,
             });
           }
-        } catch (_e) {}
+        } catch (_e) { }
       }
     }
   },
@@ -253,7 +253,7 @@ const Acta: IActa = {
      * If the callback is not a function, it sets the state
      * in the component
      */
-    let passedCallback;
+    let passedCallback: (value: TActaValue) => void;
     if (typeof callbackOrLocalStateKey === 'string') {
       passedCallback = (value: TActaValue) =>
         context.setState({
@@ -273,8 +273,8 @@ const Acta: IActa = {
     };
 
     /* Dispatch the initial or current value to the subscriber
-		if initialize is not set to false and if there is a valid
-		non circular state to dispatch */
+    if initialize is not set to false and if there is a valid
+    non circular state to dispatch */
     try {
       if (this.states[actaStateKey].value !== undefined) {
         passedCallback(
@@ -367,12 +367,12 @@ const Acta: IActa = {
        * subscribtion if the subscriber has been destroyed
        */
       if (this.states[stateKey].subscribtions) {
-        Object.keys(this.states[stateKey].subscribtions).forEach((actaID) => {
+        for (const actaID of Object.keys(this.states[stateKey].subscribtions)) {
           try {
             this.states[stateKey].subscribtions[actaID].callback(value);
             // eslint-disable-next-line no-empty
-          } catch (err) {}
-        });
+          } catch (err) { }
+        }
       }
     }
   },
@@ -438,8 +438,7 @@ const Acta: IActa = {
     if (typeof stateKey !== 'string') {
       throw new Error('Acta.hasState params => [0]: string');
     }
-    // eslint-disable-next-line no-prototype-builtins
-    return this.states.hasOwnProperty(stateKey);
+    return Object.prototype.hasOwnProperty.call(this.states, stateKey);
   },
 
   /**
@@ -609,12 +608,12 @@ const Acta: IActa = {
     /**
      * Call each subscriber callback
      */
-    Object.keys(this.events[eventKey] || {}).forEach((actaID) => {
+    for (const actaID of Object.keys(this.events[eventKey] || {})) {
       try {
         this.events[eventKey][actaID].callback(data || null);
         // eslint-disable-next-line no-empty
-      } catch (err) {}
-    });
+      } catch (err) { }
+    }
   },
 
   /**
